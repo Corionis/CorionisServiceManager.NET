@@ -56,8 +56,8 @@ namespace CorionisServiceManager.NET
             FormClosing += EventFormClosing;
             Resize += EventFormResized;
 
-
             // Menu
+            onlineDocumentationToolStripMenuItem.Click += EventMenuHelpOnlineDocumentation;
             restartToolStripMenuItem.Click += EventMenuFileRestart;
             exitToolStripMenuItem.Click += EventMenuFileExit;
 
@@ -128,6 +128,7 @@ namespace CorionisServiceManager.NET
 
                 // Update then start the Monitor tab update timer
                 EventMonitorUpdateTick(sender, e);
+                AddMonitorCellToolTips();
                 monitorUpdateTimer.Start();
                 UpdateTimerStarted = true;
             }
@@ -160,26 +161,21 @@ namespace CorionisServiceManager.NET
                 Visible = true;
 
                 EventMonitorUpdateTick(sender, e);
-
-                // Set cell-level tool-tips
-                foreach (DataGridViewRow row in dataGridViewMonitor.Rows)
-                {
-                    var cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Name");
-                    cell.ToolTipText = "Click or F2 to edit";
-                    cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Identifier");
-                    cell.ToolTipText = "Ctrl/Shift-Click to select, Drag 'n Drop to move row";
-                    cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Start Type");
-                    cell.ToolTipText = "Ctrl/Shift-Click to select, Drag 'n Drop to move row";
-                    cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Status");
-                    cell.ToolTipText = "Ctrl/Shift-Click to select, Drag 'n Drop to move row";
-                }
-
+                AddMonitorCellToolTips();
                 RestoreMonitorSelections();
             }
         }
 
+        private void EventMenuHelpOnlineDocumentation(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/Corionis/CorionisServiceManager.NET/wiki");
+        }
+
         private void EventMenuFileRestart(object sender, EventArgs e)
         {
+            // Hide tray icon, otherwise it will remain until mouse over
+            ctxt.trayIcon.Visible = false;
+
             Application.Restart();
             Environment.Exit(0);
         }
@@ -304,6 +300,22 @@ namespace CorionisServiceManager.NET
         #endregion
 
         // -----------------------------------------------------------------------------------------------------------------------
+
+        private void AddMonitorCellToolTips()
+        {
+            // Set cell-level tool-tips
+            foreach (DataGridViewRow row in dataGridViewMonitor.Rows)
+            {
+                var cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Name");
+                cell.ToolTipText = "Click or F2 to edit";
+                cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Identifier");
+                cell.ToolTipText = "Ctrl/Shift-Click to select, Drag 'n Drop to move row";
+                cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Start Type");
+                cell.ToolTipText = "Ctrl/Shift-Click to select, Drag 'n Drop to move row";
+                cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Status");
+                cell.ToolTipText = "Ctrl/Shift-Click to select, Drag 'n Drop to move row";
+            }
+        }
 
         private string GetColumnValue(DataGridViewCellCollection cells, string headerName)
         {

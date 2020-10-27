@@ -51,7 +51,7 @@
     <StartupObject>CorionisServiceManager.NET.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>manager-round-bronco.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\manager-round-bronco.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -142,9 +142,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="manager-round-bronco.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

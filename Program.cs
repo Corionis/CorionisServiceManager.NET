@@ -23,27 +23,27 @@ namespace CorionisServiceManager.NET
     {
         private Config cfg;
         private TheForm form;
-        private NotifyIcon trayIcon;
+        public NotifyIcon trayIcon;
 
         public CsmContext()
         {
+            // Load the configuration from JSON file
+            cfg = new Config();
+            cfg.Load();
+
             // Initialize Tray Icon
             trayIcon = new NotifyIcon()
             {
                 Icon = Resources.manager_round_bronco,
                 ContextMenu = new ContextMenu(new MenuItem[]
                 {
-                    new MenuItem("Show", Show),
-                    new MenuItem("Hide", Hide),
+                    new MenuItem("&Show", Show),
+                    new MenuItem("&Hide", Hide),
                     new MenuItem("-"),
-                    new MenuItem("Exit", Exit)
+                    new MenuItem("E&xit", Exit)
                 }),
                 Visible = true
             };
-
-            // Load the configuration from JSON file
-            cfg = new Config();
-            cfg.Load();
 
             // Setup the system tray icon
             trayIcon.DoubleClick += TrayIcon_DoubleClick;
