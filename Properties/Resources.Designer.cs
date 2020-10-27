@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CSM.Properties {
+namespace CorionisServiceManager.NET.Properties {
     using System;
     
     

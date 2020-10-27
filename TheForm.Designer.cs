@@ -1,4 +1,4 @@
-﻿namespace CSM
+﻿namespace CorionisServiceManager.NET
 {
     partial class TheForm
     {
@@ -271,7 +271,7 @@
             //
             // servicesBindingSource1
             //
-            this.servicesBindingSource1.DataSource = typeof(CSM.Services);
+            this.servicesBindingSource1.DataSource = typeof(Services);
             //
             // toolStripMonitor
             //
@@ -490,7 +490,7 @@
             // servicesBindingSource
             //
             this.servicesBindingSource.DataMember = "allServices";
-            this.servicesBindingSource.DataSource = typeof(CSM.Services);
+            this.servicesBindingSource.DataSource = typeof(Services);
             //
             // tabOptions
             //

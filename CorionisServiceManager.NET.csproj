@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A619BCEB-43AA-4655-8377-38AB2580DEAD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>CSM</RootNamespace>
+    <RootNamespace>CorionisServiceManager.NET</RootNamespace>
     <AssemblyName>CorionisServiceManager</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -48,7 +48,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>CSM.Program</StartupObject>
+    <StartupObject>CorionisServiceManager.NET.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>manager-round-bronco.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -139,6 +142,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="manager-round-bronco.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

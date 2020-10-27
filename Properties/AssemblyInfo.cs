@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Manage selected Windows services")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Corionis")]
-[assembly: AssemblyProduct("CSM")]
+[assembly: AssemblyProduct("CorionisServiceManager.NET")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2020.1.0.0")]
+[assembly: AssemblyFileVersion("2020.1.0.0")]

@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
 
-namespace CSM
+namespace CorionisServiceManager.NET
 {
     public class Config
     {

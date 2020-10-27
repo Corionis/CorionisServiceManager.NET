@@ -5,7 +5,7 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Windows.Forms;
 
-namespace CSM
+namespace CorionisServiceManager.NET
 {
     public partial class TheForm : Form
     {
@@ -391,8 +391,6 @@ namespace CSM
                 status = process.ExitCode;
                 return status;
             }
-
-            return -1;
         }
 
         private void MiniminzedNotification()

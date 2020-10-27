@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSM", "CSM.csproj", "{A619BCEB-43AA-4655-8377-38AB2580DEAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CorionisServiceManager.NET", "CorionisServiceManager.NET.csproj", "{A619BCEB-43AA-4655-8377-38AB2580DEAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

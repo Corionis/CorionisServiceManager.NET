@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
-using CSM.Properties;
+using CorionisServiceManager.NET.Properties;
 using Tulpep.NotificationWindow;
 
-namespace CSM
+namespace CorionisServiceManager.NET
 {
     static class Program
     {
@@ -35,6 +35,7 @@ namespace CSM
                 {
                     new MenuItem("Show", Show),
                     new MenuItem("Hide", Hide),
+                    new MenuItem("-"),
                     new MenuItem("Exit", Exit)
                 }),
                 Visible = true

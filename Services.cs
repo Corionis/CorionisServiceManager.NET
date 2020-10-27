@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ServiceProcess;
 
-namespace CSM
+namespace CorionisServiceManager.NET
 {
     public class Services
     {
