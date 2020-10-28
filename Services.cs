@@ -46,6 +46,7 @@ namespace CorionisServiceManager.NET
                             selectedServices[i] = service;
 
                             MonitoredService mon = new MonitoredService();
+                            mon.Picked = false;
                             mon.Name = servicePair.Name; // saved variation
                             mon.Identifier = service.ServiceName;
                             mon.Startup = service.StartType.ToString();
@@ -62,6 +63,7 @@ namespace CorionisServiceManager.NET
 
     public class MonitoredService
     {
+        public bool Picked { get; set; }
         public string Name { get; set; }
         public string Identifier { get; set; }
         public string Startup { get; set; }

@@ -46,13 +46,25 @@ namespace CorionisServiceManager.NET
             };
 
             // Setup the system tray icon
-            trayIcon.DoubleClick += TrayIcon_DoubleClick;
+            trayIcon.DoubleClick += DoubleClick;
             trayIcon.Text = cfg.GetProgramTitle();
 
             // Display the app if configured
             if (cfg.StartMinimized == false)
             {
                 Show();
+            }
+        }
+
+        private void DoubleClick(object Sender, EventArgs e)
+        {
+            if (form == null || form.Visible == false || form.WindowState == FormWindowState.Minimized)
+            {
+                Show();
+            }
+            else
+            {
+                form.WindowState = FormWindowState.Minimized;
             }
         }
 
@@ -90,11 +102,6 @@ namespace CorionisServiceManager.NET
             }
         }
 
-        public void Show(object sender, EventArgs e)
-        {
-            Show();
-        }
-
         public void Show()
         {
             if (form == null)
@@ -103,17 +110,9 @@ namespace CorionisServiceManager.NET
             }
             form.ShowForm();
         }
-
-        private void TrayIcon_DoubleClick(object Sender, EventArgs e)
+        public void Show(object sender, EventArgs e)
         {
-            if (form == null || form.Visible == false || form.WindowState == FormWindowState.Minimized)
-            {
-                Show();
-            }
-            else
-            {
-                form.WindowState = FormWindowState.Minimized;
-            }
+            Show();
         }
 
     }

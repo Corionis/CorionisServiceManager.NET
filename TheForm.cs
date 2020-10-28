@@ -11,13 +11,13 @@ namespace CorionisServiceManager.NET
     {
         private Config cfg;
         private CsmContext ctxt;
-        private bool UpdateTimerStarted = false;
         private Timer monitorUpdateTimer;
-        private int[] selectedMonitorRows;
-        public Services Services;
         private DataGridViewCellStyle rowStyleRunning;
         private DataGridViewCellStyle rowStyleStopped;
         private DataGridViewCellStyle rowStyleUnknown;
+        private int[] selectedMonitorRows;
+        public Services Services;
+        private bool updateTimerStarted = false;
 
         public TheForm(Config theCfg, CsmContext theContext)
         {
@@ -37,7 +37,7 @@ namespace CorionisServiceManager.NET
             // Styles
             DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
             columnHeaderStyle.BackColor = SystemColors.ControlDarkDark;
-            columnHeaderStyle.Font = new Font("Microsoft Sans Serif, 8.25pt, style=Bold", 8.25F);
+            columnHeaderStyle.Font = new Font("Microsoft Sans Serif, 9.00pt, style=Bold", 9.00F);
             columnHeaderStyle.ForeColor = Color.White;
             columnHeaderStyle.SelectionBackColor = SystemColors.ControlDark;
             columnHeaderStyle.SelectionForeColor = Color.White;
@@ -67,6 +67,7 @@ namespace CorionisServiceManager.NET
             toolStripMonitorManual.Click += EventMonitorButtonManual;
             toolStripMonitorStart.Click += EventMonitorButtonStart;
             toolStripMonitorStop.Click += EventMonitorButtonStop;
+            dataGridViewMonitor.CellClick += EventMonitorPickedClicked;
             dataGridViewMonitor.MouseMove += dataGridViewMonitorMouseMove;
             dataGridViewMonitor.MouseDown += dataGridViewMonitorMouseDown;
             dataGridViewMonitor.DragOver += dataGridViewMonitorDragOver;
@@ -122,7 +123,7 @@ namespace CorionisServiceManager.NET
         private void EventFormLoad(object sender, EventArgs e)
         {
             // Only do this when the program and data are loaded
-            if (!UpdateTimerStarted)
+            if (!updateTimerStarted)
             {
                 dataGridViewMonitor.ClearSelection();
 
@@ -130,7 +131,7 @@ namespace CorionisServiceManager.NET
                 EventMonitorUpdateTick(sender, e);
                 AddMonitorCellToolTips();
                 monitorUpdateTimer.Start();
-                UpdateTimerStarted = true;
+                updateTimerStarted = true;
             }
         }
 
@@ -210,7 +211,17 @@ namespace CorionisServiceManager.NET
             ManageServices("stop");
         }
 
-        void EventMonitorUpdateTick(object sender, EventArgs e)
+        private void EventMonitorPickedClicked(object sender, DataGridViewCellEventArgs e)
+        {
+            var type = dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].GetType();
+            if (type == typeof(System.Windows.Forms.DataGridViewCheckBoxCell))
+            {
+                Services.monitoredServices[e.RowIndex].Picked = true;
+                dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
+            }
+        }
+
+        private void EventMonitorUpdateTick(object sender, EventArgs e)
         {
             foreach (var service in Services.selectedServices)
             {
@@ -319,7 +330,8 @@ namespace CorionisServiceManager.NET
 
         private string GetColumnValue(DataGridViewCellCollection cells, string headerName)
         {
-            var v = cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == headerName).Value.ToString();
+            var c = cells.Cast<DataGridViewCell>().First(o => o.OwningColumn.HeaderText == headerName);
+            var v = c.FormattedValue.ToString();
             return v;
         }
 
@@ -348,12 +360,12 @@ namespace CorionisServiceManager.NET
 
         private void ManageServices(String command)
         {
-            Int32 selectedRowCount = dataGridViewMonitor.Rows.GetRowCount(DataGridViewElementStates.Selected);
-            if (selectedRowCount > 0)
+            for (int i = 0; i < dataGridViewMonitor.Rows.Count; ++i)
             {
-                for (int i = 0; i < selectedRowCount; ++i)
+                string state = GetColumnValue(dataGridViewMonitor.Rows[i].Cells, "Sel");
+                if (state.Equals("True"))
                 {
-                    string id = GetColumnValue(dataGridViewMonitor.SelectedRows[i].Cells, "Identifier");
+                    string id = GetColumnValue(dataGridViewMonitor.Rows[i].Cells, "Identifier");
                     var service = Services.selectedServices.First(s => s.ServiceName == id);
                     service.Refresh();
                     switch (command.ToLower())
