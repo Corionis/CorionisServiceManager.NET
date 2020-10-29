@@ -20,6 +20,7 @@ namespace CorionisServiceManager.NET
         public bool HideWhenMinimized { get; set; }
         public bool DisplayNotifications { get; set; }
         public bool DisplayMinimizedNotifications { get; set; }
+        public bool ShowGridTooltips { get; set; }
         #endregion
 
         #region Coordinates
@@ -66,6 +67,7 @@ namespace CorionisServiceManager.NET
                 this.StartMinimized = data.StartMinimized;
                 this.HideWhenMinimized = data.HideWhenMinimized;
                 this.DisplayMinimizedNotifications = data.DisplayMinimizedNotifications;
+                this.ShowGridTooltips = data.ShowGridTooltips;
                 this.Left = data.Left;
                 this.Top = data.Top;
                 this.Width = data.Width;
@@ -76,15 +78,16 @@ namespace CorionisServiceManager.NET
             {
                 this.DisplayNotifications = true;
                 this.DisplayMinimizedNotifications = true;
-                this.FriendlyName = "A friendly name";
+                this.ShowGridTooltips = false;
+                this.FriendlyName = "";
                 this.MinimizeOnClose = true;
                 this.StartAtLogin = false;
                 this.StartMinimized = false;
                 this.HideWhenMinimized = true;
-                this.Left = 100;
-                this.Top = 100;
-                this.Width = 820;
-                this.Height = 490;
+                this.Left = 10;
+                this.Top = 10;
+                this.Width = 600;
+                this.Height = 440;
                 this.SelectedServiceIds = new ServiceIdNamePair[] {};
             }
         }

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Security.Principal;
 using System.ServiceProcess;
 using System.Windows.Forms;
 
@@ -9,15 +10,17 @@ namespace CorionisServiceManager.NET
 {
     public partial class TheForm : Form
     {
+        private bool AdminChecked = false;
         private Config cfg;
         private CsmContext ctxt;
         private Timer monitorUpdateTimer;
         private DataGridViewCellStyle rowStyleRunning;
         private DataGridViewCellStyle rowStyleStopped;
         private DataGridViewCellStyle rowStyleUnknown;
-        private int[] selectedMonitorRows;
         public Services Services;
         private bool updateTimerStarted = false;
+        private bool updateTickActive = false;
+
 
         public TheForm(Config theCfg, CsmContext theContext)
         {
@@ -27,21 +30,14 @@ namespace CorionisServiceManager.NET
             InitializeComponent();
 
             IntPtr hwnd = this.Handle; // required for positioning to work
-            this.Left = cfg.Left;
             this.Top = cfg.Top;
+            this.Left = cfg.Left;
             this.Width = cfg.Width;
             this.Height = cfg.Height;
 
             this.Text = cfg.GetProgramTitle();
 
             // Styles
-            DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
-            columnHeaderStyle.BackColor = SystemColors.ControlDarkDark;
-            columnHeaderStyle.Font = new Font("Microsoft Sans Serif, 9.00pt, style=Bold", 9.00F);
-            columnHeaderStyle.ForeColor = Color.White;
-            columnHeaderStyle.SelectionBackColor = SystemColors.ControlDark;
-            columnHeaderStyle.SelectionForeColor = Color.White;
-
             rowStyleRunning = new DataGridViewCellStyle();
             rowStyleRunning.BackColor = Color.LawnGreen;
 
@@ -54,6 +50,7 @@ namespace CorionisServiceManager.NET
             // System
             Load += EventFormLoad;
             FormClosing += EventFormClosing;
+            Shown += EventFormShown;
             Resize += EventFormResized;
 
             // Menu
@@ -72,14 +69,12 @@ namespace CorionisServiceManager.NET
             dataGridViewMonitor.MouseDown += dataGridViewMonitorMouseDown;
             dataGridViewMonitor.DragOver += dataGridViewMonitorDragOver;
             dataGridViewMonitor.DragDrop += dataGridViewMonitorDragDrop;
-            dataGridViewMonitor.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
 
             // Select tab
             dataGridViewSelect.DataBindingComplete += EventSelectDataComplete;
             toolStripSelectRefresh.Click += EventSelectButtonRefresh;
             toolStripSelectSave.Click += EventSelectButtonSave;
             toolStripSelectCancel.Click += EventSelectButtonCancel;
-            dataGridViewSelect.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
 
             // Config tab
 
@@ -95,7 +90,6 @@ namespace CorionisServiceManager.NET
             monitorUpdateTimer.Interval = 1000; // 1 second
             monitorUpdateTimer.Tick += EventMonitorUpdateTick;
         }
-
         // -----------------------------------------------------------------------------------------------------------------------
 
         #region Event Handlers
@@ -130,6 +124,7 @@ namespace CorionisServiceManager.NET
                 // Update then start the Monitor tab update timer
                 EventMonitorUpdateTick(sender, e);
                 AddMonitorCellToolTips();
+
                 monitorUpdateTimer.Start();
                 updateTimerStarted = true;
             }
@@ -139,8 +134,6 @@ namespace CorionisServiceManager.NET
         {
             if (WindowState == FormWindowState.Minimized)
             {
-                SaveMonitorSelections();
-
                 if (cfg.HideWhenMinimized == false)
                 {
                     ShowInTaskbar = true;
@@ -163,13 +156,55 @@ namespace CorionisServiceManager.NET
 
                 EventMonitorUpdateTick(sender, e);
                 AddMonitorCellToolTips();
-                RestoreMonitorSelections();
+            }
+        }
+
+        private void EventFormShown(object sender, EventArgs e)
+        {
+            // Only do this once when the form is shown
+            if (!AdminChecked)
+            {
+                if (!RunningAsAdministrator())
+                {
+                    // disable the action buttons
+                    toolStripMonitorAuto.Enabled = false;
+                    toolStripMonitorAuto.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorAuto.ToolTipText = toolStripMonitorAuto.ToolTipText + " (Disabled)";
+                    toolStripMonitorDisable.Enabled = false;
+                    toolStripMonitorDisable.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorDisable.ToolTipText = toolStripMonitorDisable.ToolTipText + " (Disabled)";
+                    toolStripMonitorManual.Enabled = false;
+                    toolStripMonitorManual.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorManual.ToolTipText = toolStripMonitorManual.ToolTipText + " (Disabled)";
+                    toolStripMonitorStart.Enabled = false;
+                    toolStripMonitorStart.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorStart.ToolTipText = toolStripMonitorStart.ToolTipText + " (Disabled)";
+                    toolStripMonitorStop.Enabled = false;
+                    toolStripMonitorStop.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorStop.ToolTipText = toolStripMonitorStop.ToolTipText + " (Disabled)";
+
+                    var result = MessageBox.Show(
+                        cfg.Program + " is not running with the Administrator privileges needed to manage services.\r\n\r\n" +
+                        "Windows services may only be monitored.\r\n\r\n" +
+                        "Click OK to continue, or Cancel to exit.",
+                        "Administrator Privileges",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Warning,
+                        MessageBoxDefaultButton.Button1
+                    );
+                    if (result == DialogResult.Cancel)
+                    {
+                        ctxt.Exit(null, null);
+                    }
+                }
+
+                AdminChecked = true;
             }
         }
 
         private void EventMenuHelpOnlineDocumentation(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/Corionis/CorionisServiceManager.NET/wiki");
+            Process.Start("https://github.com/Corionis/CorionisServiceManager.NET/wiki");
         }
 
         private void EventMenuFileRestart(object sender, EventArgs e)
@@ -214,46 +249,65 @@ namespace CorionisServiceManager.NET
         private void EventMonitorPickedClicked(object sender, DataGridViewCellEventArgs e)
         {
             var type = dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].GetType();
-            if (type == typeof(System.Windows.Forms.DataGridViewCheckBoxCell))
+            if (type == typeof(DataGridViewCheckBoxCell))
             {
-                Services.monitoredServices[e.RowIndex].Picked = true;
-                dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = true;
+                // flip the sense true/false
+                bool sense = true;
+                object obj = dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                if (obj != null)
+                {
+                    sense = !obj.ToString().Equals("true", StringComparison.OrdinalIgnoreCase);
+                }
+
+                // update the data immediately
+                Services.monitoredServices[e.RowIndex].Picked = sense;
+                dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = sense;
+                DataGridView dgv = (DataGridView) sender;
+                dgv.EndEdit();
             }
         }
 
         private void EventMonitorUpdateTick(object sender, EventArgs e)
         {
-            foreach (var service in Services.selectedServices)
+            if (!updateTickActive)
             {
-                var row = GetRowByIdentifier(dataGridViewMonitor, service.ServiceName);
-                if (row != null)
-                {
-                    service.Refresh();
-                    var status = service.Status.ToString();
+                updateTickActive = true;
+                dataGridViewMonitor.ClearSelection();
 
-                    MonitoredService mon = Services.monitoredServices.First(id => id.Identifier == service.ServiceName);
-                    mon.Startup = service.StartType.ToString();
-                    mon.Status = status;
-                    switch (status.ToLower())
+                foreach (var service in Services.selectedServices)
+                {
+                    var row = GetRowByIdentifier(dataGridViewMonitor, service.ServiceName);
+                    if (row != null)
                     {
-                        case "running":
-                            row.DefaultCellStyle = rowStyleRunning;
-                            break;
-                        case "stopped":
-                            row.DefaultCellStyle = rowStyleStopped;
-                            break;
-                        default:
-                            row.DefaultCellStyle = rowStyleUnknown;
-                            break;
+                        service.Refresh();
+                        var status = service.Status.ToString();
+
+                        MonitoredService mon = Services.monitoredServices.First(id => id.Identifier == service.ServiceName);
+                        mon.Startup = service.StartType.ToString();
+                        mon.Status = status;
+                        switch (status.ToLower())
+                        {
+                            case "running":
+                                row.DefaultCellStyle = rowStyleRunning;
+                                break;
+                            case "stopped":
+                                row.DefaultCellStyle = rowStyleStopped;
+                                break;
+                            default:
+                                row.DefaultCellStyle = rowStyleUnknown;
+                                break;
+                        }
                     }
                 }
-            }
 
-            dataGridViewMonitor.Refresh();
+                updateTickActive = false;
+                dataGridViewMonitor.Refresh();
+            }
         }
 
         private void EventSelectButtonCancel(object sender, EventArgs e)
         {
+            // reset the selections
             EventSelectDataComplete(sender, e);
         }
 
@@ -314,17 +368,23 @@ namespace CorionisServiceManager.NET
 
         private void AddMonitorCellToolTips()
         {
-            // Set cell-level tool-tips
-            foreach (DataGridViewRow row in dataGridViewMonitor.Rows)
+            if (cfg.ShowGridTooltips)
             {
-                var cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Name");
-                cell.ToolTipText = "Click or F2 to edit";
-                cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Identifier");
-                cell.ToolTipText = "Ctrl/Shift-Click to select, Drag 'n Drop to move row";
-                cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Start Type");
-                cell.ToolTipText = "Ctrl/Shift-Click to select, Drag 'n Drop to move row";
-                cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Status");
-                cell.ToolTipText = "Ctrl/Shift-Click to select, Drag 'n Drop to move row";
+                // Set cell-level tool-tips
+                foreach (DataGridViewRow row in dataGridViewMonitor.Rows)
+                {
+                    var cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Sel");
+                    cell.ToolTipText = "Click to select";
+                    cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Name");
+                    cell.ToolTipText = "Click or F2 to edit";
+                    cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Identifier");
+                    string ttt = "Drag 'n Drop to move row";
+                    cell.ToolTipText = ttt;
+                    cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Start Type");
+                    cell.ToolTipText = ttt;
+                    cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Status");
+                    cell.ToolTipText = ttt;
+                }
             }
         }
 
@@ -362,12 +422,13 @@ namespace CorionisServiceManager.NET
         {
             for (int i = 0; i < dataGridViewMonitor.Rows.Count; ++i)
             {
-                string state = GetColumnValue(dataGridViewMonitor.Rows[i].Cells, "Sel");
-                if (state.Equals("True"))
+                string picked = GetColumnValue(dataGridViewMonitor.Rows[i].Cells, "Sel");
+                if (picked.Equals("True"))
                 {
                     string id = GetColumnValue(dataGridViewMonitor.Rows[i].Cells, "Identifier");
                     var service = Services.selectedServices.First(s => s.ServiceName == id);
                     service.Refresh();
+
                     switch (command.ToLower())
                     {
                         case "auto":
@@ -408,7 +469,7 @@ namespace CorionisServiceManager.NET
                 int status = -1;
                 if (!process.Start())
                 {
-                    throw new Exception("cannot run sc command");
+                    throw new Exception("cannot run sc command: " + startInfo.ToString());
                 }
 
                 process.WaitForExit();
@@ -437,29 +498,11 @@ namespace CorionisServiceManager.NET
             dataGridViewSelect.DataSource = Services.allServices;
         }
 
-        private void RestoreMonitorSelections()
+        public bool RunningAsAdministrator()
         {
-            dataGridViewMonitor.ClearSelection();
-            if (selectedMonitorRows != null)
-            {
-                for (int i = 0; i < selectedMonitorRows.Length; ++i)
-                {
-                    dataGridViewMonitor.Rows[selectedMonitorRows[i]].Selected = true;
-                }
-            }
-        }
-
-        public void SaveMonitorSelections()
-        {
-            Int32 selectedRowCount = dataGridViewMonitor.Rows.GetRowCount(DataGridViewElementStates.Selected);
-            selectedMonitorRows = new int[selectedRowCount];
-            if (selectedRowCount > 0)
-            {
-                for (int i = 0; i < selectedRowCount; ++i)
-                {
-                    selectedMonitorRows[i] = dataGridViewMonitor.SelectedRows[i].Index;
-                }
-            }
+            var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
         public void SaveUserPreferences()
@@ -476,7 +519,6 @@ namespace CorionisServiceManager.NET
             cfg.Height = Height;
 
             // Copy monitored service names, that are editable, to the saved configuration
-            // foreach (MonitoredService mon in Services.monitoredServices)
             cfg.SelectedServiceIds = new Config.ServiceIdNamePair[Services.monitoredServices.Count];
             for (int i = 0; i < Services.monitoredServices.Count; ++i)
             {
@@ -566,7 +608,6 @@ namespace CorionisServiceManager.NET
                 }
 
                 dataGridViewMonitor.ClearSelection();
-                dataGridViewMonitor.Refresh();
                 EventMonitorUpdateTick(sender, e);
             }
         }
