@@ -64,11 +64,15 @@
             this.monitorStatusTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.monitoredServicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripMonitor = new System.Windows.Forms.ToolStrip();
+            this.toolStripMonitorAll = new System.Windows.Forms.ToolStripButton();
+            this.toolStripMonitorNone = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMonitorStart = new System.Windows.Forms.ToolStripButton();
             this.toolStripMonitorStop = new System.Windows.Forms.ToolStripButton();
-            this.toolStripMonitorDisable = new System.Windows.Forms.ToolStripButton();
-            this.toolStripMonitorManual = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMonitorAuto = new System.Windows.Forms.ToolStripButton();
+            this.toolStripMonitorManual = new System.Windows.Forms.ToolStripButton();
+            this.toolStripMonitorDisable = new System.Windows.Forms.ToolStripButton();
             this.tabSelect = new System.Windows.Forms.TabPage();
             this.toolStripSelect = new System.Windows.Forms.ToolStrip();
             this.toolStripSelectRefresh = new System.Windows.Forms.ToolStripButton();
@@ -293,7 +297,7 @@
             // toolStripMonitor
             //
             this.toolStripMonitor.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.toolStripMonitor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.toolStripMonitorStart, this.toolStripMonitorStop, this.toolStripMonitorDisable, this.toolStripMonitorManual, this.toolStripMonitorAuto});
+            this.toolStripMonitor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.toolStripMonitorAll, this.toolStripMonitorNone, this.toolStripSeparator4, this.toolStripMonitorStart, this.toolStripMonitorStop, this.toolStripSeparator2, this.toolStripMonitorAuto, this.toolStripMonitorManual, this.toolStripMonitorDisable});
             this.toolStripMonitor.Location = new System.Drawing.Point(3, 362);
             this.toolStripMonitor.MinimumSize = new System.Drawing.Size(0, 29);
             this.toolStripMonitor.Name = "toolStripMonitor";
@@ -301,6 +305,33 @@
             this.toolStripMonitor.Size = new System.Drawing.Size(785, 29);
             this.toolStripMonitor.TabIndex = 0;
             this.toolStripMonitor.Text = "toolStripMonitor";
+            //
+            // toolStripMonitorAll
+            //
+            this.toolStripMonitorAll.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.toolStripMonitorAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripMonitorAll.Image = ((System.Drawing.Image) (resources.GetObject("toolStripMonitorAll.Image")));
+            this.toolStripMonitorAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripMonitorAll.Margin = new System.Windows.Forms.Padding(0, 1, 2, 2);
+            this.toolStripMonitorAll.Name = "toolStripMonitorAll";
+            this.toolStripMonitorAll.Size = new System.Drawing.Size(25, 21);
+            this.toolStripMonitorAll.Text = "All";
+            //
+            // toolStripMonitorNone
+            //
+            this.toolStripMonitorNone.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.toolStripMonitorNone.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripMonitorNone.Image = ((System.Drawing.Image) (resources.GetObject("toolStripMonitorNone.Image")));
+            this.toolStripMonitorNone.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripMonitorNone.Name = "toolStripMonitorNone";
+            this.toolStripMonitorNone.Size = new System.Drawing.Size(40, 21);
+            this.toolStripMonitorNone.Text = "None";
+            //
+            // toolStripSeparator4
+            //
+            this.toolStripSeparator4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 24);
             //
             // toolStripMonitorStart
             //
@@ -323,20 +354,25 @@
             this.toolStripMonitorStop.Size = new System.Drawing.Size(35, 21);
             this.toolStripMonitorStop.Text = "St&op";
             //
-            // toolStripMonitorDisable
+            // toolStripSeparator2
             //
-            this.toolStripMonitorDisable.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripMonitorDisable.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.toolStripMonitorDisable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripMonitorDisable.Image = ((System.Drawing.Image) (resources.GetObject("toolStripMonitorDisable.Image")));
-            this.toolStripMonitorDisable.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripMonitorDisable.Name = "toolStripMonitorDisable";
-            this.toolStripMonitorDisable.Size = new System.Drawing.Size(49, 21);
-            this.toolStripMonitorDisable.Text = "&Disable";
+            this.toolStripSeparator2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 24);
+            //
+            // toolStripMonitorAuto
+            //
+            this.toolStripMonitorAuto.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.toolStripMonitorAuto.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripMonitorAuto.Image = ((System.Drawing.Image) (resources.GetObject("toolStripMonitorAuto.Image")));
+            this.toolStripMonitorAuto.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripMonitorAuto.Margin = new System.Windows.Forms.Padding(0, 1, 2, 2);
+            this.toolStripMonitorAuto.Name = "toolStripMonitorAuto";
+            this.toolStripMonitorAuto.Size = new System.Drawing.Size(37, 21);
+            this.toolStripMonitorAuto.Text = "&Auto";
             //
             // toolStripMonitorManual
             //
-            this.toolStripMonitorManual.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripMonitorManual.BackColor = System.Drawing.SystemColors.ControlLight;
             this.toolStripMonitorManual.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMonitorManual.Image = ((System.Drawing.Image) (resources.GetObject("toolStripMonitorManual.Image")));
@@ -346,17 +382,15 @@
             this.toolStripMonitorManual.Size = new System.Drawing.Size(51, 21);
             this.toolStripMonitorManual.Text = "&Manual";
             //
-            // toolStripMonitorAuto
+            // toolStripMonitorDisable
             //
-            this.toolStripMonitorAuto.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripMonitorAuto.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.toolStripMonitorAuto.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripMonitorAuto.Image = ((System.Drawing.Image) (resources.GetObject("toolStripMonitorAuto.Image")));
-            this.toolStripMonitorAuto.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripMonitorAuto.Margin = new System.Windows.Forms.Padding(0, 1, 2, 2);
-            this.toolStripMonitorAuto.Name = "toolStripMonitorAuto";
-            this.toolStripMonitorAuto.Size = new System.Drawing.Size(37, 21);
-            this.toolStripMonitorAuto.Text = "&Auto";
+            this.toolStripMonitorDisable.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.toolStripMonitorDisable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripMonitorDisable.Image = ((System.Drawing.Image) (resources.GetObject("toolStripMonitorDisable.Image")));
+            this.toolStripMonitorDisable.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripMonitorDisable.Name = "toolStripMonitorDisable";
+            this.toolStripMonitorDisable.Size = new System.Drawing.Size(49, 21);
+            this.toolStripMonitorDisable.Text = "&Disable";
             //
             // tabSelect
             //
@@ -560,6 +594,11 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.ToolStripButton toolStripMonitorAll;
+        private System.Windows.Forms.ToolStripButton toolStripMonitorNone;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 
         private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;

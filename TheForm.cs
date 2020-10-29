@@ -59,9 +59,11 @@ namespace CorionisServiceManager.NET
             exitToolStripMenuItem.Click += EventMenuFileExit;
 
             // Monitor tab
+            toolStripMonitorAll.Click += EventMonitorButtonAll;
             toolStripMonitorAuto.Click += EventMonitorButtonAuto;
             toolStripMonitorDisable.Click += EventMonitorButtonDisable;
             toolStripMonitorManual.Click += EventMonitorButtonManual;
+            toolStripMonitorNone.Click += EventMonitorButtonNone;
             toolStripMonitorStart.Click += EventMonitorButtonStart;
             toolStripMonitorStop.Click += EventMonitorButtonStop;
             dataGridViewMonitor.CellClick += EventMonitorPickedClicked;
@@ -161,12 +163,39 @@ namespace CorionisServiceManager.NET
 
         private void EventFormShown(object sender, EventArgs e)
         {
-            // Only do this once when the form is shown
+            // Any services selected to monitor?
+            if (Services.monitoredServices.Count < 1)
+            {
+                // switch to the Select tab
+                tabControl.SelectedIndex = 1;
+
+                MessageBox.Show(cfg.Program + " has no services selected.\r\n\r\nPlease select one or more services to monitor & manage using your mouse. " +
+                                " Use Ctrl-Click to select individual services or Shift-Click to select a range.",
+                    "No Services Selected",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+
+            // Running "As Administrator"?
             if (!AdminChecked)
             {
                 if (!RunningAsAdministrator())
                 {
                     // disable the action buttons
+                    toolStripMonitorAll.Enabled = false;
+                    toolStripMonitorAll.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorAll.ToolTipText = toolStripMonitorAll.ToolTipText + " (Disabled)";
+                    toolStripMonitorNone.Enabled = false;
+                    toolStripMonitorNone.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorNone.ToolTipText = toolStripMonitorNone.ToolTipText + " (Disabled)";
+                    //
+                    toolStripMonitorStart.Enabled = false;
+                    toolStripMonitorStart.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorStart.ToolTipText = toolStripMonitorStart.ToolTipText + " (Disabled)";
+                    toolStripMonitorStop.Enabled = false;
+                    toolStripMonitorStop.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorStop.ToolTipText = toolStripMonitorStop.ToolTipText + " (Disabled)";
+                    //
                     toolStripMonitorAuto.Enabled = false;
                     toolStripMonitorAuto.BackColor = System.Drawing.Color.Wheat;
                     toolStripMonitorAuto.ToolTipText = toolStripMonitorAuto.ToolTipText + " (Disabled)";
@@ -176,12 +205,6 @@ namespace CorionisServiceManager.NET
                     toolStripMonitorManual.Enabled = false;
                     toolStripMonitorManual.BackColor = System.Drawing.Color.Wheat;
                     toolStripMonitorManual.ToolTipText = toolStripMonitorManual.ToolTipText + " (Disabled)";
-                    toolStripMonitorStart.Enabled = false;
-                    toolStripMonitorStart.BackColor = System.Drawing.Color.Wheat;
-                    toolStripMonitorStart.ToolTipText = toolStripMonitorStart.ToolTipText + " (Disabled)";
-                    toolStripMonitorStop.Enabled = false;
-                    toolStripMonitorStop.BackColor = System.Drawing.Color.Wheat;
-                    toolStripMonitorStop.ToolTipText = toolStripMonitorStop.ToolTipText + " (Disabled)";
 
                     var result = MessageBox.Show(
                         cfg.Program + " is not running with the Administrator privileges needed to manage services.\r\n\r\n" +
@@ -202,6 +225,11 @@ namespace CorionisServiceManager.NET
             }
         }
 
+        private void EventMenuHelpAbout(object sender, EventArgs e)
+        {
+
+        }
+
         private void EventMenuHelpOnlineDocumentation(object sender, EventArgs e)
         {
             Process.Start("https://github.com/Corionis/CorionisServiceManager.NET/wiki");
@@ -209,6 +237,8 @@ namespace CorionisServiceManager.NET
 
         private void EventMenuFileRestart(object sender, EventArgs e)
         {
+            SaveUserPreferences();
+
             // Hide tray icon, otherwise it will remain until mouse over
             ctxt.trayIcon.Visible = false;
 
@@ -219,6 +249,11 @@ namespace CorionisServiceManager.NET
         private void EventMenuFileExit(object sender, EventArgs e)
         {
             ctxt.Exit(sender, e);
+        }
+
+        private void EventMonitorButtonAll(object sender, EventArgs e)
+        {
+            TogglePicked(true);
         }
 
         private void EventMonitorButtonAuto(object sender, EventArgs e)
@@ -234,6 +269,11 @@ namespace CorionisServiceManager.NET
         private void EventMonitorButtonManual(object sender, EventArgs e)
         {
             ManageServices("manual");
+        }
+
+        private void EventMonitorButtonNone(object sender, EventArgs e)
+        {
+            TogglePicked(false);
         }
 
         private void EventMonitorButtonStart(object sender, EventArgs e)
@@ -536,6 +576,19 @@ namespace CorionisServiceManager.NET
         {
             Visible = true;
             WindowState = FormWindowState.Normal;
+        }
+
+        public void TogglePicked(bool sense)
+        {
+            for (int i = 0; i < dataGridViewMonitor.Rows.Count; ++i)
+            {
+                var cell = dataGridViewMonitor.Rows[i].Cells.Cast<DataGridViewCell>().First(o => o.OwningColumn.HeaderText == "Sel");
+
+                // update the data immediately
+                Services.monitoredServices[i].Picked = sense;
+                cell.Value = sense;
+                dataGridViewMonitor.Refresh();
+            }
         }
 
         // -----------------------------------------------------------------------------------------------------------------------
