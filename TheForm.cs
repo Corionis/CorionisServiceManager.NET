@@ -54,6 +54,7 @@ namespace CorionisServiceManager.NET
             Resize += EventFormResized;
 
             // Menu
+            aboutToolStripMenuItem.Click += EventMenuHelpAbout;
             onlineDocumentationToolStripMenuItem.Click += EventMenuHelpOnlineDocumentation;
             restartToolStripMenuItem.Click += EventMenuFileRestart;
             exitToolStripMenuItem.Click += EventMenuFileExit;
@@ -227,7 +228,8 @@ namespace CorionisServiceManager.NET
 
         private void EventMenuHelpAbout(object sender, EventArgs e)
         {
-
+            var about = new AboutForm(this, cfg);
+            about = null;
         }
 
         private void EventMenuHelpOnlineDocumentation(object sender, EventArgs e)
