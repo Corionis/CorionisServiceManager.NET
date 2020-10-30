@@ -22,7 +22,7 @@ namespace CorionisServiceManager.NET
     public class CsmContext : ApplicationContext
     {
         private Config cfg;
-        private TheForm form;
+        private ProgramForm form;
         public NotifyIcon trayIcon;
 
         public CsmContext()
@@ -106,7 +106,7 @@ namespace CorionisServiceManager.NET
         {
             if (form == null)
             {
-                form = new TheForm(cfg, this);
+                form = new ProgramForm(cfg, this);
             }
 
             form.ShowForm();

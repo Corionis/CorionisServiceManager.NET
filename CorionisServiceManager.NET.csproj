@@ -95,11 +95,11 @@
     </Compile>
     <Compile Include="Config.cs" />
     <Compile Include="Services.cs" />
-    <Compile Include="TheForm.cs">
+    <Compile Include="ProgramForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TheForm.Designer.cs">
-      <DependentUpon>TheForm.cs</DependentUpon>
+    <Compile Include="ProgramForm.Designer.cs">
+      <DependentUpon>ProgramForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,8 +116,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="TheForm.resx">
-      <DependentUpon>TheForm.cs</DependentUpon>
+    <EmbeddedResource Include="ProgramForm.resx">
+      <DependentUpon>ProgramForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Services.datasource" />

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace CorionisServiceManager.NET
@@ -15,22 +16,41 @@ namespace CorionisServiceManager.NET
 
             aboutVersion.Text = "Version: " + theCfg.Version;
 
+            linkLabelDocumentation.Click += EventLinkLabelDocumentation;
+            linkLabelProject.Click += EventLinkLabelProject;
+
+            okButton.Click += EventOkButton;
+            okButton.KeyPress += EventKeyPress;
+
             AcceptButton = okButton;
             CancelButton = okButton;
-            KeyPress += EventKeyDown;
-
-            okButton.Focus();
-            okButton.Click += EventOkButton;
-            okButton.KeyPress += EventKeyDown;
-
+            KeyDown += EventKeyDown;
+            KeyPress += EventKeyPress;
 
             Show();
+            okButton.Focus();
         }
 
-        private void EventKeyDown(object sender, KeyPressEventArgs e)
+        private void EventKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyChar.Equals(Keys.Enter) || e.KeyChar == 32)
+            if (e.KeyCode == Keys.Return || e.KeyCode == Keys.Enter)
                 okButton.PerformClick();
+        }
+
+        private void EventKeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 32)
+                okButton.PerformClick();
+        }
+
+        private void EventLinkLabelDocumentation(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/Corionis/CorionisServiceManager.NET/wiki");
+        }
+
+        private void EventLinkLabelProject(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/Corionis/CorionisServiceManager.NET");
         }
 
         private void EventOkButton(object sender, EventArgs e)

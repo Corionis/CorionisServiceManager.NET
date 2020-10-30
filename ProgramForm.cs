@@ -8,9 +8,10 @@ using System.Windows.Forms;
 
 namespace CorionisServiceManager.NET
 {
-    public partial class TheForm : Form
+    public partial class ProgramForm : Form
     {
         private bool AdminChecked = false;
+        private bool AsAdmin = false;
         private Config cfg;
         private CsmContext ctxt;
         private Timer monitorUpdateTimer;
@@ -22,7 +23,7 @@ namespace CorionisServiceManager.NET
         private bool updateTickActive = false;
 
 
-        public TheForm(Config theCfg, CsmContext theContext)
+        public ProgramForm(Config theCfg, CsmContext theContext)
         {
             this.cfg = theCfg;
             this.ctxt = theContext;
@@ -101,7 +102,7 @@ namespace CorionisServiceManager.NET
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                // Cancel the event so TheForm is not disposed
+                // Cancel the event so ProgramForm is not disposed
                 e.Cancel = true;
 
                 // Do not actually close. Hide in the system tray.
@@ -126,7 +127,7 @@ namespace CorionisServiceManager.NET
 
                 // Update then start the Monitor tab update timer
                 EventMonitorUpdateTick(sender, e);
-                AddMonitorCellToolTips();
+                AugmentMonitorCells();
 
                 monitorUpdateTimer.Start();
                 updateTimerStarted = true;
@@ -158,7 +159,7 @@ namespace CorionisServiceManager.NET
                 Visible = true;
 
                 EventMonitorUpdateTick(sender, e);
-                AddMonitorCellToolTips();
+                AugmentMonitorCells();
             }
         }
 
@@ -293,19 +294,31 @@ namespace CorionisServiceManager.NET
             var type = dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].GetType();
             if (type == typeof(DataGridViewCheckBoxCell))
             {
-                // flip the sense true/false
-                bool sense = true;
-                object obj = dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                if (obj != null)
-                {
-                    sense = !obj.ToString().Equals("true", StringComparison.OrdinalIgnoreCase);
-                }
-
-                // update the data immediately
-                Services.monitoredServices[e.RowIndex].Picked = sense;
-                dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = sense;
                 DataGridView dgv = (DataGridView) sender;
-                dgv.EndEdit();
+                if (AsAdmin)
+                {
+                    // flip the sense true/false
+                    bool sense = true;
+                    object obj = dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                    if (obj != null)
+                    {
+                        sense = !obj.ToString().Equals("true", StringComparison.OrdinalIgnoreCase);
+                    }
+
+                    // update the data immediately
+                    Services.monitoredServices[e.RowIndex].Picked = sense;
+                    dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = (sense) ? "True" : "False";
+                    dgv.EndEdit();
+                }
+                else
+                {
+                    // dgv.CancelEdit();
+                    // Services.monitoredServices[e.RowIndex].Picked = false;
+                    // dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "False";
+                    // dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = false;
+                    // var c = dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewCheckBoxCell;
+                    // c.EditingCellValueChanged = false;
+                }
             }
         }
 
@@ -382,6 +395,7 @@ namespace CorionisServiceManager.NET
             // Update the Monitor tab with new selections
             Services.GetSelectedServices();
             dataGridViewMonitor.DataSource = Services.monitoredServices; // required to get new instance
+            AugmentMonitorCells();
             dataGridViewMonitor.Refresh();
         }
 
@@ -408,15 +422,29 @@ namespace CorionisServiceManager.NET
 
         // -----------------------------------------------------------------------------------------------------------------------
 
-        private void AddMonitorCellToolTips()
+        private void AugmentMonitorCells()
         {
+            if (!AsAdmin)
+            {
+                foreach (DataGridViewRow row in dataGridViewMonitor.Rows)
+                {
+                    var cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Sel");
+                    cell.ReadOnly = true;
+                }
+            }
+
             if (cfg.ShowGridTooltips)
             {
                 // Set cell-level tool-tips
                 foreach (DataGridViewRow row in dataGridViewMonitor.Rows)
                 {
                     var cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Sel");
-                    cell.ToolTipText = "Click to select";
+                    if (!AsAdmin)
+                    {
+                        cell.ToolTipText = "Click to select (Disabled)";
+                    }
+                    else
+                        cell.ToolTipText = "Click to select";
                     cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Name");
                     cell.ToolTipText = "Click or F2 to edit";
                     cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Identifier");
@@ -544,7 +572,8 @@ namespace CorionisServiceManager.NET
         {
             var identity = WindowsIdentity.GetCurrent();
             var principal = new WindowsPrincipal(identity);
-            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+            AsAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            return AsAdmin;
         }
 
         public void SaveUserPreferences()

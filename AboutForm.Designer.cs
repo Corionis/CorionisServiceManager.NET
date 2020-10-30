@@ -34,11 +34,12 @@ namespace CorionisServiceManager.NET
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.aboutVersion = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.linkLabelProject = new System.Windows.Forms.LinkLabel();
+            this.linkLabelDocumentation = new System.Windows.Forms.LinkLabel();
             this.okButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             //
@@ -61,34 +62,35 @@ namespace CorionisServiceManager.NET
             this.aboutVersion.TabIndex = 1;
             this.aboutVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             //
-            // linkLabel1
+            // linkLabelProject
             //
-            this.linkLabel1.Location = new System.Drawing.Point(87, 134);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(292, 23);
-            this.linkLabel1.TabIndex = 2;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "https://github.com/Corionis/CorionisServiceManager.NET";
-            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linkLabelProject.Location = new System.Drawing.Point(87, 134);
+            this.linkLabelProject.Name = "linkLabelProject";
+            this.linkLabelProject.Size = new System.Drawing.Size(292, 23);
+            this.linkLabelProject.TabIndex = 2;
+            this.linkLabelProject.TabStop = true;
+            this.linkLabelProject.Text = "https://github.com/Corionis/CorionisServiceManager.NET";
+            this.linkLabelProject.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
-            // linkLabel2
+            // linkLabelDocumentation
             //
-            this.linkLabel2.Location = new System.Drawing.Point(87, 111);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(309, 23);
-            this.linkLabel2.TabIndex = 3;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "https://github.com/Corionis/CorionisServiceManager.NET/wiki";
-            this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linkLabelDocumentation.Location = new System.Drawing.Point(87, 111);
+            this.linkLabelDocumentation.Name = "linkLabelDocumentation";
+            this.linkLabelDocumentation.Size = new System.Drawing.Size(309, 23);
+            this.linkLabelDocumentation.TabIndex = 3;
+            this.linkLabelDocumentation.TabStop = true;
+            this.linkLabelDocumentation.Text = "https://github.com/Corionis/CorionisServiceManager.NET/wiki";
+            this.linkLabelDocumentation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // okButton
             //
+            this.okButton.BackColor = System.Drawing.SystemColors.ControlLight;
             this.okButton.Location = new System.Drawing.Point(325, 177);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(62, 23);
             this.okButton.TabIndex = 4;
             this.okButton.Text = "&Ok";
-            this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.UseVisualStyleBackColor = false;
             //
             // label2
             //
@@ -108,17 +110,27 @@ namespace CorionisServiceManager.NET
             this.label3.Text = "Documentation:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             //
+            // label1
+            //
+            this.label1.Location = new System.Drawing.Point(9, 177);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(167, 23);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "By Todd R. Hill, Corionis, LLC";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
             // AboutForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(399, 212);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.okButton);
-            this.Controls.Add(this.linkLabel2);
-            this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.linkLabelDocumentation);
+            this.Controls.Add(this.linkLabelProject);
             this.Controls.Add(this.aboutVersion);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -134,14 +146,17 @@ namespace CorionisServiceManager.NET
             this.ResumeLayout(false);
         }
 
+        private System.Windows.Forms.Label label1;
+
+        private System.Windows.Forms.LinkLabel linkLabelDocumentation;
+        private System.Windows.Forms.LinkLabel linkLabelProject;
+
         private System.Windows.Forms.Button okButton;
 
         private System.Windows.Forms.Label aboutVersion;
 
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.LinkLabel linkLabel2;
 
         private System.Windows.Forms.PictureBox pictureBox1;
 

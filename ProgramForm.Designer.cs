@@ -1,6 +1,6 @@
 ﻿namespace CorionisServiceManager.NET
 {
-    partial class TheForm
+    partial class ProgramForm
     {
         /// <summary>
         /// Required designer variable.
@@ -37,7 +37,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TheForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgramForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -112,23 +112,23 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.restartToolStripMenuItem, this.toolStripSeparator1, this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Text = "&File";
             //
             // restartToolStripMenuItem
             //
             this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
-            this.restartToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.restartToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.restartToolStripMenuItem.Text = "Restart";
             //
             // toolStripSeparator1
             //
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(107, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             //
             // exitToolStripMenuItem
             //
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             //
             // helpToolStripMenuItem
@@ -136,7 +136,7 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.onlineDocumentationToolStripMenuItem, this.toolStripSeparator3, this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Text = "&Help";
             //
             // onlineDocumentationToolStripMenuItem
             //
@@ -239,13 +239,14 @@
             this.monitorPickedCheckBox.DefaultCellStyle = dataGridViewCellStyle2;
             this.monitorPickedCheckBox.FalseValue = "False";
             this.monitorPickedCheckBox.HeaderText = "Sel";
-            this.monitorPickedCheckBox.IndeterminateValue = "notused";
+            this.monitorPickedCheckBox.IndeterminateValue = "False";
             this.monitorPickedCheckBox.MinimumWidth = 32;
             this.monitorPickedCheckBox.Name = "monitorPickedCheckBox";
             this.monitorPickedCheckBox.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.monitorPickedCheckBox.ToolTipText = "Select";
             this.monitorPickedCheckBox.TrueValue = "True";
             this.monitorPickedCheckBox.Width = 32;
+            this.monitorPickedCheckBox.ThreeState = false;
             //
             // monitorNameTextBox
             //
@@ -565,7 +566,7 @@
             this.tabLog.Text = "Log";
             this.tabLog.UseVisualStyleBackColor = true;
             //
-            // TheForm
+            // ProgramForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -574,7 +575,7 @@
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
-            this.Name = "TheForm";
+            this.Name = "ProgramForm";
             this.Text = "Corionis Service Manager";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
