@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Security.Principal;
@@ -40,13 +41,18 @@ namespace CorionisServiceManager.NET
 
             // Styles
             rowStyleRunning = new DataGridViewCellStyle();
-            rowStyleRunning.BackColor = Color.LawnGreen;
+            rowStyleRunning.BackColor = cfg.ColorFromHex(cfg.RunningBack);
+            rowStyleRunning.ForeColor = cfg.ColorFromHex(cfg.RunningFore);
 
             rowStyleStopped = new DataGridViewCellStyle();
-            rowStyleStopped.BackColor = Color.Red;
+            rowStyleStopped.BackColor = cfg.ColorFromHex(cfg.StoppedBack);
+            rowStyleStopped.ForeColor = cfg.ColorFromHex(cfg.StoppedFore);
 
             rowStyleUnknown = new DataGridViewCellStyle();
-            rowStyleUnknown.BackColor = Color.Yellow;
+            rowStyleUnknown.BackColor = cfg.ColorFromHex(cfg.UnknownBack);
+            ;
+            rowStyleUnknown.ForeColor = cfg.ColorFromHex(cfg.UnknownFore);
+            ;
 
             // System
             Load += EventFormLoad;
@@ -80,7 +86,17 @@ namespace CorionisServiceManager.NET
             toolStripSelectSave.Click += EventSelectButtonSave;
             toolStripSelectCancel.Click += EventSelectButtonCancel;
 
-            // Config tab
+            // Options tab
+            toolStripOptionsDefault.Click += EventOptionsButtonDefault;
+            toolStripOptionsSave.Click += EventOptionsButtonSave;
+            toolStripOptionsCancel.Click += EventOptionsButtonCancel;
+
+            optionsRunningFore.Click += EventOptionsRunningFore;
+            optionsRunningBack.Click += EventOptionsRunningBack;
+            optionsStoppedFore.Click += EventOptionsStoppedFore;
+            optionsStoppedBack.Click += EventOptionsStoppedBack;
+            optionsUnknownFore.Click += EventOptionsUnknownFore;
+            optionsUnknownBack.Click += EventOptionsUnknownBack;
 
             // Log tab
 
@@ -88,6 +104,7 @@ namespace CorionisServiceManager.NET
             Services = new Services(ref cfg);
             PopulateSelect(); // initialize Select to populate services first
             PopulateMonitor();
+            PopulateOptions();
 
             // Setup the Monitor tab update timer
             monitorUpdateTimer = new Timer();
@@ -310,15 +327,6 @@ namespace CorionisServiceManager.NET
                     dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = (sense) ? "True" : "False";
                     dgv.EndEdit();
                 }
-                else
-                {
-                    // dgv.CancelEdit();
-                    // Services.monitoredServices[e.RowIndex].Picked = false;
-                    // dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "False";
-                    // dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = false;
-                    // var c = dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewCheckBoxCell;
-                    // c.EditingCellValueChanged = false;
-                }
             }
         }
 
@@ -358,6 +366,72 @@ namespace CorionisServiceManager.NET
                 updateTickActive = false;
                 dataGridViewMonitor.Refresh();
             }
+        }
+
+        private void EventOptionsButtonCancel(object sender, EventArgs e)
+        {
+            cfg.Load();
+            PopulateOptions();
+        }
+
+        private void EventOptionsButtonDefault(object sender, EventArgs e)
+        {
+            cfg.SetConfigDefaults();
+            PopulateOptions();
+        }
+
+        private void EventOptionsButtonSave(object sender, EventArgs e)
+        {
+            SaveUserPreferences(); // Save all changes including on the Monitor tab
+            PopulateOptions();
+        }
+
+        private void EventOptionsRunningFore(object sender, EventArgs e)
+        {
+            var color = ShowColorDialog(sender, e, cfg.RunningFore);
+            optionsRunningFore.BackColor = color;
+            cfg.RunningFore = cfg.ColorToHex(color);
+            rowStyleRunning.ForeColor = color;
+        }
+
+        private void EventOptionsRunningBack(object sender, EventArgs e)
+        {
+            var color = ShowColorDialog(sender, e, cfg.RunningBack);
+            optionsRunningBack.BackColor = color;
+            cfg.RunningBack = cfg.ColorToHex(color);
+            rowStyleRunning.BackColor = color;
+        }
+
+        private void EventOptionsStoppedFore(object sender, EventArgs e)
+        {
+            var color = ShowColorDialog(sender, e, cfg.StoppedFore);
+            optionsStoppedFore.BackColor = color;
+            cfg.StoppedFore = cfg.ColorToHex(color);
+            rowStyleStopped.ForeColor = color;
+        }
+
+        private void EventOptionsStoppedBack(object sender, EventArgs e)
+        {
+            var color = ShowColorDialog(sender, e, cfg.StoppedBack);
+            optionsStoppedBack.BackColor = color;
+            cfg.StoppedBack = cfg.ColorToHex(color);
+            rowStyleStopped.BackColor = color;
+        }
+
+        private void EventOptionsUnknownFore(object sender, EventArgs e)
+        {
+            var color = ShowColorDialog(sender, e, cfg.UnknownFore);
+            optionsUnknownFore.BackColor = color;
+            cfg.UnknownFore = cfg.ColorToHex(color);
+            rowStyleUnknown.ForeColor = color;
+        }
+
+        private void EventOptionsUnknownBack(object sender, EventArgs e)
+        {
+            var color = ShowColorDialog(sender, e, cfg.UnknownBack);
+            optionsUnknownBack.BackColor = color;
+            cfg.UnknownBack = cfg.ColorToHex(color);
+            rowStyleUnknown.BackColor = color;
         }
 
         private void EventSelectButtonCancel(object sender, EventArgs e)
@@ -433,28 +507,28 @@ namespace CorionisServiceManager.NET
                 }
             }
 
-            if (cfg.ShowGridTooltips)
+            // Set cell-level tool-tips
+            foreach (DataGridViewRow row in dataGridViewMonitor.Rows)
             {
-                // Set cell-level tool-tips
-                foreach (DataGridViewRow row in dataGridViewMonitor.Rows)
+                var cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Sel");
+                if (!AsAdmin)
                 {
-                    var cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Sel");
-                    if (!AsAdmin)
-                    {
-                        cell.ToolTipText = "Click to select (Disabled)";
-                    }
-                    else
-                        cell.ToolTipText = "Click to select";
-                    cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Name");
-                    cell.ToolTipText = "Click or F2 to edit";
-                    cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Identifier");
-                    string ttt = "Drag 'n Drop to move row";
-                    cell.ToolTipText = ttt;
-                    cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Start Type");
-                    cell.ToolTipText = ttt;
-                    cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Status");
-                    cell.ToolTipText = ttt;
+                    cell.ToolTipText = cfg.ShowGridTooltips ? "Click to select (Disabled)" : "";
                 }
+                else
+                    cell.ToolTipText = cfg.ShowGridTooltips ? "Click to select" : "";
+
+                cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Name");
+                cell.ToolTipText = cfg.ShowGridTooltips ? "Click or F2 to edit" : "";
+
+                cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Identifier");
+                string ttt = cfg.ShowGridTooltips ? "Drag 'n Drop to move row" : "";
+
+                cell.ToolTipText = ttt;
+                cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Start Type");
+                cell.ToolTipText = ttt;
+                cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Status");
+                cell.ToolTipText = ttt;
             }
         }
 
@@ -562,6 +636,25 @@ namespace CorionisServiceManager.NET
             dataGridViewMonitor.DataSource = Services.monitoredServices;
         }
 
+        private void PopulateOptions()
+        {
+            configBindingSource.DataSource = cfg;
+            this.Text = cfg.GetProgramTitle();
+            ctxt.trayIcon.Text = cfg.GetProgramTitle();
+            // optionsTextBoxFriendlyName.Text = cfg.FriendlyName;
+            configBindingSource.ResetBindings(false);
+            optionsRunningFore.BackColor = cfg.ColorFromHex(cfg.RunningFore);
+            optionsRunningBack.BackColor = cfg.ColorFromHex(cfg.RunningBack);
+            optionsStoppedFore.BackColor = cfg.ColorFromHex(cfg.StoppedFore);
+            optionsStoppedBack.BackColor = cfg.ColorFromHex(cfg.StoppedBack);
+            optionsUnknownFore.BackColor = cfg.ColorFromHex(cfg.UnknownFore);
+            optionsUnknownBack.BackColor = cfg.ColorFromHex(cfg.UnknownBack);
+            tabOptions.Refresh();
+            AugmentMonitorCells();
+            tabMonitor.Refresh();
+            Refresh();
+        }
+
         private void PopulateSelect()
         {
             Services.GetAllServices();
@@ -601,6 +694,22 @@ namespace CorionisServiceManager.NET
             }
 
             cfg.Save();
+        }
+
+        public Color ShowColorDialog(object sender, EventArgs e, String hexColor)
+        {
+            ColorDialog cd = new ColorDialog();
+            cd.AllowFullOpen = true;
+            cd.ShowHelp = true;
+            cd.AnyColor = true;
+            Color color = cfg.ColorFromHex(hexColor);
+            cd.Color = color;
+            if (cd.ShowDialog() == DialogResult.OK)
+            {
+                return cd.Color;
+            }
+
+            return color;
         }
 
         public void ShowForm()

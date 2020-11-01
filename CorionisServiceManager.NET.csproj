@@ -120,6 +120,7 @@
       <DependentUpon>ProgramForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Config.datasource" />
     <None Include="Properties\DataSources\Services.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
