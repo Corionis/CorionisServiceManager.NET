@@ -3,9 +3,12 @@ using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Security.Principal;
 using System.ServiceProcess;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32.TaskScheduler;
 
 namespace CorionisServiceManager.NET
 {
@@ -22,7 +25,6 @@ namespace CorionisServiceManager.NET
         public Services Services;
         private bool updateTimerStarted = false;
         private bool updateTickActive = false;
-
 
         public ProgramForm(Config theCfg, CsmContext theContext)
         {
@@ -188,7 +190,8 @@ namespace CorionisServiceManager.NET
                 // switch to the Select tab
                 tabControl.SelectedIndex = 1;
 
-                MessageBox.Show(cfg.Program + " has no services selected.\r\n\r\nPlease select one or more services to monitor & manage using your mouse. " +
+                MessageBox.Show(cfg.Program +
+                                " has no services selected.\r\n\r\nPlease select one or more services to monitor & manage using your mouse. " +
                                 " Use Ctrl-Click to select individual services or Shift-Click to select a range.",
                     "No Services Selected",
                     MessageBoxButtons.OK,
@@ -226,8 +229,10 @@ namespace CorionisServiceManager.NET
                     toolStripMonitorManual.ToolTipText = toolStripMonitorManual.ToolTipText + " (Disabled)";
 
                     var result = MessageBox.Show(
-                        cfg.Program + " is not running with the Administrator privileges needed to manage services.\r\n\r\n" +
-                        "Windows services may only be monitored.\r\n\r\n" +
+                        cfg.Program +
+                        " is not running with the Administrator privileges needed to manage services.\r\n\r\n" +
+                        "Windows services may only be monitored. The \"Start at login\" option cannot be changed.\r\n\r\n" +
+                        "To avoid this warning right-click the program icon then select \"Run as administrator\".\r\n\r\n" +
                         "Click OK to continue, or Cancel to exit.",
                         "Administrator Privileges",
                         MessageBoxButtons.OKCancel,
@@ -345,7 +350,8 @@ namespace CorionisServiceManager.NET
                         service.Refresh();
                         var status = service.Status.ToString();
 
-                        MonitoredService mon = Services.monitoredServices.First(id => id.Identifier == service.ServiceName);
+                        MonitoredService mon =
+                            Services.monitoredServices.First(id => id.Identifier == service.ServiceName);
                         mon.Startup = service.StartType.ToString();
                         mon.Status = status;
                         switch (status.ToLower())
@@ -500,6 +506,7 @@ namespace CorionisServiceManager.NET
         {
             if (!AsAdmin)
             {
+                // Disable Picked checkbox controls
                 foreach (DataGridViewRow row in dataGridViewMonitor.Rows)
                 {
                     var cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Sel");
@@ -610,14 +617,13 @@ namespace CorionisServiceManager.NET
 
             using (var process = new Process {StartInfo = startInfo})
             {
-                int status = -1;
                 if (!process.Start())
                 {
                     throw new Exception("cannot run sc command: " + startInfo.ToString());
                 }
 
                 process.WaitForExit();
-                status = process.ExitCode;
+                int status = process.ExitCode;
                 return status;
             }
         }
@@ -641,7 +647,7 @@ namespace CorionisServiceManager.NET
             configBindingSource.DataSource = cfg;
             this.Text = cfg.GetProgramTitle();
             ctxt.trayIcon.Text = cfg.GetProgramTitle();
-            // optionsTextBoxFriendlyName.Text = cfg.FriendlyName;
+
             configBindingSource.ResetBindings(false);
             optionsRunningFore.BackColor = cfg.ColorFromHex(cfg.RunningFore);
             optionsRunningBack.BackColor = cfg.ColorFromHex(cfg.RunningBack);
@@ -649,8 +655,14 @@ namespace CorionisServiceManager.NET
             optionsStoppedBack.BackColor = cfg.ColorFromHex(cfg.StoppedBack);
             optionsUnknownFore.BackColor = cfg.ColorFromHex(cfg.UnknownFore);
             optionsUnknownBack.BackColor = cfg.ColorFromHex(cfg.UnknownBack);
+
+            if (!RunningAsAdministrator())
+            {
+                optionsCheckBoxStartAtLogin.Enabled = false;
+            }
+
             tabOptions.Refresh();
-            AugmentMonitorCells();
+            AugmentMonitorCells(); // done here for Options refresh
             tabMonitor.Refresh();
             Refresh();
         }
@@ -694,6 +706,7 @@ namespace CorionisServiceManager.NET
             }
 
             cfg.Save();
+            StartAtLogin();
         }
 
         public Color ShowColorDialog(object sender, EventArgs e, String hexColor)
@@ -718,11 +731,47 @@ namespace CorionisServiceManager.NET
             WindowState = FormWindowState.Normal;
         }
 
+        public void StartAtLogin()
+        {
+            if (RunningAsAdministrator())
+            {
+                using (TaskService ts = new TaskService())
+                {
+                    var task = ts.GetTask(Assembly.GetEntryAssembly().Location);
+                    if (task == null && cfg.StartAtLogin)
+                    {
+                        // Create a new task definition and assign properties
+                        TaskDefinition td = ts.NewTask();
+                        td.RegistrationInfo.Description = cfg.Program;
+                        td.RegistrationInfo.Author = "Corionis, LLC";
+                        td.RegistrationInfo.Date = DateTime.Now;
+
+                        // Set "Run with highest privileges" to avoid UAC when managing services
+                        td.Principal.RunLevel = TaskRunLevel.Highest;
+
+                        // Create a trigger that will fire the task at this time every other day
+                        td.Triggers.Add(new LogonTrigger());
+
+                        // Create an action that will launch Notepad whenever the trigger fires
+                        td.Actions.Add(new ExecAction(Assembly.GetEntryAssembly().Location, "", null));
+
+                        // Register the task in the root folder.
+                        ts.RootFolder.RegisterTaskDefinition(cfg.Program, td);
+                    }
+                    else if (task != null && !cfg.StartAtLogin)
+                    {
+                        ts.RootFolder.DeleteTask(cfg.Program, false);
+                    }
+                }
+            }
+        }
+
         public void TogglePicked(bool sense)
         {
             for (int i = 0; i < dataGridViewMonitor.Rows.Count; ++i)
             {
-                var cell = dataGridViewMonitor.Rows[i].Cells.Cast<DataGridViewCell>().First(o => o.OwningColumn.HeaderText == "Sel");
+                var cell = dataGridViewMonitor.Rows[i].Cells.Cast<DataGridViewCell>()
+                    .First(o => o.OwningColumn.HeaderText == "Sel");
 
                 // update the data immediately
                 Services.monitoredServices[i].Picked = sense;
@@ -747,7 +796,9 @@ namespace CorionisServiceManager.NET
                 if (dragBoxFromMouseDown != Rectangle.Empty && !dragBoxFromMouseDown.Contains(e.X, e.Y))
                 {
                     // Proceed with the drag and drop, passing in the list item.
-                    DragDropEffects dropEffect = dataGridViewMonitor.DoDragDrop(dataGridViewMonitor.Rows[rowIndexFromMouseDown], DragDropEffects.Move);
+                    DragDropEffects dropEffect =
+                        dataGridViewMonitor.DoDragDrop(dataGridViewMonitor.Rows[rowIndexFromMouseDown],
+                            DragDropEffects.Move);
                 }
             }
         }
@@ -765,7 +816,8 @@ namespace CorionisServiceManager.NET
 
                 // Create a rectangle using the DragSize, with the mouse position being
                 // at the center of the rectangle.
-                dragBoxFromMouseDown = new Rectangle(new Point(e.X - (dragSize.Width / 2), e.Y - (dragSize.Height / 2)), dragSize);
+                dragBoxFromMouseDown = new Rectangle(new Point(e.X - (dragSize.Width / 2), e.Y - (dragSize.Height / 2)),
+                    dragSize);
             }
             else
                 // Reset the rectangle if the mouse is not over an item in the ListBox.
