@@ -776,6 +776,7 @@ namespace CorionisServiceManager.NET
                 // update the data immediately
                 Services.monitoredServices[i].Picked = sense;
                 cell.Value = sense;
+                cell.Selected = sense;
                 dataGridViewMonitor.Refresh();
             }
         }

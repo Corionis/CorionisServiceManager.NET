@@ -352,7 +352,7 @@
             this.toolStripMonitorAll.Margin = new System.Windows.Forms.Padding(0, 1, 2, 2);
             this.toolStripMonitorAll.Name = "toolStripMonitorAll";
             this.toolStripMonitorAll.Size = new System.Drawing.Size(25, 21);
-            this.toolStripMonitorAll.Text = "All";
+            this.toolStripMonitorAll.Text = "&All";
             //
             // toolStripMonitorNone
             //
@@ -362,7 +362,7 @@
             this.toolStripMonitorNone.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMonitorNone.Name = "toolStripMonitorNone";
             this.toolStripMonitorNone.Size = new System.Drawing.Size(40, 21);
-            this.toolStripMonitorNone.Text = "None";
+            this.toolStripMonitorNone.Text = "&None";
             //
             // toolStripSeparator4
             //
@@ -406,7 +406,7 @@
             this.toolStripMonitorAuto.Margin = new System.Windows.Forms.Padding(0, 1, 2, 2);
             this.toolStripMonitorAuto.Name = "toolStripMonitorAuto";
             this.toolStripMonitorAuto.Size = new System.Drawing.Size(37, 21);
-            this.toolStripMonitorAuto.Text = "&Auto";
+            this.toolStripMonitorAuto.Text = "A&uto";
             //
             // toolStripMonitorManual
             //
@@ -636,7 +636,7 @@
             this.optionsCheckBoxLogToFile.Location = new System.Drawing.Point(12, 117);
             this.optionsCheckBoxLogToFile.Name = "optionsCheckBoxLogToFile";
             this.optionsCheckBoxLogToFile.Size = new System.Drawing.Size(72, 17);
-            this.optionsCheckBoxLogToFile.TabIndex = 8;
+            this.optionsCheckBoxLogToFile.TabIndex = 7;
             this.optionsCheckBoxLogToFile.Text = "Log to file";
             this.optionsCheckBoxLogToFile.UseVisualStyleBackColor = true;
             //
@@ -873,7 +873,7 @@
             this.optionsCheckBoxHideWhenMinimized.Location = new System.Drawing.Point(185, 117);
             this.optionsCheckBoxHideWhenMinimized.Name = "optionsCheckBoxHideWhenMinimized";
             this.optionsCheckBoxHideWhenMinimized.Size = new System.Drawing.Size(125, 17);
-            this.optionsCheckBoxHideWhenMinimized.TabIndex = 7;
+            this.optionsCheckBoxHideWhenMinimized.TabIndex = 8;
             this.optionsCheckBoxHideWhenMinimized.Text = "Hide when minimized";
             this.optionsCheckBoxHideWhenMinimized.UseVisualStyleBackColor = true;
             //
