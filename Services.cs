@@ -10,7 +10,6 @@ namespace CorionisServiceManager.NET
         private Config cfg;
         public ServiceController[] allServices { get; set; }
         public List<MonitoredService> monitoredServices { get; set; }
-        // public MonitoredService[] monitoredServices { get; set; }
         public ServiceController[] selectedServices { get; set; }
 
         public Services(ref Config theCfg)
@@ -58,7 +57,6 @@ namespace CorionisServiceManager.NET
                 }
             }
         }
-
     }
 
     public class MonitoredService

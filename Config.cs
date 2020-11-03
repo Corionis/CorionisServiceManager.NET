@@ -29,6 +29,8 @@ namespace CorionisServiceManager.NET
         public String StoppedBack { get; set; }
         public String UnknownFore { get; set; }
         public String UnknownBack { get; set; }
+        public String SelectFore { get; set; }
+        public String SelectBack { get; set; }
         #endregion
 
         #region Coordinates
@@ -94,6 +96,8 @@ namespace CorionisServiceManager.NET
                 StoppedBack = data.StoppedBack;
                 UnknownFore = data.UnknownFore;
                 UnknownBack = data.UnknownBack;
+                SelectFore = data.SelectFore;
+                SelectBack = data.SelectBack;
                 Left = data.Left;
                 Top = data.Top;
                 Width = data.Width;
@@ -144,6 +148,8 @@ namespace CorionisServiceManager.NET
             StoppedBack = ColorToHex(Color.Red);
             UnknownFore = ColorToHex(Color.Black);
             UnknownBack = ColorToHex(Color.Yellow);
+            SelectFore = ColorToHex(Color.Black);
+            SelectBack = "#B2C7FF"; // a personal favorite :)
             Left = 10;
             Top = 10;
             Width = 600;

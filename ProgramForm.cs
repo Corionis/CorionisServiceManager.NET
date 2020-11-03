@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using System.ServiceProcess;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32.TaskScheduler;
 
@@ -14,8 +12,8 @@ namespace CorionisServiceManager.NET
 {
     public partial class ProgramForm : Form
     {
-        private bool AdminChecked = false;
-        private bool AsAdmin = false;
+        private bool adminChecked = false;
+        private bool asAdmin = false;
         private Config cfg;
         private CsmContext ctxt;
         private Timer monitorUpdateTimer;
@@ -43,18 +41,9 @@ namespace CorionisServiceManager.NET
 
             // Styles
             rowStyleRunning = new DataGridViewCellStyle();
-            rowStyleRunning.BackColor = cfg.ColorFromHex(cfg.RunningBack);
-            rowStyleRunning.ForeColor = cfg.ColorFromHex(cfg.RunningFore);
-
             rowStyleStopped = new DataGridViewCellStyle();
-            rowStyleStopped.BackColor = cfg.ColorFromHex(cfg.StoppedBack);
-            rowStyleStopped.ForeColor = cfg.ColorFromHex(cfg.StoppedFore);
-
             rowStyleUnknown = new DataGridViewCellStyle();
-            rowStyleUnknown.BackColor = cfg.ColorFromHex(cfg.UnknownBack);
-            ;
-            rowStyleUnknown.ForeColor = cfg.ColorFromHex(cfg.UnknownFore);
-            ;
+            SetMonitorColors();
 
             // System
             Load += EventFormLoad;
@@ -87,18 +76,20 @@ namespace CorionisServiceManager.NET
             toolStripSelectRefresh.Click += EventSelectButtonRefresh;
             toolStripSelectSave.Click += EventSelectButtonSave;
             toolStripSelectCancel.Click += EventSelectButtonCancel;
+            dataGridViewSelect.CellClick += EventSelectPickedClicked;
 
             // Options tab
             toolStripOptionsDefault.Click += EventOptionsButtonDefault;
             toolStripOptionsSave.Click += EventOptionsButtonSave;
             toolStripOptionsCancel.Click += EventOptionsButtonCancel;
-
             optionsRunningFore.Click += EventOptionsRunningFore;
             optionsRunningBack.Click += EventOptionsRunningBack;
             optionsStoppedFore.Click += EventOptionsStoppedFore;
             optionsStoppedBack.Click += EventOptionsStoppedBack;
             optionsUnknownFore.Click += EventOptionsUnknownFore;
             optionsUnknownBack.Click += EventOptionsUnknownBack;
+            optionsSelectFore.Click += EventOptionsSelectFore;
+            optionsSelectBack.Click += EventOptionsSelectBack;
 
             // Log tab
 
@@ -191,41 +182,41 @@ namespace CorionisServiceManager.NET
                 tabControl.SelectedIndex = 1;
 
                 MessageBox.Show(cfg.Program +
-                                " has no services selected.\r\n\r\nPlease select one or more services to monitor & manage using your mouse. " +
-                                " Use Ctrl-Click to select individual services or Shift-Click to select a range.",
+                                " has no services selected.\r\n\r\nPlease select one or more services to monitor & manage. Check the" +
+                                " \"Sel\" for each desired service on the Select tab, Save your choices, then goto the Monitor tab",
                     "No Services Selected",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
 
             // Running "As Administrator"?
-            if (!AdminChecked)
+            if (!adminChecked)
             {
                 if (!RunningAsAdministrator())
                 {
                     // disable the action buttons
                     toolStripMonitorAll.Enabled = false;
-                    toolStripMonitorAll.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorAll.BackColor = Color.Wheat;
                     toolStripMonitorAll.ToolTipText = toolStripMonitorAll.ToolTipText + " (Disabled)";
                     toolStripMonitorNone.Enabled = false;
-                    toolStripMonitorNone.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorNone.BackColor = Color.Wheat;
                     toolStripMonitorNone.ToolTipText = toolStripMonitorNone.ToolTipText + " (Disabled)";
                     //
                     toolStripMonitorStart.Enabled = false;
-                    toolStripMonitorStart.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorStart.BackColor = Color.Wheat;
                     toolStripMonitorStart.ToolTipText = toolStripMonitorStart.ToolTipText + " (Disabled)";
                     toolStripMonitorStop.Enabled = false;
-                    toolStripMonitorStop.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorStop.BackColor = Color.Wheat;
                     toolStripMonitorStop.ToolTipText = toolStripMonitorStop.ToolTipText + " (Disabled)";
                     //
                     toolStripMonitorAuto.Enabled = false;
-                    toolStripMonitorAuto.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorAuto.BackColor = Color.Wheat;
                     toolStripMonitorAuto.ToolTipText = toolStripMonitorAuto.ToolTipText + " (Disabled)";
                     toolStripMonitorDisable.Enabled = false;
-                    toolStripMonitorDisable.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorDisable.BackColor = Color.Wheat;
                     toolStripMonitorDisable.ToolTipText = toolStripMonitorDisable.ToolTipText + " (Disabled)";
                     toolStripMonitorManual.Enabled = false;
-                    toolStripMonitorManual.BackColor = System.Drawing.Color.Wheat;
+                    toolStripMonitorManual.BackColor = Color.Wheat;
                     toolStripMonitorManual.ToolTipText = toolStripMonitorManual.ToolTipText + " (Disabled)";
 
                     var result = MessageBox.Show(
@@ -245,7 +236,7 @@ namespace CorionisServiceManager.NET
                     }
                 }
 
-                AdminChecked = true;
+                adminChecked = true;
             }
         }
 
@@ -317,7 +308,7 @@ namespace CorionisServiceManager.NET
             if (type == typeof(DataGridViewCheckBoxCell))
             {
                 DataGridView dgv = (DataGridView) sender;
-                if (AsAdmin)
+                if (asAdmin)
                 {
                     // flip the sense true/false
                     bool sense = true;
@@ -350,8 +341,7 @@ namespace CorionisServiceManager.NET
                         service.Refresh();
                         var status = service.Status.ToString();
 
-                        MonitoredService mon =
-                            Services.monitoredServices.First(id => id.Identifier == service.ServiceName);
+                        MonitoredService mon = Services.monitoredServices.First(id => id.Identifier == service.ServiceName);
                         mon.Startup = service.StartType.ToString();
                         mon.Status = status;
                         switch (status.ToLower())
@@ -390,6 +380,8 @@ namespace CorionisServiceManager.NET
         {
             SaveUserPreferences(); // Save all changes including on the Monitor tab
             PopulateOptions();
+            EventSelectDataComplete(sender, e);
+            SetMonitorColors();
         }
 
         private void EventOptionsRunningFore(object sender, EventArgs e)
@@ -440,9 +432,33 @@ namespace CorionisServiceManager.NET
             rowStyleUnknown.BackColor = color;
         }
 
+        private void EventOptionsSelectFore(object sender, EventArgs e)
+        {
+            var color = ShowColorDialog(sender, e, cfg.SelectFore);
+            optionsSelectFore.BackColor = color;
+            cfg.SelectFore = cfg.ColorToHex(color);
+        }
+
+        private void EventOptionsSelectBack(object sender, EventArgs e)
+        {
+            var color = ShowColorDialog(sender, e, cfg.SelectBack);
+            optionsSelectBack.BackColor = color;
+            cfg.SelectBack = cfg.ColorToHex(color);
+        }
+
         private void EventSelectButtonCancel(object sender, EventArgs e)
         {
             // reset the selections
+            foreach (DataGridViewRow row in dataGridViewSelect.Rows)
+            {
+                var c = row.Cells.Cast<DataGridViewCell>().First(o => o.OwningColumn.HeaderText == "Sel");
+                if (c != null)
+                {
+                    c.Value = "False";
+                    row.DefaultCellStyle.ForeColor = dataGridViewSelect.DefaultCellStyle.ForeColor;
+                    row.DefaultCellStyle.BackColor = dataGridViewSelect.DefaultCellStyle.BackColor;
+                }
+            }
             EventSelectDataComplete(sender, e);
         }
 
@@ -454,19 +470,37 @@ namespace CorionisServiceManager.NET
 
         private void EventSelectButtonSave(object sender, EventArgs e)
         {
-            Int32 selectedRowCount = dataGridViewSelect.Rows.GetRowCount(DataGridViewElementStates.Selected);
-            cfg.SelectedServiceIds = new Config.ServiceIdNamePair[selectedRowCount];
-            if (selectedRowCount > 0)
+            // Count the Picked items to size the new Config.ServiceIdNamePair array below
+            int count = 0;
+            for (int i = 0; i < dataGridViewSelect.Rows.Count; ++i)
             {
-                for (int i = 0; i < selectedRowCount; ++i)
+                DataGridViewRow row = dataGridViewSelect.Rows[i];
+                var c = row.Cells.Cast<DataGridViewCell>().First(o => o.OwningColumn.HeaderText == "Sel");
+                if (c != null && c.Value != null && c.Value.ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
                 {
-                    cfg.SelectedServiceIds[i] = new Config.ServiceIdNamePair();
+                    ++count;
+                }
+            }
 
-                    string name = GetColumnValue(dataGridViewSelect.SelectedRows[i].Cells, "Name");
-                    cfg.SelectedServiceIds[i].Name = name;
+            cfg.SelectedServiceIds = new Config.ServiceIdNamePair[count];
+            if (count > 0)
+            {
+                for (int i = 0, n = 0; i < dataGridViewSelect.Rows.Count; ++i)
+                {
+                    DataGridViewRow row = dataGridViewSelect.Rows[i];
+                    var c = row.Cells.Cast<DataGridViewCell>().First(o => o.OwningColumn.HeaderText == "Sel");
+                    if (c != null && c.Value != null && c.Value.ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
+                    {
+                        cfg.SelectedServiceIds[n] = new Config.ServiceIdNamePair();
 
-                    string id = GetColumnValue(dataGridViewSelect.SelectedRows[i].Cells, "Identifier");
-                    cfg.SelectedServiceIds[i].Identifier = id;
+                        string name = GetColumnValue(row.Cells, "Name");
+                        cfg.SelectedServiceIds[n].Name = name;
+
+                        string id = GetColumnValue(row.Cells, "Identifier");
+                        cfg.SelectedServiceIds[n].Identifier = id;
+
+                        ++n;
+                    }
                 }
             }
 
@@ -492,9 +526,46 @@ namespace CorionisServiceManager.NET
                     var row = GetRowByIdentifier(dataGridViewSelect, pair.Identifier);
                     if (row != null)
                     {
-                        row.Selected = true;
+                        var c = row.Cells.Cast<DataGridViewCell>().First(o => o.OwningColumn.HeaderText == "Sel");
+                        if (c != null)
+                        {
+                            c.Value = "True";
+                            row.DefaultCellStyle.ForeColor = cfg.ColorFromHex(cfg.SelectFore);
+                            row.DefaultCellStyle.BackColor = cfg.ColorFromHex(cfg.SelectBack);
+                        }
                     }
                 }
+            }
+        }
+
+        private void EventSelectPickedClicked(object sender, DataGridViewCellEventArgs e)
+        {
+            var type = dataGridViewSelect.Rows[e.RowIndex].Cells[e.ColumnIndex].GetType();
+            if (type == typeof(DataGridViewCheckBoxCell))
+            {
+                DataGridView dgv = (DataGridView) sender;
+
+                // flip the sense true/false
+                bool sense = true;
+                object obj = dataGridViewSelect.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                if (obj != null)
+                {
+                    sense = !obj.ToString().Equals("true", StringComparison.OrdinalIgnoreCase);
+                }
+
+                // update the data immediately
+                dataGridViewSelect.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = (sense) ? "True" : "False";
+                if (sense)
+                {
+                    dataGridViewSelect.Rows[e.RowIndex].DefaultCellStyle.ForeColor = cfg.ColorFromHex(cfg.SelectFore);
+                    dataGridViewSelect.Rows[e.RowIndex].DefaultCellStyle.BackColor = cfg.ColorFromHex(cfg.SelectBack);
+                }
+                else
+                {
+                    dataGridViewSelect.Rows[e.RowIndex].DefaultCellStyle.ForeColor = dataGridViewSelect.DefaultCellStyle.ForeColor;
+                    dataGridViewSelect.Rows[e.RowIndex].DefaultCellStyle.BackColor = dataGridViewSelect.DefaultCellStyle.BackColor;
+                }
+                dgv.EndEdit();
             }
         }
 
@@ -504,7 +575,7 @@ namespace CorionisServiceManager.NET
 
         private void AugmentMonitorCells()
         {
-            if (!AsAdmin)
+            if (!asAdmin)
             {
                 // Disable Picked checkbox controls
                 foreach (DataGridViewRow row in dataGridViewMonitor.Rows)
@@ -518,7 +589,7 @@ namespace CorionisServiceManager.NET
             foreach (DataGridViewRow row in dataGridViewMonitor.Rows)
             {
                 var cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Sel");
-                if (!AsAdmin)
+                if (!asAdmin)
                 {
                     cell.ToolTipText = cfg.ShowGridTooltips ? "Click to select (Disabled)" : "";
                 }
@@ -655,6 +726,8 @@ namespace CorionisServiceManager.NET
             optionsStoppedBack.BackColor = cfg.ColorFromHex(cfg.StoppedBack);
             optionsUnknownFore.BackColor = cfg.ColorFromHex(cfg.UnknownFore);
             optionsUnknownBack.BackColor = cfg.ColorFromHex(cfg.UnknownBack);
+            optionsSelectFore.BackColor = cfg.ColorFromHex(cfg.SelectFore);
+            optionsSelectBack.BackColor = cfg.ColorFromHex(cfg.SelectBack);
 
             if (!RunningAsAdministrator())
             {
@@ -662,7 +735,7 @@ namespace CorionisServiceManager.NET
             }
 
             tabOptions.Refresh();
-            AugmentMonitorCells(); // done here for Options refresh
+            AugmentMonitorCells(); // done here for Options Cancel
             tabMonitor.Refresh();
             Refresh();
         }
@@ -677,8 +750,8 @@ namespace CorionisServiceManager.NET
         {
             var identity = WindowsIdentity.GetCurrent();
             var principal = new WindowsPrincipal(identity);
-            AsAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
-            return AsAdmin;
+            asAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            return asAdmin;
         }
 
         public void SaveUserPreferences()
@@ -709,11 +782,23 @@ namespace CorionisServiceManager.NET
             StartAtLogin();
         }
 
+        private void SetMonitorColors()
+        {
+            rowStyleRunning.BackColor = cfg.ColorFromHex(cfg.RunningBack);
+            rowStyleRunning.ForeColor = cfg.ColorFromHex(cfg.RunningFore);
+
+            rowStyleStopped.BackColor = cfg.ColorFromHex(cfg.StoppedBack);
+            rowStyleStopped.ForeColor = cfg.ColorFromHex(cfg.StoppedFore);
+
+            rowStyleUnknown.BackColor = cfg.ColorFromHex(cfg.UnknownBack);
+            rowStyleUnknown.ForeColor = cfg.ColorFromHex(cfg.UnknownFore);
+        }
+
         public Color ShowColorDialog(object sender, EventArgs e, String hexColor)
         {
             ColorDialog cd = new ColorDialog();
             cd.AllowFullOpen = true;
-            cd.ShowHelp = true;
+            cd.ShowHelp = false;
             cd.AnyColor = true;
             Color color = cfg.ColorFromHex(hexColor);
             cd.Color = color;

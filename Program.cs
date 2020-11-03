@@ -5,6 +5,10 @@ using Tulpep.NotificationWindow;
 
 namespace CorionisServiceManager.NET
 {
+    /// <summary>
+    /// Corionis Service Manager.
+    /// Monitor and manage selected Windows services.
+    /// </summary>
     static class Program
     {
         /// <summary>
@@ -37,6 +41,8 @@ namespace CorionisServiceManager.NET
                 Icon = Resources.manager_round_bronco,
                 ContextMenu = new ContextMenu(new MenuItem[]
                 {
+                    new MenuItem(cfg.GetProgramTitle()), // faux title
+                    new MenuItem("-"),
                     new MenuItem("&Show", Show),
                     new MenuItem("&Hide", Hide),
                     new MenuItem("-"),
@@ -48,6 +54,7 @@ namespace CorionisServiceManager.NET
             // Setup the system tray icon
             trayIcon.Text = cfg.GetProgramTitle();
             trayIcon.DoubleClick += DoubleClick;
+            trayIcon.ContextMenu.MenuItems[0].Enabled = false; // disable content menu faux title
 
             // Display the app if configured
             if (cfg.StartMinimized == false)
