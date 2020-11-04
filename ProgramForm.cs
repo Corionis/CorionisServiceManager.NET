@@ -341,86 +341,100 @@ namespace CorionisServiceManager.NET
                     }
                 }
             }
-            else
+            else // It is a column header, perform sort
             {
-                if (monitorSortColumnIndex != e.ColumnIndex)
+                var name = dataGridViewMonitor.Columns[e.ColumnIndex].HeaderText;
+                if (!name.Equals("Sel"))
                 {
-                    for (int i = 0; i < dataGridViewMonitor.Columns.Count; ++i)
+                    // reset mode & glyph in all column headers
+                    if (monitorSortColumnIndex != e.ColumnIndex)
                     {
-                        dataGridViewMonitor.Columns[i].HeaderCell.SortGlyphDirection = SortOrder.None;
+                        for (int i = 0; i < dataGridViewMonitor.Columns.Count; ++i)
+                        {
+                            dataGridViewMonitor.Columns[i].HeaderCell.SortGlyphDirection = SortOrder.None;
+                        }
+
+                        monitorSortMode = SortOrder.None;
+                        dataGridViewMonitor.Refresh();
+                        monitorSortColumnIndex = e.ColumnIndex;
                     }
 
-                    monitorSortMode = SortOrder.None;
-                    dataGridViewMonitor.Refresh();
-                    monitorSortColumnIndex = e.ColumnIndex;
-                }
+                    // progress the mode through the 3 states
+                    monitorSortMode = (monitorSortMode == SortOrder.None) ? SortOrder.Ascending :
+                        (monitorSortMode == SortOrder.Ascending) ? SortOrder.Descending : SortOrder.None;
 
-                monitorSortMode = (monitorSortMode == SortOrder.None) ? SortOrder.Ascending :
-                    (monitorSortMode == SortOrder.Ascending) ? SortOrder.Descending : SortOrder.None;
+                    // set this column header glyph
+                    dataGridViewMonitor.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection = monitorSortMode;
 
-                dataGridViewMonitor.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection = monitorSortMode;
-
-                if (monitorSortMode != SortOrder.None)
-                {
-                    var name = dataGridViewMonitor.Columns[e.ColumnIndex].HeaderText;
-                    if (monitorSortMode == SortOrder.Ascending)
+                    if (monitorSortMode != SortOrder.None)
                     {
-                        if (name.Equals("Name"))
+                        if (monitorSortMode == SortOrder.Ascending)
                         {
-                            Services.monitoredServices.Sort((x, y) =>
-                                String.Compare(x.Name, y.Name, StringComparison.OrdinalIgnoreCase));
+                            if (name.Equals("Name"))
+                            {
+                                Services.monitoredServices.Sort((x, y) =>
+                                    String.Compare(x.Name, y.Name, StringComparison.OrdinalIgnoreCase));
+                            }
+                            else if (name.Equals("Identifier"))
+                            {
+                                Services.monitoredServices.Sort((x, y) =>
+                                    String.Compare(x.Identifier, y.Identifier, StringComparison.Ordinal));
+                            }
+                            else if (name.Equals("Start Type"))
+                            {
+                                Services.monitoredServices.Sort((x, y) =>
+                                    String.Compare(x.Startup, y.Startup, StringComparison.Ordinal));
+                            }
+                            else if (name.Equals("Status"))
+                            {
+                                Services.monitoredServices.Sort((x, y) =>
+                                    String.Compare(x.Status, y.Status, StringComparison.Ordinal));
+                            }
+                            else
+                            {
+                                throw new Exception("unknown column name");
+                            }
                         }
-                        else if (name.Equals("Identifier"))
+                        else
                         {
-                            Services.monitoredServices.Sort((x, y) =>
-                                String.Compare(x.Identifier, y.Identifier, StringComparison.Ordinal));
-                        }
-                        else if (name.Equals("Start Type"))
-                        {
-                            Services.monitoredServices.Sort((x, y) =>
-                                String.Compare(x.Startup, y.Startup, StringComparison.Ordinal));
-                        }
-                        else if (name.Equals("Status"))
-                        {
-                            Services.monitoredServices.Sort((x, y) =>
-                                String.Compare(x.Status, y.Status, StringComparison.Ordinal));
+                            if (name.Equals("Name"))
+                            {
+                                Services.monitoredServices.Sort((x, y) =>
+                                    String.Compare(y.Name, x.Name, StringComparison.Ordinal));
+                            }
+                            else if (name.Equals("Identifier"))
+                            {
+                                Services.monitoredServices.Sort((x, y) =>
+                                    String.Compare(y.Identifier, x.Identifier, StringComparison.Ordinal));
+                            }
+                            else if (name.Equals("Start Type"))
+                            {
+                                Services.monitoredServices.Sort((x, y) =>
+                                    String.Compare(y.Startup, x.Startup, StringComparison.Ordinal));
+                            }
+                            else if (name.Equals("Status"))
+                            {
+                                Services.monitoredServices.Sort((x, y) =>
+                                    String.Compare(y.Status, x.Status, StringComparison.Ordinal));
+                            }
+                            else
+                            {
+                                throw new Exception("unknown column name");
+                            }
                         }
                     }
                     else
                     {
-                        if (name.Equals("Name"))
-                        {
-                            Services.monitoredServices.Sort((x, y) =>
-                                String.Compare(y.Name, x.Name, StringComparison.Ordinal));
-                        }
-                        else if (name.Equals("Identifier"))
-                        {
-                            Services.monitoredServices.Sort((x, y) =>
-                                String.Compare(y.Identifier, x.Identifier, StringComparison.Ordinal));
-                        }
-                        else if (name.Equals("Start Type"))
-                        {
-                            Services.monitoredServices.Sort((x, y) =>
-                                String.Compare(y.Startup, x.Startup, StringComparison.Ordinal));
-                        }
-                        else if (name.Equals("Status"))
-                        {
-                            Services.monitoredServices.Sort((x, y) =>
-                                String.Compare(y.Status, x.Status, StringComparison.Ordinal));
-                        }
+                        // Reset context of Monitor tab data
+                        cfg.Load();
+                        PopulateMonitor();
+                        monitorSortMode = SortOrder.None;
+                        monitorSortColumnIndex = -1;
                     }
-                }
-                else
-                {
-                    // Reset context of Monitor tab data
-                    cfg.Load();
-                    PopulateMonitor();
-                    monitorSortMode = SortOrder.None;
-                    monitorSortColumnIndex = -1;
-                }
 
-                EventMonitorUpdateTick(sender, e);
-                dataGridViewMonitor.Refresh();
+                    EventMonitorUpdateTick(sender, e);
+                    dataGridViewMonitor.Refresh();
+                }
             }
         }
 
@@ -439,8 +453,7 @@ namespace CorionisServiceManager.NET
                         service.Refresh();
                         var status = service.Status.ToString();
 
-                        MonitoredService mon =
-                            Services.monitoredServices.First(id => id.Identifier == service.ServiceName);
+                        MonitoredService mon = Services.monitoredServices.First(id => id.Identifier == service.ServiceName);
                         mon.Startup = service.StartType.ToString();
                         mon.Status = status;
                         switch (status.ToLower())
@@ -675,86 +688,47 @@ namespace CorionisServiceManager.NET
                     dgv.EndEdit();
                 }
             }
-            else
+            else // It is a column header, perform sort
             {
-                if (selectSortColumnIndex > 0 && selectSortColumnIndex != e.ColumnIndex)
+                var name = dataGridViewSelect.Columns[e.ColumnIndex].HeaderText;
+                if (!name.Equals("Sel"))
                 {
-                    for (int i = 0; i < dataGridViewSelect.Columns.Count; ++i)
+                    // reset mode & glyph in all column headers
+                    if (selectSortColumnIndex != e.ColumnIndex)
                     {
-                        dataGridViewSelect.Columns[i].HeaderCell.SortGlyphDirection = SortOrder.None;
+                        for (int i = 0; i < dataGridViewSelect.Columns.Count; ++i)
+                        {
+                            dataGridViewSelect.Columns[i].HeaderCell.SortGlyphDirection = SortOrder.None;
+                        }
+
+                        selectSortMode = SortOrder.None;
+                        dataGridViewSelect.Refresh();
+                        selectSortColumnIndex = e.ColumnIndex;
                     }
 
-                    selectSortMode = SortOrder.None;
-                    dataGridViewSelect.Refresh();
-                }
-                selectSortColumnIndex = e.ColumnIndex;
+                    // progress the mode through the 3 states
+                    selectSortMode = (selectSortMode == SortOrder.None) ? SortOrder.Ascending :
+                        (selectSortMode == SortOrder.Ascending) ? SortOrder.Descending : SortOrder.None;
 
-                selectSortMode = (selectSortMode == SortOrder.None) ? SortOrder.Ascending :
-                    (selectSortMode == SortOrder.Ascending) ? SortOrder.Descending : SortOrder.None;
+                    // set this column header glyph
+                    dataGridViewSelect.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection = selectSortMode;
 
-                dataGridViewSelect.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection = selectSortMode;
-
-                if (selectSortMode != SortOrder.None)
-                {
-                    var name = dataGridViewSelect.Columns[e.ColumnIndex].HeaderText;
-                    if (selectSortMode == SortOrder.Ascending)
+                    if (selectSortMode != SortOrder.None)
                     {
-                        // if (name.Equals("Name"))
-                        // {
-                        //     Services.selectedServices.Sort((x, y) =>
-                        //         String.Compare(x.Name, y.Name, StringComparison.OrdinalIgnoreCase));
-                        // }
-                        // else if (name.Equals("Identifier"))
-                        // {
-                        //     Services.selectedServices.Sort((x, y) =>
-                        //         String.Compare(x.Identifier, y.Identifier, StringComparison.Ordinal));
-                        // }
-                        // else if (name.Equals("Start Type"))
-                        // {
-                        //     Services.selectedServices.Sort((x, y) =>
-                        //         String.Compare(x.Startup, y.Startup, StringComparison.Ordinal));
-                        // }
-                        // else if (name.Equals("Status"))
-                        // {
-                        //     Services.selectedServices.Sort((x, y) =>
-                        //         String.Compare(x.Status, y.Status, StringComparison.Ordinal));
-                        // }
+                        var sorter = new ServiceSorter(name, selectSortMode == SortOrder.Ascending);
+                        Array.Sort(Services.allServices, sorter);
                     }
                     else
                     {
-                        // if (name.Equals("Name"))
-                        // {
-                        //     Services.selectedServices.Sort((x, y) =>
-                        //         String.Compare(y.Name, x.Name, StringComparison.Ordinal));
-                        // }
-                        // else if (name.Equals("Identifier"))
-                        // {
-                        //     Services.selectedServices.Sort((x, y) =>
-                        //         String.Compare(y.Identifier, x.Identifier, StringComparison.Ordinal));
-                        // }
-                        // else if (name.Equals("Start Type"))
-                        // {
-                        //     Services.selectedServices.Sort((x, y) =>
-                        //         String.Compare(y.Startup, x.Startup, StringComparison.Ordinal));
-                        // }
-                        // else if (name.Equals("Status"))
-                        // {
-                        //     Services.selectedServices.Sort((x, y) =>
-                        //         String.Compare(y.Status, x.Status, StringComparison.Ordinal));
-                        }
-                }
-                else
-                {
-                    // Reset context of Select tab data
-                    cfg.Load();
-                    PopulateSelect();
-                    selectSortMode = SortOrder.None;
-                    selectSortColumnIndex = -1;
-                }
+                        // Reset context of Select tab data
+                        cfg.Load();
+                        PopulateSelect();
+                        selectSortMode = SortOrder.None;
+                        selectSortColumnIndex = -1;
+                    }
 
-                 // EventSelectUpdateTick(sender, e);
-                dataGridViewSelect.Refresh();
-                
+                    dataGridViewSelect.Refresh();
+                }
             }
         }
 
@@ -1149,5 +1123,55 @@ namespace CorionisServiceManager.NET
         #endregion
 
         // -----------------------------------------------------------------------------------------------------------------------
+        public class ServiceSorter : IComparer
+        {
+            public string ColumnName { get; set; }
+            public bool IsAscending { get; set; }
+
+            public ServiceSorter(string col, bool asc)
+            {
+                ColumnName = col;
+                IsAscending = asc;
+            }
+
+            public int Compare(object x, object y)
+            {
+                string left = "";
+                string right = "";
+                if (ColumnName.Equals("Name"))
+                {
+                    left = ((ServiceController) x).DisplayName;
+                    right = ((ServiceController) y).DisplayName;
+                }
+                else if (ColumnName.Equals("Identifier"))
+                {
+                    left = ((ServiceController) x).ServiceName;
+                    right = ((ServiceController) y).ServiceName;
+                }
+                else if (ColumnName.Equals("Start Type"))
+                {
+                    left = ((ServiceController) x).StartType.ToString();
+                    right = ((ServiceController) y).StartType.ToString();
+                }
+                else if (ColumnName.Equals("Status"))
+                {
+                    left = ((ServiceController) x).Status.ToString();
+                    right = ((ServiceController) y).Status.ToString();
+                }
+                else
+                {
+                    throw new Exception("unknown column name");
+                }
+
+                if (IsAscending)
+                {
+                    return (new CaseInsensitiveComparer()).Compare(left, right);
+                }
+                else
+                {
+                    return (new CaseInsensitiveComparer()).Compare(right, left);
+                }
+            }
+        }
     }
 }
