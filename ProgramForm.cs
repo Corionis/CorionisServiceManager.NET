@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -16,10 +18,14 @@ namespace CorionisServiceManager.NET
         private bool asAdmin = false;
         private Config cfg;
         private CsmContext ctxt;
+        private int monitorSortColumnIndex = -1;
+        private SortOrder monitorSortMode = SortOrder.None;
         private Timer monitorUpdateTimer;
         private DataGridViewCellStyle rowStyleRunning;
         private DataGridViewCellStyle rowStyleStopped;
         private DataGridViewCellStyle rowStyleUnknown;
+        private int selectSortColumnIndex = -1;
+        private SortOrder selectSortMode = SortOrder.None;
         public Services Services;
         private bool updateTimerStarted = false;
         private bool updateTickActive = false;
@@ -65,7 +71,7 @@ namespace CorionisServiceManager.NET
             toolStripMonitorNone.Click += EventMonitorButtonNone;
             toolStripMonitorStart.Click += EventMonitorButtonStart;
             toolStripMonitorStop.Click += EventMonitorButtonStop;
-            dataGridViewMonitor.CellClick += EventMonitorPickedClicked;
+            dataGridViewMonitor.CellClick += EventMonitorCellClicked;
             dataGridViewMonitor.MouseMove += dataGridViewMonitorMouseMove;
             dataGridViewMonitor.MouseDown += dataGridViewMonitorMouseDown;
             dataGridViewMonitor.DragOver += dataGridViewMonitorDragOver;
@@ -76,20 +82,28 @@ namespace CorionisServiceManager.NET
             toolStripSelectRefresh.Click += EventSelectButtonRefresh;
             toolStripSelectSave.Click += EventSelectButtonSave;
             toolStripSelectCancel.Click += EventSelectButtonCancel;
-            dataGridViewSelect.CellClick += EventSelectPickedClicked;
+            dataGridViewSelect.CellClick += EventSelectCellClicked;
 
             // Options tab
             toolStripOptionsDefault.Click += EventOptionsButtonDefault;
             toolStripOptionsSave.Click += EventOptionsButtonSave;
             toolStripOptionsCancel.Click += EventOptionsButtonCancel;
             optionsRunningFore.Click += EventOptionsRunningFore;
+            optionsRunningForeLabel.Click += EventOptionsRunningFore;
             optionsRunningBack.Click += EventOptionsRunningBack;
+            optionsRunningBackLabel.Click += EventOptionsRunningBack;
             optionsStoppedFore.Click += EventOptionsStoppedFore;
+            optionsStoppedForeLabel.Click += EventOptionsStoppedFore;
             optionsStoppedBack.Click += EventOptionsStoppedBack;
+            optionsStoppedBackLabel.Click += EventOptionsStoppedBack;
             optionsUnknownFore.Click += EventOptionsUnknownFore;
+            optionsUnknownForeLabel.Click += EventOptionsUnknownFore;
             optionsUnknownBack.Click += EventOptionsUnknownBack;
+            optionsUnknownBackLabel.Click += EventOptionsUnknownBack;
             optionsSelectFore.Click += EventOptionsSelectFore;
+            optionsSelectForeLabel.Click += EventOptionsSelectFore;
             optionsSelectBack.Click += EventOptionsSelectBack;
+            optionsSelectBackLabel.Click += EventOptionsSelectBack;
 
             // Log tab
 
@@ -302,27 +316,111 @@ namespace CorionisServiceManager.NET
             ManageServices("stop");
         }
 
-        private void EventMonitorPickedClicked(object sender, DataGridViewCellEventArgs e)
+        private void EventMonitorCellClicked(object sender, DataGridViewCellEventArgs e)
         {
-            var type = dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].GetType();
-            if (type == typeof(DataGridViewCheckBoxCell))
+            if (e.RowIndex > -1)
             {
-                DataGridView dgv = (DataGridView) sender;
-                if (asAdmin)
+                var type = dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].GetType();
+                if (type == typeof(DataGridViewCheckBoxCell))
                 {
-                    // flip the sense true/false
-                    bool sense = true;
-                    object obj = dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                    if (obj != null)
+                    DataGridView dgv = (DataGridView) sender;
+                    if (asAdmin)
                     {
-                        sense = !obj.ToString().Equals("true", StringComparison.OrdinalIgnoreCase);
+                        // flip the sense true/false
+                        bool sense = true;
+                        object obj = dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                        if (obj != null)
+                        {
+                            sense = !obj.ToString().Equals("true", StringComparison.OrdinalIgnoreCase);
+                        }
+
+                        // update the data immediately
+                        Services.monitoredServices[e.RowIndex].Picked = sense;
+                        dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = (sense) ? "True" : "False";
+                        dgv.EndEdit();
+                    }
+                }
+            }
+            else
+            {
+                if (monitorSortColumnIndex != e.ColumnIndex)
+                {
+                    for (int i = 0; i < dataGridViewMonitor.Columns.Count; ++i)
+                    {
+                        dataGridViewMonitor.Columns[i].HeaderCell.SortGlyphDirection = SortOrder.None;
                     }
 
-                    // update the data immediately
-                    Services.monitoredServices[e.RowIndex].Picked = sense;
-                    dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = (sense) ? "True" : "False";
-                    dgv.EndEdit();
+                    monitorSortMode = SortOrder.None;
+                    dataGridViewMonitor.Refresh();
+                    monitorSortColumnIndex = e.ColumnIndex;
                 }
+
+                monitorSortMode = (monitorSortMode == SortOrder.None) ? SortOrder.Ascending :
+                    (monitorSortMode == SortOrder.Ascending) ? SortOrder.Descending : SortOrder.None;
+
+                dataGridViewMonitor.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection = monitorSortMode;
+
+                if (monitorSortMode != SortOrder.None)
+                {
+                    var name = dataGridViewMonitor.Columns[e.ColumnIndex].HeaderText;
+                    if (monitorSortMode == SortOrder.Ascending)
+                    {
+                        if (name.Equals("Name"))
+                        {
+                            Services.monitoredServices.Sort((x, y) =>
+                                String.Compare(x.Name, y.Name, StringComparison.OrdinalIgnoreCase));
+                        }
+                        else if (name.Equals("Identifier"))
+                        {
+                            Services.monitoredServices.Sort((x, y) =>
+                                String.Compare(x.Identifier, y.Identifier, StringComparison.Ordinal));
+                        }
+                        else if (name.Equals("Start Type"))
+                        {
+                            Services.monitoredServices.Sort((x, y) =>
+                                String.Compare(x.Startup, y.Startup, StringComparison.Ordinal));
+                        }
+                        else if (name.Equals("Status"))
+                        {
+                            Services.monitoredServices.Sort((x, y) =>
+                                String.Compare(x.Status, y.Status, StringComparison.Ordinal));
+                        }
+                    }
+                    else
+                    {
+                        if (name.Equals("Name"))
+                        {
+                            Services.monitoredServices.Sort((x, y) =>
+                                String.Compare(y.Name, x.Name, StringComparison.Ordinal));
+                        }
+                        else if (name.Equals("Identifier"))
+                        {
+                            Services.monitoredServices.Sort((x, y) =>
+                                String.Compare(y.Identifier, x.Identifier, StringComparison.Ordinal));
+                        }
+                        else if (name.Equals("Start Type"))
+                        {
+                            Services.monitoredServices.Sort((x, y) =>
+                                String.Compare(y.Startup, x.Startup, StringComparison.Ordinal));
+                        }
+                        else if (name.Equals("Status"))
+                        {
+                            Services.monitoredServices.Sort((x, y) =>
+                                String.Compare(y.Status, x.Status, StringComparison.Ordinal));
+                        }
+                    }
+                }
+                else
+                {
+                    // Reset context of Monitor tab data
+                    cfg.Load();
+                    PopulateMonitor();
+                    monitorSortMode = SortOrder.None;
+                    monitorSortColumnIndex = -1;
+                }
+
+                EventMonitorUpdateTick(sender, e);
+                dataGridViewMonitor.Refresh();
             }
         }
 
@@ -341,7 +439,8 @@ namespace CorionisServiceManager.NET
                         service.Refresh();
                         var status = service.Status.ToString();
 
-                        MonitoredService mon = Services.monitoredServices.First(id => id.Identifier == service.ServiceName);
+                        MonitoredService mon =
+                            Services.monitoredServices.First(id => id.Identifier == service.ServiceName);
                         mon.Startup = service.StartType.ToString();
                         mon.Status = status;
                         switch (status.ToLower())
@@ -459,6 +558,7 @@ namespace CorionisServiceManager.NET
                     row.DefaultCellStyle.BackColor = dataGridViewSelect.DefaultCellStyle.BackColor;
                 }
             }
+
             EventSelectDataComplete(sender, e);
         }
 
@@ -476,7 +576,8 @@ namespace CorionisServiceManager.NET
             {
                 DataGridViewRow row = dataGridViewSelect.Rows[i];
                 var c = row.Cells.Cast<DataGridViewCell>().First(o => o.OwningColumn.HeaderText == "Sel");
-                if (c != null && c.Value != null && c.Value.ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
+                if (c != null && c.Value != null &&
+                    c.Value.ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
                 {
                     ++count;
                 }
@@ -489,7 +590,8 @@ namespace CorionisServiceManager.NET
                 {
                     DataGridViewRow row = dataGridViewSelect.Rows[i];
                     var c = row.Cells.Cast<DataGridViewCell>().First(o => o.OwningColumn.HeaderText == "Sel");
-                    if (c != null && c.Value != null && c.Value.ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
+                    if (c != null && c.Value != null &&
+                        c.Value.ToString().Equals("true", StringComparison.OrdinalIgnoreCase))
                     {
                         cfg.SelectedServiceIds[n] = new Config.ServiceIdNamePair();
 
@@ -538,34 +640,121 @@ namespace CorionisServiceManager.NET
             }
         }
 
-        private void EventSelectPickedClicked(object sender, DataGridViewCellEventArgs e)
+        private void EventSelectCellClicked(object sender, DataGridViewCellEventArgs e)
         {
-            var type = dataGridViewSelect.Rows[e.RowIndex].Cells[e.ColumnIndex].GetType();
-            if (type == typeof(DataGridViewCheckBoxCell))
+            if (e.RowIndex > 0)
             {
-                DataGridView dgv = (DataGridView) sender;
-
-                // flip the sense true/false
-                bool sense = true;
-                object obj = dataGridViewSelect.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                if (obj != null)
+                var type = dataGridViewSelect.Rows[e.RowIndex].Cells[e.ColumnIndex].GetType();
+                if (type == typeof(DataGridViewCheckBoxCell))
                 {
-                    sense = !obj.ToString().Equals("true", StringComparison.OrdinalIgnoreCase);
+                    DataGridView dgv = (DataGridView) sender;
+
+                    // flip the sense true/false
+                    bool sense = true;
+                    object obj = dataGridViewSelect.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                    if (obj != null)
+                    {
+                        sense = !obj.ToString().Equals("true", StringComparison.OrdinalIgnoreCase);
+                    }
+
+                    // update the data immediately
+                    dataGridViewSelect.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = (sense) ? "True" : "False";
+                    if (sense)
+                    {
+                        dataGridViewSelect.Rows[e.RowIndex].DefaultCellStyle.ForeColor = cfg.ColorFromHex(cfg.SelectFore);
+                        dataGridViewSelect.Rows[e.RowIndex].DefaultCellStyle.BackColor = cfg.ColorFromHex(cfg.SelectBack);
+                    }
+                    else
+                    {
+                        dataGridViewSelect.Rows[e.RowIndex].DefaultCellStyle.ForeColor =
+                            dataGridViewSelect.DefaultCellStyle.ForeColor;
+                        dataGridViewSelect.Rows[e.RowIndex].DefaultCellStyle.BackColor =
+                            dataGridViewSelect.DefaultCellStyle.BackColor;
+                    }
+
+                    dgv.EndEdit();
                 }
-
-                // update the data immediately
-                dataGridViewSelect.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = (sense) ? "True" : "False";
-                if (sense)
+            }
+            else
+            {
+                if (selectSortColumnIndex > 0 && selectSortColumnIndex != e.ColumnIndex)
                 {
-                    dataGridViewSelect.Rows[e.RowIndex].DefaultCellStyle.ForeColor = cfg.ColorFromHex(cfg.SelectFore);
-                    dataGridViewSelect.Rows[e.RowIndex].DefaultCellStyle.BackColor = cfg.ColorFromHex(cfg.SelectBack);
+                    for (int i = 0; i < dataGridViewSelect.Columns.Count; ++i)
+                    {
+                        dataGridViewSelect.Columns[i].HeaderCell.SortGlyphDirection = SortOrder.None;
+                    }
+
+                    selectSortMode = SortOrder.None;
+                    dataGridViewSelect.Refresh();
+                }
+                selectSortColumnIndex = e.ColumnIndex;
+
+                selectSortMode = (selectSortMode == SortOrder.None) ? SortOrder.Ascending :
+                    (selectSortMode == SortOrder.Ascending) ? SortOrder.Descending : SortOrder.None;
+
+                dataGridViewSelect.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection = selectSortMode;
+
+                if (selectSortMode != SortOrder.None)
+                {
+                    var name = dataGridViewSelect.Columns[e.ColumnIndex].HeaderText;
+                    if (selectSortMode == SortOrder.Ascending)
+                    {
+                        // if (name.Equals("Name"))
+                        // {
+                        //     Services.selectedServices.Sort((x, y) =>
+                        //         String.Compare(x.Name, y.Name, StringComparison.OrdinalIgnoreCase));
+                        // }
+                        // else if (name.Equals("Identifier"))
+                        // {
+                        //     Services.selectedServices.Sort((x, y) =>
+                        //         String.Compare(x.Identifier, y.Identifier, StringComparison.Ordinal));
+                        // }
+                        // else if (name.Equals("Start Type"))
+                        // {
+                        //     Services.selectedServices.Sort((x, y) =>
+                        //         String.Compare(x.Startup, y.Startup, StringComparison.Ordinal));
+                        // }
+                        // else if (name.Equals("Status"))
+                        // {
+                        //     Services.selectedServices.Sort((x, y) =>
+                        //         String.Compare(x.Status, y.Status, StringComparison.Ordinal));
+                        // }
+                    }
+                    else
+                    {
+                        // if (name.Equals("Name"))
+                        // {
+                        //     Services.selectedServices.Sort((x, y) =>
+                        //         String.Compare(y.Name, x.Name, StringComparison.Ordinal));
+                        // }
+                        // else if (name.Equals("Identifier"))
+                        // {
+                        //     Services.selectedServices.Sort((x, y) =>
+                        //         String.Compare(y.Identifier, x.Identifier, StringComparison.Ordinal));
+                        // }
+                        // else if (name.Equals("Start Type"))
+                        // {
+                        //     Services.selectedServices.Sort((x, y) =>
+                        //         String.Compare(y.Startup, x.Startup, StringComparison.Ordinal));
+                        // }
+                        // else if (name.Equals("Status"))
+                        // {
+                        //     Services.selectedServices.Sort((x, y) =>
+                        //         String.Compare(y.Status, x.Status, StringComparison.Ordinal));
+                        }
                 }
                 else
                 {
-                    dataGridViewSelect.Rows[e.RowIndex].DefaultCellStyle.ForeColor = dataGridViewSelect.DefaultCellStyle.ForeColor;
-                    dataGridViewSelect.Rows[e.RowIndex].DefaultCellStyle.BackColor = dataGridViewSelect.DefaultCellStyle.BackColor;
+                    // Reset context of Select tab data
+                    cfg.Load();
+                    PopulateSelect();
+                    selectSortMode = SortOrder.None;
+                    selectSortColumnIndex = -1;
                 }
-                dgv.EndEdit();
+
+                 // EventSelectUpdateTick(sender, e);
+                dataGridViewSelect.Refresh();
+                
             }
         }
 
@@ -704,6 +893,21 @@ namespace CorionisServiceManager.NET
             if (cfg.DisplayMinimizedNotifications)
             {
                 ctxt.Popup(cfg.GetProgramTitle(), "CSM is running in the system tray");
+            }
+        }
+
+        private void MoveMonitorRow(int from, int to)
+        {
+            MonitoredService moveRow = Services.monitoredServices[from];
+            Services.monitoredServices.RemoveAt(from);
+            if (to >= 0)
+            {
+                Services.monitoredServices.Insert(to, moveRow);
+            }
+            else
+            {
+                // If dragged/sorted out-of-bounds add it to the bottom
+                Services.monitoredServices.Add(moveRow);
             }
         }
 
@@ -926,19 +1130,18 @@ namespace CorionisServiceManager.NET
             // If the drag operation was a move then remove and insert the row.
             if (e.Effect == DragDropEffects.Move)
             {
-                MonitoredService moveRow = Services.monitoredServices[rowIndexFromMouseDown];
-                Services.monitoredServices.RemoveAt(rowIndexFromMouseDown);
-                if (rowIndexOfItemUnderMouseToDrop >= 0)
+                MoveMonitorRow(rowIndexFromMouseDown, rowIndexOfItemUnderMouseToDrop);
+                dataGridViewMonitor.ClearSelection();
+
+                // Clear any sort
+                for (int i = 0; i < dataGridViewMonitor.Columns.Count; ++i)
                 {
-                    Services.monitoredServices.Insert(rowIndexOfItemUnderMouseToDrop, moveRow);
-                }
-                else
-                {
-                    // If dragged out-of-bounds add it to the bottom
-                    Services.monitoredServices.Add(moveRow);
+                    dataGridViewMonitor.Columns[i].HeaderCell.SortGlyphDirection = SortOrder.None;
                 }
 
-                dataGridViewMonitor.ClearSelection();
+                monitorSortMode = SortOrder.None;
+                monitorSortColumnIndex = -1;
+                dataGridViewMonitor.Refresh();
                 EventMonitorUpdateTick(sender, e);
             }
         }

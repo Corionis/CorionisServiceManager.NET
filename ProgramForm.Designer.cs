@@ -34,19 +34,19 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgramForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,7 +59,6 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabMonitor = new System.Windows.Forms.TabPage();
             this.dataGridViewMonitor = new System.Windows.Forms.DataGridView();
-            this.monitorPickedCheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.toolStripMonitor = new System.Windows.Forms.ToolStrip();
             this.toolStripMonitorAll = new System.Windows.Forms.ToolStripButton();
             this.toolStripMonitorNone = new System.Windows.Forms.ToolStripButton();
@@ -83,19 +82,19 @@
             this.optionsCheckBoxLogToFile = new System.Windows.Forms.CheckBox();
             this.groupBoxMonitorColors = new System.Windows.Forms.GroupBox();
             this.optionsSelectBack = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.optionsSelectBackLabel = new System.Windows.Forms.Label();
             this.optionsSelectFore = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.optionsSelectForeLabel = new System.Windows.Forms.Label();
+            this.optionsRunningForeLabel = new System.Windows.Forms.Label();
             this.optionsRunningFore = new System.Windows.Forms.Label();
             this.optionsUnknownBack = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.optionsStoppedForeLabel = new System.Windows.Forms.Label();
             this.optionsStoppedFore = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.optionsUnknownBackLabel = new System.Windows.Forms.Label();
+            this.optionsRunningBackLabel = new System.Windows.Forms.Label();
+            this.optionsStoppedBackLabel = new System.Windows.Forms.Label();
             this.optionsStoppedBack = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.optionsUnknownForeLabel = new System.Windows.Forms.Label();
             this.optionsRunningBack = new System.Windows.Forms.Label();
             this.optionsUnknownFore = new System.Windows.Forms.Label();
             this.optionsCheckBoxDisplayNotifications = new System.Windows.Forms.CheckBox();
@@ -113,10 +112,6 @@
             this.toolStripOptionsDefault = new System.Windows.Forms.ToolStripButton();
             this.tabLog = new System.Windows.Forms.TabPage();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.monitorNameTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.monitorIdentifierTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.monitorStartupTypeTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.monitorStatusTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.monitoredServicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.selectNameTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.selectIdentifierTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -124,6 +119,11 @@
             this.selectStatusTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.servicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.configBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.monitorPickedCheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.monitorNameTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.monitorIdentifierTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.monitorStartupTypeTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.monitorStatusTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabMonitor.SuspendLayout();
@@ -288,23 +288,6 @@
             this.dataGridViewMonitor.RowHeadersVisible = false;
             this.dataGridViewMonitor.Size = new System.Drawing.Size(785, 359);
             this.dataGridViewMonitor.TabIndex = 0;
-            // 
-            // monitorPickedCheckBox
-            // 
-            this.monitorPickedCheckBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.monitorPickedCheckBox.DataPropertyName = "Picked";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.monitorPickedCheckBox.DefaultCellStyle = dataGridViewCellStyle3;
-            this.monitorPickedCheckBox.FalseValue = "False";
-            this.monitorPickedCheckBox.HeaderText = "Sel";
-            this.monitorPickedCheckBox.IndeterminateValue = "False";
-            this.monitorPickedCheckBox.MinimumWidth = 32;
-            this.monitorPickedCheckBox.Name = "monitorPickedCheckBox";
-            this.monitorPickedCheckBox.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.monitorPickedCheckBox.ToolTipText = "Select";
-            this.monitorPickedCheckBox.TrueValue = "True";
-            this.monitorPickedCheckBox.Width = 32;
             // 
             // toolStripMonitor
             // 
@@ -619,19 +602,19 @@
             this.groupBoxMonitorColors.AutoSize = true;
             this.groupBoxMonitorColors.BackColor = System.Drawing.SystemColors.Window;
             this.groupBoxMonitorColors.Controls.Add(this.optionsSelectBack);
-            this.groupBoxMonitorColors.Controls.Add(this.label5);
+            this.groupBoxMonitorColors.Controls.Add(this.optionsSelectBackLabel);
             this.groupBoxMonitorColors.Controls.Add(this.optionsSelectFore);
-            this.groupBoxMonitorColors.Controls.Add(this.label2);
-            this.groupBoxMonitorColors.Controls.Add(this.label3);
+            this.groupBoxMonitorColors.Controls.Add(this.optionsSelectForeLabel);
+            this.groupBoxMonitorColors.Controls.Add(this.optionsRunningForeLabel);
             this.groupBoxMonitorColors.Controls.Add(this.optionsRunningFore);
             this.groupBoxMonitorColors.Controls.Add(this.optionsUnknownBack);
-            this.groupBoxMonitorColors.Controls.Add(this.label4);
+            this.groupBoxMonitorColors.Controls.Add(this.optionsStoppedForeLabel);
             this.groupBoxMonitorColors.Controls.Add(this.optionsStoppedFore);
-            this.groupBoxMonitorColors.Controls.Add(this.label12);
-            this.groupBoxMonitorColors.Controls.Add(this.label8);
-            this.groupBoxMonitorColors.Controls.Add(this.label10);
+            this.groupBoxMonitorColors.Controls.Add(this.optionsUnknownBackLabel);
+            this.groupBoxMonitorColors.Controls.Add(this.optionsRunningBackLabel);
+            this.groupBoxMonitorColors.Controls.Add(this.optionsStoppedBackLabel);
             this.groupBoxMonitorColors.Controls.Add(this.optionsStoppedBack);
-            this.groupBoxMonitorColors.Controls.Add(this.label6);
+            this.groupBoxMonitorColors.Controls.Add(this.optionsUnknownForeLabel);
             this.groupBoxMonitorColors.Controls.Add(this.optionsRunningBack);
             this.groupBoxMonitorColors.Controls.Add(this.optionsUnknownFore);
             this.groupBoxMonitorColors.Location = new System.Drawing.Point(9, 146);
@@ -654,14 +637,14 @@
             this.optionsSelectBack.TabIndex = 37;
             this.toolTip1.SetToolTip(this.optionsSelectBack, "Click to change color");
             // 
-            // label5
+            // optionsSelectBackLabel
             // 
-            this.label5.Location = new System.Drawing.Point(209, 100);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(100, 23);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Select background";
-            this.toolTip1.SetToolTip(this.label5, "Select tab background color for selected services\r\n");
+            this.optionsSelectBackLabel.Location = new System.Drawing.Point(209, 100);
+            this.optionsSelectBackLabel.Name = "optionsSelectBackLabel";
+            this.optionsSelectBackLabel.Size = new System.Drawing.Size(100, 23);
+            this.optionsSelectBackLabel.TabIndex = 0;
+            this.optionsSelectBackLabel.Text = "Select background";
+            this.toolTip1.SetToolTip(this.optionsSelectBackLabel, "Select tab background color for selected services\r\n");
             // 
             // optionsSelectFore
             // 
@@ -676,24 +659,24 @@
             this.optionsSelectFore.TabIndex = 36;
             this.toolTip1.SetToolTip(this.optionsSelectFore, "Click to change color");
             // 
-            // label2
+            // optionsSelectForeLabel
             // 
-            this.label2.Location = new System.Drawing.Point(35, 100);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 23);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Select text";
-            this.toolTip1.SetToolTip(this.label2, "Select tab text color for selected services");
+            this.optionsSelectForeLabel.Location = new System.Drawing.Point(35, 100);
+            this.optionsSelectForeLabel.Name = "optionsSelectForeLabel";
+            this.optionsSelectForeLabel.Size = new System.Drawing.Size(73, 23);
+            this.optionsSelectForeLabel.TabIndex = 0;
+            this.optionsSelectForeLabel.Text = "Select text";
+            this.toolTip1.SetToolTip(this.optionsSelectForeLabel, "Select tab text color for selected services");
             // 
-            // label3
+            // optionsRunningForeLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(35, 25);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Running text";
-            this.toolTip1.SetToolTip(this.label3, "Monitor text color for a running service");
+            this.optionsRunningForeLabel.AutoSize = true;
+            this.optionsRunningForeLabel.Location = new System.Drawing.Point(35, 25);
+            this.optionsRunningForeLabel.Name = "optionsRunningForeLabel";
+            this.optionsRunningForeLabel.Size = new System.Drawing.Size(67, 13);
+            this.optionsRunningForeLabel.TabIndex = 0;
+            this.optionsRunningForeLabel.Text = "Running text";
+            this.toolTip1.SetToolTip(this.optionsRunningForeLabel, "Monitor text color for a running service");
             // 
             // optionsRunningFore
             // 
@@ -722,15 +705,15 @@
             this.optionsUnknownBack.TabIndex = 35;
             this.toolTip1.SetToolTip(this.optionsUnknownBack, "Click to change color");
             // 
-            // label4
+            // optionsStoppedForeLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(35, 49);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 13);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Stopped text";
-            this.toolTip1.SetToolTip(this.label4, "Monitor text color for a stopped service");
+            this.optionsStoppedForeLabel.AutoSize = true;
+            this.optionsStoppedForeLabel.Location = new System.Drawing.Point(35, 49);
+            this.optionsStoppedForeLabel.Name = "optionsStoppedForeLabel";
+            this.optionsStoppedForeLabel.Size = new System.Drawing.Size(67, 13);
+            this.optionsStoppedForeLabel.TabIndex = 0;
+            this.optionsStoppedForeLabel.Text = "Stopped text";
+            this.toolTip1.SetToolTip(this.optionsStoppedForeLabel, "Monitor text color for a stopped service");
             // 
             // optionsStoppedFore
             // 
@@ -745,35 +728,35 @@
             this.optionsStoppedFore.TabIndex = 32;
             this.toolTip1.SetToolTip(this.optionsStoppedFore, "Click to change color");
             // 
-            // label12
+            // optionsUnknownBackLabel
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(209, 73);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(113, 13);
-            this.label12.TabIndex = 0;
-            this.label12.Text = "Unknown background";
-            this.toolTip1.SetToolTip(this.label12, "Monitor background color for a service in an unknown state");
+            this.optionsUnknownBackLabel.AutoSize = true;
+            this.optionsUnknownBackLabel.Location = new System.Drawing.Point(209, 73);
+            this.optionsUnknownBackLabel.Name = "optionsUnknownBackLabel";
+            this.optionsUnknownBackLabel.Size = new System.Drawing.Size(113, 13);
+            this.optionsUnknownBackLabel.TabIndex = 0;
+            this.optionsUnknownBackLabel.Text = "Unknown background";
+            this.toolTip1.SetToolTip(this.optionsUnknownBackLabel, "Monitor background color for a service in an unknown state");
             // 
-            // label8
+            // optionsRunningBackLabel
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(209, 25);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(107, 13);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Running background";
-            this.toolTip1.SetToolTip(this.label8, "Monitor background color for a running service");
+            this.optionsRunningBackLabel.AutoSize = true;
+            this.optionsRunningBackLabel.Location = new System.Drawing.Point(209, 25);
+            this.optionsRunningBackLabel.Name = "optionsRunningBackLabel";
+            this.optionsRunningBackLabel.Size = new System.Drawing.Size(107, 13);
+            this.optionsRunningBackLabel.TabIndex = 0;
+            this.optionsRunningBackLabel.Text = "Running background";
+            this.toolTip1.SetToolTip(this.optionsRunningBackLabel, "Monitor background color for a running service");
             // 
-            // label10
+            // optionsStoppedBackLabel
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(209, 49);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(107, 13);
-            this.label10.TabIndex = 0;
-            this.label10.Text = "Stopped background";
-            this.toolTip1.SetToolTip(this.label10, "Monitor background color for a stopped service");
+            this.optionsStoppedBackLabel.AutoSize = true;
+            this.optionsStoppedBackLabel.Location = new System.Drawing.Point(209, 49);
+            this.optionsStoppedBackLabel.Name = "optionsStoppedBackLabel";
+            this.optionsStoppedBackLabel.Size = new System.Drawing.Size(107, 13);
+            this.optionsStoppedBackLabel.TabIndex = 0;
+            this.optionsStoppedBackLabel.Text = "Stopped background";
+            this.toolTip1.SetToolTip(this.optionsStoppedBackLabel, "Monitor background color for a stopped service");
             // 
             // optionsStoppedBack
             // 
@@ -788,15 +771,15 @@
             this.optionsStoppedBack.TabIndex = 33;
             this.toolTip1.SetToolTip(this.optionsStoppedBack, "Click to change color");
             // 
-            // label6
+            // optionsUnknownForeLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(35, 73);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(73, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Unknown text";
-            this.toolTip1.SetToolTip(this.label6, "Monitor text color for a service in an unknown state");
+            this.optionsUnknownForeLabel.AutoSize = true;
+            this.optionsUnknownForeLabel.Location = new System.Drawing.Point(35, 73);
+            this.optionsUnknownForeLabel.Name = "optionsUnknownForeLabel";
+            this.optionsUnknownForeLabel.Size = new System.Drawing.Size(73, 13);
+            this.optionsUnknownForeLabel.TabIndex = 0;
+            this.optionsUnknownForeLabel.Text = "Unknown text";
+            this.toolTip1.SetToolTip(this.optionsUnknownForeLabel, "Monitor text color for a service in an unknown state");
             // 
             // optionsRunningBack
             // 
@@ -991,48 +974,6 @@
             this.tabLog.Text = "Log";
             this.tabLog.UseVisualStyleBackColor = true;
             // 
-            // monitorNameTextBox
-            // 
-            this.monitorNameTextBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.monitorNameTextBox.DataPropertyName = "Name";
-            this.monitorNameTextBox.HeaderText = "Name";
-            this.monitorNameTextBox.Name = "monitorNameTextBox";
-            this.monitorNameTextBox.ToolTipText = "Name of service - Editable";
-            // 
-            // monitorIdentifierTextBox
-            // 
-            this.monitorIdentifierTextBox.DataPropertyName = "Identifier";
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.monitorIdentifierTextBox.DefaultCellStyle = dataGridViewCellStyle4;
-            this.monitorIdentifierTextBox.FillWeight = 90F;
-            this.monitorIdentifierTextBox.HeaderText = "Identifier";
-            this.monitorIdentifierTextBox.Name = "monitorIdentifierTextBox";
-            this.monitorIdentifierTextBox.ReadOnly = true;
-            this.monitorIdentifierTextBox.ToolTipText = "Internal service id";
-            // 
-            // monitorStartupTypeTextBox
-            // 
-            this.monitorStartupTypeTextBox.DataPropertyName = "Startup";
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.monitorStartupTypeTextBox.DefaultCellStyle = dataGridViewCellStyle5;
-            this.monitorStartupTypeTextBox.FillWeight = 90F;
-            this.monitorStartupTypeTextBox.HeaderText = "Start Type";
-            this.monitorStartupTypeTextBox.Name = "monitorStartupTypeTextBox";
-            this.monitorStartupTypeTextBox.ReadOnly = true;
-            this.monitorStartupTypeTextBox.ToolTipText = "Service startup type";
-            // 
-            // monitorStatusTextBox
-            // 
-            this.monitorStatusTextBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.monitorStatusTextBox.DataPropertyName = "Status";
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.monitorStatusTextBox.DefaultCellStyle = dataGridViewCellStyle6;
-            this.monitorStatusTextBox.HeaderText = "Status";
-            this.monitorStatusTextBox.Name = "monitorStatusTextBox";
-            this.monitorStatusTextBox.ReadOnly = true;
-            this.monitorStatusTextBox.ToolTipText = "Current service status";
-            this.monitorStatusTextBox.Width = 62;
-            // 
             // monitoredServicesBindingSource
             // 
             this.monitoredServicesBindingSource.DataMember = "monitoredServices";
@@ -1088,6 +1029,66 @@
             // 
             this.configBindingSource.DataSource = typeof(CorionisServiceManager.NET.Config);
             // 
+            // monitorPickedCheckBox
+            // 
+            this.monitorPickedCheckBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.monitorPickedCheckBox.DataPropertyName = "Picked";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.monitorPickedCheckBox.DefaultCellStyle = dataGridViewCellStyle3;
+            this.monitorPickedCheckBox.FalseValue = "False";
+            this.monitorPickedCheckBox.HeaderText = "Sel";
+            this.monitorPickedCheckBox.IndeterminateValue = "False";
+            this.monitorPickedCheckBox.MinimumWidth = 32;
+            this.monitorPickedCheckBox.Name = "monitorPickedCheckBox";
+            this.monitorPickedCheckBox.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.monitorPickedCheckBox.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.monitorPickedCheckBox.ToolTipText = "Select";
+            this.monitorPickedCheckBox.TrueValue = "True";
+            this.monitorPickedCheckBox.Width = 32;
+            // 
+            // monitorNameTextBox
+            // 
+            this.monitorNameTextBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.monitorNameTextBox.DataPropertyName = "Name";
+            this.monitorNameTextBox.HeaderText = "Name";
+            this.monitorNameTextBox.Name = "monitorNameTextBox";
+            this.monitorNameTextBox.ToolTipText = "Name of service - Editable";
+            // 
+            // monitorIdentifierTextBox
+            // 
+            this.monitorIdentifierTextBox.DataPropertyName = "Identifier";
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.monitorIdentifierTextBox.DefaultCellStyle = dataGridViewCellStyle4;
+            this.monitorIdentifierTextBox.FillWeight = 90F;
+            this.monitorIdentifierTextBox.HeaderText = "Identifier";
+            this.monitorIdentifierTextBox.Name = "monitorIdentifierTextBox";
+            this.monitorIdentifierTextBox.ReadOnly = true;
+            this.monitorIdentifierTextBox.ToolTipText = "Internal service id";
+            // 
+            // monitorStartupTypeTextBox
+            // 
+            this.monitorStartupTypeTextBox.DataPropertyName = "Startup";
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.monitorStartupTypeTextBox.DefaultCellStyle = dataGridViewCellStyle5;
+            this.monitorStartupTypeTextBox.FillWeight = 90F;
+            this.monitorStartupTypeTextBox.HeaderText = "Start Type";
+            this.monitorStartupTypeTextBox.Name = "monitorStartupTypeTextBox";
+            this.monitorStartupTypeTextBox.ReadOnly = true;
+            this.monitorStartupTypeTextBox.ToolTipText = "Service startup type";
+            // 
+            // monitorStatusTextBox
+            // 
+            this.monitorStatusTextBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.monitorStatusTextBox.DataPropertyName = "Status";
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.monitorStatusTextBox.DefaultCellStyle = dataGridViewCellStyle6;
+            this.monitorStatusTextBox.HeaderText = "Status";
+            this.monitorStatusTextBox.Name = "monitorStatusTextBox";
+            this.monitorStatusTextBox.ReadOnly = true;
+            this.monitorStatusTextBox.ToolTipText = "Current service status";
+            this.monitorStatusTextBox.Width = 62;
+            // 
             // ProgramForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1134,8 +1135,8 @@
         private System.Windows.Forms.Label optionsSelectBack;
         private System.Windows.Forms.Label optionsSelectFore;
 
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label optionsSelectForeLabel;
+        private System.Windows.Forms.Label optionsSelectBackLabel;
 
         private System.Windows.Forms.ToolStripButton toolStripMonitorAll;
         private System.Windows.Forms.ToolStripButton toolStripMonitorNone;
@@ -1179,11 +1180,6 @@
         private System.Windows.Forms.ToolStripButton toolStripMonitorManual;
         private System.Windows.Forms.ToolStripButton toolStripMonitorDisable;
         private System.Windows.Forms.DataGridView dataGridViewMonitor;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn monitorPickedCheckBox;
-        private System.Windows.Forms.DataGridViewTextBoxColumn monitorNameTextBox;
-        private System.Windows.Forms.DataGridViewTextBoxColumn monitorIdentifierTextBox;
-        private System.Windows.Forms.DataGridViewTextBoxColumn monitorStartupTypeTextBox;
-        private System.Windows.Forms.DataGridViewTextBoxColumn monitorStatusTextBox;
         private System.Windows.Forms.ToolStrip toolStripOptions;
         private System.Windows.Forms.ToolStripButton toolStripOptionsCancel;
         private System.Windows.Forms.ToolStripButton toolStripOptionsSave;
@@ -1198,16 +1194,16 @@
         private System.Windows.Forms.CheckBox optionsCheckBoxMinimizeOnClose;
         private System.Windows.Forms.CheckBox optionsCheckBoxStartMinimized;
         private System.Windows.Forms.Label optionsUnknownBack;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label optionsUnknownBackLabel;
         private System.Windows.Forms.Label optionsStoppedBack;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label optionsStoppedBackLabel;
         private System.Windows.Forms.Label optionsRunningBack;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label optionsRunningBackLabel;
         private System.Windows.Forms.Label optionsUnknownFore;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label optionsUnknownForeLabel;
         private System.Windows.Forms.Label optionsStoppedFore;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label optionsStoppedForeLabel;
+        private System.Windows.Forms.Label optionsRunningForeLabel;
         private System.Windows.Forms.Label optionsRunningFore;
         private System.Windows.Forms.GroupBox groupBoxMonitorColors;
         private System.Windows.Forms.GroupBox groupBoxBehavior;
@@ -1220,5 +1216,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn selectIdentifierTextBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn selectStartupTypeTextBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn selectStatusTextBox;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn monitorPickedCheckBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn monitorNameTextBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn monitorIdentifierTextBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn monitorStartupTypeTextBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn monitorStatusTextBox;
     }
 }

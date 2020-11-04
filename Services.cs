@@ -68,7 +68,7 @@ namespace CorionisServiceManager.NET
         public string Status { get; set; }
     }
 
-    class ServiceComparer : IComparer
+    public class ServiceComparer : IComparer
     {
         public int Compare(object x, object y)
         {
