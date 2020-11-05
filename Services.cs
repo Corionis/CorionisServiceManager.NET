@@ -6,7 +6,7 @@ using System.ServiceProcess;
 namespace CorionisServiceManager.NET
 {
     /// <summary>
-    /// services class.
+    /// Services class.
     /// Holds the services used by the GUI. Members are bound to Windows Forms components.
     /// </summary>
     public class Services
@@ -61,6 +61,15 @@ namespace CorionisServiceManager.NET
                 }
             }
         }
+
+        public void LogMonitoredServices(Log logger)
+        {
+            logger.Write("Currently Monitored Services:");
+            foreach (var mon in monitoredServices)
+            {
+                logger.Write("+ " + mon.Name);
+            }
+        }
     }
 
     public class MonitoredService
@@ -76,8 +85,7 @@ namespace CorionisServiceManager.NET
     {
         public int Compare(object x, object y)
         {
-            return (new CaseInsensitiveComparer()).Compare(((ServiceController)x).DisplayName, ((ServiceController)y).DisplayName);
+            return (new CaseInsensitiveComparer()).Compare(((ServiceController) x).DisplayName, ((ServiceController) y).DisplayName);
         }
     }
-
 }

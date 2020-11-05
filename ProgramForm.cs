@@ -13,7 +13,7 @@ namespace CorionisServiceManager.NET
 {
     /// <summary>
     /// ProgramForm class.
-    /// The application implementation of the main Windows Form.
+    /// The application logic of the main Windows Form.
     /// </summary>
     public partial class ProgramForm : Form
     {
@@ -21,6 +21,7 @@ namespace CorionisServiceManager.NET
         private bool asAdmin = false;
         private Config cfg;
         private CsmContext ctxt;
+        public Log logger { get; }
         private int monitorSortColumnIndex = -1;
         private SortOrder monitorSortMode = SortOrder.None;
         private Timer monitorUpdateTimer;
@@ -65,6 +66,9 @@ namespace CorionisServiceManager.NET
             onlineDocumentationToolStripMenuItem.Click += EventMenuHelpOnlineDocumentation;
             restartToolStripMenuItem.Click += EventMenuFileRestart;
             exitToolStripMenuItem.Click += EventMenuFileExit;
+
+            // Tab control
+            tabControl.Click += EventTabFocused;
 
             // Monitor tab
             toolStripMonitorAll.Click += EventMonitorButtonAll;
@@ -112,12 +116,21 @@ namespace CorionisServiceManager.NET
             optionsSelectBackLabel.Click += EventOptionsSelectBack;
 
             // Log tab
+            logger = new Log(cfg, logTextBox);
+            logBindingSource.DataSource = logger;
+            toolStripLogButtonBottom.Click += EventLogButtonBottom;
+            toolStripLogButtonClear.Click += EventLogButtonClear;
+            toolStripLogButtonSave.Click += EventLogButtonSave;
+            toolStripLogButtonView.Click += EventLogButtonView;
 
             // Populate the data on all the tabs
             services = new Services(ref cfg);
             PopulateSelect(); // initialize Select to populate services first
             PopulateMonitor();
             PopulateOptions();
+
+            logger.Write(cfg.Program + " Version " + cfg.Version + " started");
+            services.LogMonitoredServices(logger);
 
             // Setup the Monitor tab update timer
             monitorUpdateTimer = new Timer();
@@ -258,6 +271,30 @@ namespace CorionisServiceManager.NET
 
                 adminChecked = true;
             }
+        }
+
+        private void EventLogButtonBottom(object sender, EventArgs e)
+        {
+            logTextBox.Focus();
+            logTextBox.SelectionStart = logger.logBuffer.Length - 1;
+            logTextBox.ScrollToCaret();
+        }
+
+        private void EventLogButtonClear(object sender, EventArgs e)
+        {
+            logger.Clear();
+            logger.Write(cfg.Program + " Version " + cfg.Version + " log cleared");
+        }
+
+        private void EventLogButtonSave(object sender, EventArgs e)
+        {
+            logger.Save();
+        }
+
+        private void EventLogButtonView(object sender, EventArgs e)
+        {
+            logger.Save();
+            Process.Start(logger.GetLogFilename());
         }
 
         private void EventMenuHelpAbout(object sender, EventArgs e)
@@ -458,7 +495,7 @@ namespace CorionisServiceManager.NET
         {
             if (e.KeyCode == Keys.F3)
             {
-                // ignore F3 Sort
+                // ignore F3 Sort, direct sorting does not support it
                 e.Handled = true;
             }
         }
@@ -479,6 +516,7 @@ namespace CorionisServiceManager.NET
                         var status = service.Status.ToString();
 
                         MonitoredService mon = services.monitoredServices.First(id => id.Identifier == service.ServiceName);
+                        var current = mon.Status;
                         mon.Startup = service.StartType.ToString();
                         mon.Status = status;
                         switch (status.ToLower())
@@ -492,6 +530,11 @@ namespace CorionisServiceManager.NET
                             default:
                                 row.DefaultCellStyle = rowStyleUnknown;
                                 break;
+                        }
+
+                        if (!status.Equals(current))
+                        {
+                            logger.Write("Service " + mon.Name + " is " + status);
                         }
                     }
                 }
@@ -651,6 +694,7 @@ namespace CorionisServiceManager.NET
             dataGridViewMonitor.DataSource = services.monitoredServices; // required to get new instance
             AugmentMonitorCells();
             dataGridViewMonitor.Refresh();
+            services.LogMonitoredServices(logger);
         }
 
         private void EventSelectDataComplete(object sender, EventArgs e)
@@ -766,6 +810,16 @@ namespace CorionisServiceManager.NET
             }
         }
 
+        private void EventTabFocused(object sender, EventArgs e)
+        {
+            if (((TabControl)sender).SelectedTab.Name.Equals("tabLog"))
+            {
+                logTextBox.Focus();
+                logTextBox.SelectionStart = logger.logBuffer.Length - 1;
+                logTextBox.ScrollToCaret();
+            }
+        }
+
         #endregion
 
         // -----------------------------------------------------------------------------------------------------------------------
@@ -786,7 +840,7 @@ namespace CorionisServiceManager.NET
             foreach (DataGridViewRow row in dataGridViewMonitor.Rows)
             {
                 var cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Sel");
-                /*
+                /* The tooltip obscures the control and clicks are missed
                 if (!asAdmin)
                 {
                     cell.ToolTipText = cfg.ShowGridTooltips ? "Click to select (Disabled)" : "";
@@ -843,13 +897,22 @@ namespace CorionisServiceManager.NET
                     switch (command.ToLower())
                     {
                         case "auto":
-                            ManageStartupType(service.ServiceName, "auto");
+                            if (service.StartType != ServiceStartMode.Automatic)
+                            {
+                                ManageStartupType(service.ServiceName, service.DisplayName, "auto");
+                            }
                             break;
                         case "disable":
-                            ManageStartupType(service.ServiceName, "disabled");
+                            if (service.StartType != ServiceStartMode.Disabled)
+                            {
+                                ManageStartupType(service.ServiceName, service.DisplayName, "disabled");
+                            }
                             break;
                         case "manual":
-                            ManageStartupType(service.ServiceName, "demand");
+                            if (service.StartType != ServiceStartMode.Manual)
+                            {
+                                ManageStartupType(service.ServiceName, service.DisplayName, "demand");
+                            }
                             break;
                         case "start":
                             if (service.Status != ServiceControllerStatus.Running)
@@ -866,7 +929,7 @@ namespace CorionisServiceManager.NET
             }
         }
 
-        private int ManageStartupType(String id, String type)
+        private int ManageStartupType(String id, String name, String type)
         {
             var startInfo = new ProcessStartInfo
             {
@@ -884,6 +947,7 @@ namespace CorionisServiceManager.NET
 
                 process.WaitForExit();
                 int status = process.ExitCode;
+                logger.Write("Service " + name + " set to " + type.ToUpper());
                 return status;
             }
         }
@@ -1032,8 +1096,8 @@ namespace CorionisServiceManager.NET
             {
                 using (TaskService ts = new TaskService())
                 {
-                    var task = ts.GetTask(Assembly.GetEntryAssembly().Location);
-                    if (task == null && cfg.StartAtLogin)
+                    var task = ts.GetTask(cfg.Program);
+                    if (task == null)
                     {
                         // Create a new task definition and assign properties
                         TaskDefinition td = ts.NewTask();
@@ -1045,7 +1109,9 @@ namespace CorionisServiceManager.NET
                         td.Principal.RunLevel = TaskRunLevel.Highest;
 
                         // Create a trigger that will fire the task when the user logs-in
-                        td.Triggers.Add(new LogonTrigger());
+                        var trigger = new LogonTrigger();
+                        trigger.Enabled = cfg.StartAtLogin;
+                        td.Triggers.Add(trigger);
 
                         // Create an action that will launch this app whenever the trigger fires
                         td.Actions.Add(new ExecAction(Assembly.GetEntryAssembly().Location, "", null));
@@ -1053,9 +1119,10 @@ namespace CorionisServiceManager.NET
                         // Register the task in the root folder
                         ts.RootFolder.RegisterTaskDefinition(cfg.Program, td);
                     }
-                    else if (task != null && !cfg.StartAtLogin)
+                    else if (task != null)
                     {
-                        ts.RootFolder.DeleteTask(cfg.Program, false);
+                        task.Definition.Triggers[0].Enabled = cfg.StartAtLogin;
+                        task.RegisterChanges();
                     }
                 }
             }
@@ -1205,5 +1272,6 @@ namespace CorionisServiceManager.NET
                 }
             }
         }
+
     }
 }

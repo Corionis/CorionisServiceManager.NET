@@ -13,11 +13,14 @@ namespace CorionisServiceManager.NET
     public class Config
     {
         #region Constants
+
         public String Program { get; set; } = "Corionis Service Manager";
         public String Version { get; set; } = "2020.1";
+
         #endregion
 
         #region Options
+
         public String FriendlyName { get; set; }
         public bool StartAtLogin { get; set; }
         public bool StartMinimized { get; set; }
@@ -35,17 +38,22 @@ namespace CorionisServiceManager.NET
         public String UnknownBack { get; set; }
         public String SelectFore { get; set; }
         public String SelectBack { get; set; }
+
         #endregion
 
         #region Coordinates
+
         public int Top { get; set; }
         public int Left { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+
         #endregion
 
         #region Selected
+
         public ServiceIdNamePair[] SelectedServiceIds { get; set; }
+
         #endregion
 
         // Class for each service identifer/name pair where name is editable
@@ -62,20 +70,36 @@ namespace CorionisServiceManager.NET
 
         public Color ColorFromHex(String hexColor)
         {
-            Color color = System.Drawing.ColorTranslator.FromHtml(hexColor);;
+            Color color = System.Drawing.ColorTranslator.FromHtml(hexColor);
+            ;
             return color;
         }
-        
+
         public String ColorToHex(System.Drawing.Color c)
         {
             return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
-        }        
+        }
 
-        private string GetConfigFilename()
+        public string GetConfigFilename()
         {
             string path = Assembly.GetEntryAssembly().Location;
             path = path.Replace(".exe", ".json");
             return path;
+        }
+
+        public String GetProgramTitle()
+        {
+            String result = "";
+            if (FriendlyName.Length > 0)
+            {
+                result = FriendlyName + " : CSM";
+            }
+            else
+            {
+                result = Program + " " + Version;
+            }
+
+            return result;
         }
 
         public void Load()
@@ -108,25 +132,11 @@ namespace CorionisServiceManager.NET
                 Height = data.Height;
                 SelectedServiceIds = data.SelectedServiceIds;
             }
-            catch (FileNotFoundException )
+            catch (FileNotFoundException)
             {
                 SetConfigDefaults();
-                SelectedServiceIds = new ServiceIdNamePair[] {};
+                SelectedServiceIds = new ServiceIdNamePair[] { };
             }
-        }
-
-        public String GetProgramTitle()
-        {
-            String result = "";
-            if (FriendlyName.Length > 0)
-            {
-                result = FriendlyName + " : CSM";
-            }
-            else
-            {
-                result = Program + " " + Version;
-            }
-            return result;
         }
 
         public void Save()
@@ -160,6 +170,5 @@ namespace CorionisServiceManager.NET
             Height = 440;
             // don't replace selected services
         }
-
     }
 }

@@ -98,6 +98,7 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Config.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Services.cs" />
     <Compile Include="ProgramForm.cs">
       <SubType>Form</SubType>
@@ -125,6 +126,7 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Config.datasource" />
+    <None Include="Properties\DataSources\Log.datasource" />
     <None Include="Properties\DataSources\Services.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

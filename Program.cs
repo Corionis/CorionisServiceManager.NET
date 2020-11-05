@@ -77,6 +77,8 @@ namespace CorionisServiceManager.NET
 
         public void Exit(object sender, EventArgs e)
         {
+            form.logger.Write("Exit");
+
             // Save size and coordinates
             if (form != null && !form.IsDisposed)
             {
