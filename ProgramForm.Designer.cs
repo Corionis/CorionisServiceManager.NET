@@ -421,7 +421,7 @@
             this.toolStripSelectRefresh.Name = "toolStripSelectRefresh";
             this.toolStripSelectRefresh.Size = new System.Drawing.Size(50, 21);
             this.toolStripSelectRefresh.Text = "&Refresh";
-            this.toolStripSelectRefresh.ToolTipText = "Refresh All Services from Windows";
+            this.toolStripSelectRefresh.ToolTipText = "Refresh All services from Windows";
             //
             // toolStripSelectCancel
             //
@@ -942,14 +942,14 @@
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlLight;
             this.monitorPickedCheckBox.DefaultCellStyle = dataGridViewCellStyle3;
-            this.monitorPickedCheckBox.FalseValue = "False";
+            this.monitorPickedCheckBox.FalseValue = "false";
             this.monitorPickedCheckBox.HeaderText = "Sel";
-            this.monitorPickedCheckBox.IndeterminateValue = "False";
+            this.monitorPickedCheckBox.IndeterminateValue = "false";
             this.monitorPickedCheckBox.MinimumWidth = 32;
             this.monitorPickedCheckBox.Name = "monitorPickedCheckBox";
             this.monitorPickedCheckBox.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.monitorPickedCheckBox.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.monitorPickedCheckBox.TrueValue = "True";
+            this.monitorPickedCheckBox.TrueValue = "true";
             this.monitorPickedCheckBox.Width = 32;
             //
             // monitorNameTextBox
@@ -998,13 +998,13 @@
             dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle10.NullValue = false;
             this.selectPickedCheckBox.DefaultCellStyle = dataGridViewCellStyle10;
-            this.selectPickedCheckBox.FalseValue = "False";
+            this.selectPickedCheckBox.FalseValue = "false";
             this.selectPickedCheckBox.HeaderText = "Sel";
-            this.selectPickedCheckBox.IndeterminateValue = "False";
+            this.selectPickedCheckBox.IndeterminateValue = "false";
             this.selectPickedCheckBox.MinimumWidth = 32;
             this.selectPickedCheckBox.Name = "selectPickedCheckBox";
             this.selectPickedCheckBox.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.selectPickedCheckBox.TrueValue = "True";
+            this.selectPickedCheckBox.TrueValue = "true";
             this.selectPickedCheckBox.Width = 32;
             //
             // selectNameTextBox

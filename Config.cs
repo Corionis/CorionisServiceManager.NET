@@ -6,6 +6,10 @@ using Newtonsoft.Json;
 
 namespace CorionisServiceManager.NET
 {
+    /// <summary>
+    /// Config class.
+    /// Holds configuration parameters. Is encoded in JSON to/from the .json file.
+    /// </summary>
     public class Config
     {
         #region Constants

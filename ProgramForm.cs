@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -12,6 +11,10 @@ using Microsoft.Win32.TaskScheduler;
 
 namespace CorionisServiceManager.NET
 {
+    /// <summary>
+    /// ProgramForm class.
+    /// The application implementation of the main Windows Form.
+    /// </summary>
     public partial class ProgramForm : Form
     {
         private bool adminChecked = false;
@@ -26,9 +29,9 @@ namespace CorionisServiceManager.NET
         private DataGridViewCellStyle rowStyleUnknown;
         private int selectSortColumnIndex = -1;
         private SortOrder selectSortMode = SortOrder.None;
-        public Services Services;
-        private bool updateTimerStarted = false;
+        public Services services;
         private bool updateTickActive = false;
+        private bool updateTimerStarted = false;
 
         public ProgramForm(Config theCfg, CsmContext theContext)
         {
@@ -72,6 +75,8 @@ namespace CorionisServiceManager.NET
             toolStripMonitorStart.Click += EventMonitorButtonStart;
             toolStripMonitorStop.Click += EventMonitorButtonStop;
             dataGridViewMonitor.CellClick += EventMonitorCellClicked;
+            dataGridViewMonitor.CellValueChanged += EventMonitorCellEndEdit;
+            dataGridViewMonitor.KeyDown += EventMonitorKeyDown;
             dataGridViewMonitor.MouseMove += dataGridViewMonitorMouseMove;
             dataGridViewMonitor.MouseDown += dataGridViewMonitorMouseDown;
             dataGridViewMonitor.DragOver += dataGridViewMonitorDragOver;
@@ -83,6 +88,7 @@ namespace CorionisServiceManager.NET
             toolStripSelectSave.Click += EventSelectButtonSave;
             toolStripSelectCancel.Click += EventSelectButtonCancel;
             dataGridViewSelect.CellClick += EventSelectCellClicked;
+            dataGridViewSelect.KeyDown += EventSelectKeyDown;
 
             // Options tab
             toolStripOptionsDefault.Click += EventOptionsButtonDefault;
@@ -108,7 +114,7 @@ namespace CorionisServiceManager.NET
             // Log tab
 
             // Populate the data on all the tabs
-            Services = new Services(ref cfg);
+            services = new Services(ref cfg);
             PopulateSelect(); // initialize Select to populate services first
             PopulateMonitor();
             PopulateOptions();
@@ -190,7 +196,7 @@ namespace CorionisServiceManager.NET
         private void EventFormShown(object sender, EventArgs e)
         {
             // Any services selected to monitor?
-            if (Services.monitoredServices.Count < 1)
+            if (services.monitoredServices.Count < 1)
             {
                 // switch to the Select tab
                 tabControl.SelectedIndex = 1;
@@ -198,7 +204,7 @@ namespace CorionisServiceManager.NET
                 MessageBox.Show(cfg.Program +
                                 " has no services selected.\r\n\r\nPlease select one or more services to monitor & manage. Check the" +
                                 " \"Sel\" for each desired service on the Select tab, Save your choices, then goto the Monitor tab",
-                    "No Services Selected",
+                    "No services Selected",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
@@ -256,8 +262,7 @@ namespace CorionisServiceManager.NET
 
         private void EventMenuHelpAbout(object sender, EventArgs e)
         {
-            var about = new AboutForm(this, cfg);
-            about = null;
+            new AboutForm(this, cfg);
         }
 
         private void EventMenuHelpOnlineDocumentation(object sender, EventArgs e)
@@ -335,7 +340,7 @@ namespace CorionisServiceManager.NET
                         }
 
                         // update the data immediately
-                        Services.monitoredServices[e.RowIndex].Picked = sense;
+                        services.monitoredServices[e.RowIndex].Picked = sense;
                         dataGridViewMonitor.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = (sense) ? "True" : "False";
                         dgv.EndEdit();
                     }
@@ -372,22 +377,22 @@ namespace CorionisServiceManager.NET
                         {
                             if (name.Equals("Name"))
                             {
-                                Services.monitoredServices.Sort((x, y) =>
+                                services.monitoredServices.Sort((x, y) =>
                                     String.Compare(x.Name, y.Name, StringComparison.OrdinalIgnoreCase));
                             }
                             else if (name.Equals("Identifier"))
                             {
-                                Services.monitoredServices.Sort((x, y) =>
+                                services.monitoredServices.Sort((x, y) =>
                                     String.Compare(x.Identifier, y.Identifier, StringComparison.Ordinal));
                             }
                             else if (name.Equals("Start Type"))
                             {
-                                Services.monitoredServices.Sort((x, y) =>
+                                services.monitoredServices.Sort((x, y) =>
                                     String.Compare(x.Startup, y.Startup, StringComparison.Ordinal));
                             }
                             else if (name.Equals("Status"))
                             {
-                                Services.monitoredServices.Sort((x, y) =>
+                                services.monitoredServices.Sort((x, y) =>
                                     String.Compare(x.Status, y.Status, StringComparison.Ordinal));
                             }
                             else
@@ -399,22 +404,22 @@ namespace CorionisServiceManager.NET
                         {
                             if (name.Equals("Name"))
                             {
-                                Services.monitoredServices.Sort((x, y) =>
+                                services.monitoredServices.Sort((x, y) =>
                                     String.Compare(y.Name, x.Name, StringComparison.Ordinal));
                             }
                             else if (name.Equals("Identifier"))
                             {
-                                Services.monitoredServices.Sort((x, y) =>
+                                services.monitoredServices.Sort((x, y) =>
                                     String.Compare(y.Identifier, x.Identifier, StringComparison.Ordinal));
                             }
                             else if (name.Equals("Start Type"))
                             {
-                                Services.monitoredServices.Sort((x, y) =>
+                                services.monitoredServices.Sort((x, y) =>
                                     String.Compare(y.Startup, x.Startup, StringComparison.Ordinal));
                             }
                             else if (name.Equals("Status"))
                             {
-                                Services.monitoredServices.Sort((x, y) =>
+                                services.monitoredServices.Sort((x, y) =>
                                     String.Compare(y.Status, x.Status, StringComparison.Ordinal));
                             }
                             else
@@ -438,6 +443,26 @@ namespace CorionisServiceManager.NET
             }
         }
 
+        private void EventMonitorCellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            var name = dataGridViewSelect.Columns[e.ColumnIndex].HeaderText;
+
+            // Save changes if a Name has been edited
+            if (name.Equals("Name"))
+            {
+                SaveUserPreferences();
+            }
+        }
+
+        public void EventMonitorKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F3)
+            {
+                // ignore F3 Sort
+                e.Handled = true;
+            }
+        }
+
         private void EventMonitorUpdateTick(object sender, EventArgs e)
         {
             if (!updateTickActive)
@@ -445,7 +470,7 @@ namespace CorionisServiceManager.NET
                 updateTickActive = true;
                 dataGridViewMonitor.ClearSelection();
 
-                foreach (var service in Services.selectedServices)
+                foreach (var service in services.selectedServices)
                 {
                     var row = GetRowByIdentifier(dataGridViewMonitor, service.ServiceName);
                     if (row != null)
@@ -453,7 +478,7 @@ namespace CorionisServiceManager.NET
                         service.Refresh();
                         var status = service.Status.ToString();
 
-                        MonitoredService mon = Services.monitoredServices.First(id => id.Identifier == service.ServiceName);
+                        MonitoredService mon = services.monitoredServices.First(id => id.Identifier == service.ServiceName);
                         mon.Startup = service.StartType.ToString();
                         mon.Status = status;
                         switch (status.ToLower())
@@ -622,8 +647,8 @@ namespace CorionisServiceManager.NET
             cfg.Save();
 
             // Update the Monitor tab with new selections
-            Services.GetSelectedServices();
-            dataGridViewMonitor.DataSource = Services.monitoredServices; // required to get new instance
+            services.GetSelectedServices();
+            dataGridViewMonitor.DataSource = services.monitoredServices; // required to get new instance
             AugmentMonitorCells();
             dataGridViewMonitor.Refresh();
         }
@@ -655,7 +680,7 @@ namespace CorionisServiceManager.NET
 
         private void EventSelectCellClicked(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > 0)
+            if (e.RowIndex > -1)
             {
                 var type = dataGridViewSelect.Rows[e.RowIndex].Cells[e.ColumnIndex].GetType();
                 if (type == typeof(DataGridViewCheckBoxCell))
@@ -716,7 +741,7 @@ namespace CorionisServiceManager.NET
                     if (selectSortMode != SortOrder.None)
                     {
                         var sorter = new ServiceSorter(name, selectSortMode == SortOrder.Ascending);
-                        Array.Sort(Services.allServices, sorter);
+                        Array.Sort(services.allServices, sorter);
                     }
                     else
                     {
@@ -729,6 +754,15 @@ namespace CorionisServiceManager.NET
 
                     dataGridViewSelect.Refresh();
                 }
+            }
+        }
+
+        public void EventSelectKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F3)
+            {
+                // ignore F3 Sort
+                e.Handled = true;
             }
         }
 
@@ -752,12 +786,14 @@ namespace CorionisServiceManager.NET
             foreach (DataGridViewRow row in dataGridViewMonitor.Rows)
             {
                 var cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Sel");
+                /*
                 if (!asAdmin)
                 {
                     cell.ToolTipText = cfg.ShowGridTooltips ? "Click to select (Disabled)" : "";
                 }
                 else
                     cell.ToolTipText = cfg.ShowGridTooltips ? "Click to select" : "";
+                */
 
                 cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Name");
                 cell.ToolTipText = cfg.ShowGridTooltips ? "Click or F2 to edit" : "";
@@ -778,16 +814,6 @@ namespace CorionisServiceManager.NET
             var c = cells.Cast<DataGridViewCell>().First(o => o.OwningColumn.HeaderText == headerName);
             var v = c.FormattedValue.ToString();
             return v;
-        }
-
-        public DataGridView GetMonitorDataGridView()
-        {
-            return dataGridViewMonitor;
-        }
-
-        public DataGridView GetSelectDataGridView()
-        {
-            return dataGridViewSelect;
         }
 
         private DataGridViewRow GetRowByIdentifier(DataGridView view, String id)
@@ -811,7 +837,7 @@ namespace CorionisServiceManager.NET
                 if (picked.Equals("True"))
                 {
                     string id = GetColumnValue(dataGridViewMonitor.Rows[i].Cells, "Identifier");
-                    var service = Services.selectedServices.First(s => s.ServiceName == id);
+                    var service = services.selectedServices.First(s => s.ServiceName == id);
                     service.Refresh();
 
                     switch (command.ToLower())
@@ -872,23 +898,23 @@ namespace CorionisServiceManager.NET
 
         private void MoveMonitorRow(int from, int to)
         {
-            MonitoredService moveRow = Services.monitoredServices[from];
-            Services.monitoredServices.RemoveAt(from);
+            MonitoredService moveRow = services.monitoredServices[from];
+            services.monitoredServices.RemoveAt(from);
             if (to >= 0)
             {
-                Services.monitoredServices.Insert(to, moveRow);
+                services.monitoredServices.Insert(to, moveRow);
             }
             else
             {
                 // If dragged/sorted out-of-bounds add it to the bottom
-                Services.monitoredServices.Add(moveRow);
+                services.monitoredServices.Add(moveRow);
             }
         }
 
         private void PopulateMonitor()
         {
-            Services.GetSelectedServices();
-            dataGridViewMonitor.DataSource = Services.monitoredServices;
+            services.GetSelectedServices();
+            dataGridViewMonitor.DataSource = services.monitoredServices;
         }
 
         private void PopulateOptions()
@@ -920,8 +946,8 @@ namespace CorionisServiceManager.NET
 
         private void PopulateSelect()
         {
-            Services.GetAllServices();
-            dataGridViewSelect.DataSource = Services.allServices;
+            services.GetAllServices();
+            dataGridViewSelect.DataSource = services.allServices;
         }
 
         public bool RunningAsAdministrator()
@@ -930,6 +956,22 @@ namespace CorionisServiceManager.NET
             var principal = new WindowsPrincipal(identity);
             asAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
             return asAdmin;
+        }
+
+        public void SaveSelectedServices()
+        {
+            // Copy monitored service names, that are editable, to the saved configuration
+            cfg.SelectedServiceIds = new Config.ServiceIdNamePair[services.monitoredServices.Count];
+            for (int i = 0; i < services.monitoredServices.Count; ++i)
+            {
+                var mon = services.monitoredServices[i];
+                Config.ServiceIdNamePair pair = new Config.ServiceIdNamePair();
+                pair.Identifier = mon.Identifier;
+                pair.Name = mon.Name;
+                cfg.SelectedServiceIds[i] = pair;
+            }
+
+            cfg.Save();
         }
 
         public void SaveUserPreferences()
@@ -945,18 +987,8 @@ namespace CorionisServiceManager.NET
             cfg.Width = Width;
             cfg.Height = Height;
 
-            // Copy monitored service names, that are editable, to the saved configuration
-            cfg.SelectedServiceIds = new Config.ServiceIdNamePair[Services.monitoredServices.Count];
-            for (int i = 0; i < Services.monitoredServices.Count; ++i)
-            {
-                var mon = Services.monitoredServices[i];
-                Config.ServiceIdNamePair pair = new Config.ServiceIdNamePair();
-                pair.Identifier = mon.Identifier;
-                pair.Name = mon.Name;
-                cfg.SelectedServiceIds[i] = pair;
-            }
+            SaveSelectedServices();
 
-            cfg.Save();
             StartAtLogin();
         }
 
@@ -976,8 +1008,8 @@ namespace CorionisServiceManager.NET
         {
             ColorDialog cd = new ColorDialog();
             cd.AllowFullOpen = true;
-            cd.ShowHelp = false;
             cd.AnyColor = true;
+            cd.ShowHelp = false;
             Color color = cfg.ColorFromHex(hexColor);
             cd.Color = color;
             if (cd.ShowDialog() == DialogResult.OK)
@@ -1012,13 +1044,13 @@ namespace CorionisServiceManager.NET
                         // Set "Run with highest privileges" to avoid UAC when managing services
                         td.Principal.RunLevel = TaskRunLevel.Highest;
 
-                        // Create a trigger that will fire the task at this time every other day
+                        // Create a trigger that will fire the task when the user logs-in
                         td.Triggers.Add(new LogonTrigger());
 
-                        // Create an action that will launch Notepad whenever the trigger fires
+                        // Create an action that will launch this app whenever the trigger fires
                         td.Actions.Add(new ExecAction(Assembly.GetEntryAssembly().Location, "", null));
 
-                        // Register the task in the root folder.
+                        // Register the task in the root folder
                         ts.RootFolder.RegisterTaskDefinition(cfg.Program, td);
                     }
                     else if (task != null && !cfg.StartAtLogin)
@@ -1037,7 +1069,7 @@ namespace CorionisServiceManager.NET
                     .First(o => o.OwningColumn.HeaderText == "Sel");
 
                 // update the data immediately
-                Services.monitoredServices[i].Picked = sense;
+                services.monitoredServices[i].Picked = sense;
                 cell.Value = sense;
                 cell.Selected = sense;
                 dataGridViewMonitor.Refresh();

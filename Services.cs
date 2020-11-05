@@ -5,6 +5,10 @@ using System.ServiceProcess;
 
 namespace CorionisServiceManager.NET
 {
+    /// <summary>
+    /// services class.
+    /// Holds the services used by the GUI. Members are bound to Windows Forms components.
+    /// </summary>
     public class Services
     {
         private Config cfg;
