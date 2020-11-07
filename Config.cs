@@ -82,8 +82,15 @@ namespace CorionisServiceManager.NET
 
         public string GetConfigFilename()
         {
-            string path = Assembly.GetEntryAssembly().Location;
-            path = path.Replace(".exe", ".json");
+            string file = Assembly.GetEntryAssembly().GetName().Name;
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+            // path = Path.Combine(path, file); // add directory
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            path = Path.Combine(path, file); // add filename
+            path = path + ".json";
             return path;
         }
 
@@ -104,6 +111,7 @@ namespace CorionisServiceManager.NET
 
         public void Load()
         {
+            bool found;
             try
             {
                 string json = File.ReadAllText(GetConfigFilename());
@@ -131,8 +139,18 @@ namespace CorionisServiceManager.NET
                 Width = data.Width;
                 Height = data.Height;
                 SelectedServiceIds = data.SelectedServiceIds;
+
+                found = true;
+            }
+            catch (DirectoryNotFoundException)
+            {
+                found = false;
             }
             catch (FileNotFoundException)
+            {
+                found = false;
+            }
+            if (!found)
             {
                 SetConfigDefaults();
                 SelectedServiceIds = new ServiceIdNamePair[] { };
@@ -148,7 +166,7 @@ namespace CorionisServiceManager.NET
         public void SetConfigDefaults()
         {
             FriendlyName = "";
-            StartAtLogin = false;
+            StartAtLogin = true;
             StartMinimized = false;
             MinimizeOnClose = true;
             HideWhenMinimized = true;

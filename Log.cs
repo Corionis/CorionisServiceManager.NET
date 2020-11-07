@@ -29,8 +29,15 @@ namespace CorionisServiceManager.NET
 
         public string GetLogFilename()
         {
-            string path = Assembly.GetEntryAssembly().Location;
-            path = path.Replace(".exe", ".log");
+            string file = Assembly.GetEntryAssembly().GetName().Name;
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+            // path = Path.Combine(path, file); // add directory
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            path = Path.Combine(path, file); // add filename
+            path = path + ".log";
             return path;
         }
 

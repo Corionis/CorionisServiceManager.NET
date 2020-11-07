@@ -1,0 +1,223 @@
+﻿[Setup]
+Version=8.0
+Edition=0
+GUID={18CEB355-04CB-4FDA-9B8E-A73257017BD6}
+AppName=Corionis Service Manager
+AppVersion=2020.1.0.0
+AppDescription=Monitor and manage selected Windows services
+CompanyName=Corionis, LLC
+WebSite=https://github.com/Corionis/CorionisServiceManager.NET
+SupportLink=https://github.com/Corionis/CorionisServiceManager.NET/wiki
+InstallMode=0
+InstallLevel=0
+PromptUninstall=1
+PromptSilentUninstall=0
+CheckVersions=0
+CheckMinVer=1.0
+CheckMaxVer=2.0
+CheckNoUpdate=0
+CheckAllowMultiVer=0
+Windows XP=0
+Windows Vista=0
+Windows 7=1
+Windows 8=1
+Windows 8.1=1
+Windows 10=1
+Windows Server 2003=1
+Windows Server 2008=1
+Windows Server 2008 R2=1
+Windows Server 2012=1
+Windows Server 2012 R2=1
+Windows Server 2016=1
+Windows Server 2019=1
+x64=0
+SystemType=0
+Admin=1
+Internet=0
+CloseApp=0
+CloseAppFile=iexplore.exe
+CloseAppText=Internet Explorer
+CloseApp2=0
+CloseAppFile2=
+CloseAppText2=
+dotNET=1
+dotNETVersion=17
+LinkDN=https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net48-web-installer
+IE=0
+IEVersion=6
+LinkIE=https://support.microsoft.com/en-us/help/17621/internet-explorer-downloads
+AR=0
+ARVersion=10
+LinkAR=http://get.adobe.com/reader/
+Java=0
+JavaVersion=6
+LinkJR=http://www.java.com/en/download/manual.jsp
+SQL=0
+SQLVersion=0
+LinkSQL=https://www.microsoft.com/en-us/download/details.aspx?id=30709
+SQLE=0
+SQLEVersion=17
+SQLExpressVersion=2019
+LinkSQLE=https://www.microsoft.com/en-us/download/details.aspx?id=55994
+VisualCpp=0
+VisualCppVersion=5
+LinkVisualCpp=https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads
+PackageType=0
+DataFileName=
+SetupFolder=D:\Users\trh\Work\corionis\git\corionis\CorionisServiceManager.NET\deploy
+SetupFileName=CorionisServiceManager<AppVersion>
+SetupFile=D:\Users\trh\Work\corionis\git\corionis\CorionisServiceManager.NET\deploy\CorionisServiceManager<AppVersion>.exe
+IconFile=Default
+SourceDir=D:\Users\trh\Work\corionis\git\corionis\CorionisServiceManager.NET\bin\Debug
+InstallationPath=<LocalAppData>\<AppName>
+MainExecutable=<InstallDir>\CorionisServiceManager.exe
+ProgramGroup=<AppName>
+Uninstall=1
+ShowAddRemove=1
+SilentUninstall=0
+UninstallForce=1
+UninstallRestart=0
+UninstallSettings=0
+UninstallSettingsCommand=
+VisitUninstallPage=0
+UninstallURL=http://www.website.com/uninstall.html
+UninstallCloseMainExe=1
+UninstallCloseApp=0
+UninstallCloseAppFile=File.exe
+UninstallCloseAppText=App
+Updater=1
+UpdateURL=https://github.com/Corionis/CorionisServiceManager.NET/tree/main/deploy/update.txt
+CheckUpdateBefore=0
+CheckUpdaterTitle=0
+CheckUseDownloader=0
+CheckUpdateOnLaunch=0
+AutoCheckUpdate=0
+AutoSilentUpdate=0
+UpdateFrequency=2
+CheckUpdatePassParam=0
+CheckUpdaterParam=?id=<AppVersion>
+CheckSmartNotification=0
+AllowChangeUpdate=0
+UpdaterParameters=
+LaunchOnStatup=0
+SelectFolderMode=1
+AltInstallDir=<AppData>\<AppName>
+DataExtractParam=-o"<InstallDir>" -aoa
+UninstallFileName=Uninstall.exe
+LangIDMethod=0
+AllowInstallIfNoSpace=0
+CalcReqSizeMethod=0
+WizardBitmap=D:\Tools\Actual Installer\Bitmaps\Wizard\01.bmp
+HeaderBitmap=D:\Tools\Actual Installer\Bitmaps\Header\01.bmp
+LogoBitmap=D:\Tools\Actual Installer\Bitmaps\Logo\01.bmp
+SilentInstall=0
+Theme=2
+ShowPublisher=1
+HideFileNames=1
+Beep=1
+RunAsAdmin=1
+DialogWelcome=1
+DialogLicense=0
+DialogReadme=0
+DialogUserInfo=0
+DialogDestinationFolder=1
+DialogAdditionalTasks=1
+DialogReady=0
+DialogFinish=1
+DefaultLanguage=English
+AutoDetectLanguage=0
+AcceptAgreement=0
+InfoUserName=0
+InfoUserNameReq=0
+InfoCompany=0
+InfoCompanyReq=0
+InfoCustom=0
+InfoCustomReq=0
+InfoCustomName=
+InfoCustomType=0
+InfoSerial=0
+InfoSerialReq=0
+SerialsCount=0
+InfoCustomBox=0
+InfoCustomBoxReq=0
+InfoCustomBoxName=
+CustomComboBox=0
+CustomComboBoxName=
+CustomComboBoxItems=
+CustomComboDefItem=
+CustomComponents=0
+CustomComponentsText=
+CustomComponentsDesc=
+CustomComponentsFull=0
+CalcCompoSize=0
+CompoMustSelect=0
+RestartComputer=0
+LaunchFile=1
+LaunchFileName=<InstallDir>\CorionisServiceManager.exe
+LaunchFileChecked=1
+LaunchFileAdmin=1
+CustomAction=0
+CustomActionName=Visit Web Site
+CustomActionCommand=<WebSite>
+CustomActionChecked=0
+CustomActionAdmin=0
+CustomTemplate=1
+TotalFiles=2
+
+[Languages]
+English=
+
+[GUI]
+LogoAutoSize=0
+LogoTransparent=0
+LogoStretch=0
+LogoProportional=0
+FormWidth=494
+FormHeight=375
+FormBorderless=0
+FormColor=
+FontName=Tahoma
+HeaderSize=18
+HeaderColor=
+HeaderStyle=Regular
+HeaderOffset=0
+TextSize=9
+TextColor=
+TextStyle=Regular
+TextOffset=0
+ButtonWidth=180
+ButtonFontSize=12
+ButtonOffset=0
+LicenseFontSize=8
+LicenseColor=
+LinkColor=
+LicensePosition=Center
+
+[Files]
+0=D:\Tools\Actual Installer\Uninstall.exe?<InstallDir>\Uninstall.exe?1?1
+1=D:\Tools\Actual Installer\Updater.exe?<InstallDir>\Updater.exe?1?1
+
+[License]
+(Default)=
+English=
+
+[Readme]
+(Default)=
+English=
+
+[Shortcuts]
+0=<ProgramGroup>*?<AppName>*?<InstallDir>\CorionisServiceManager.exe*?*?*?<InstallDir>*?*?0*?Normal
+1=<Desktop>*?<AppName>*?<InstallDir>\CorionisServiceManager.exe*?*?*?<InstallDir>*?*?0*?Normal
+2=<ProgramGroup>*?Uninstall <AppName>*?<InstallDir>\Uninstall.exe*?*?*?<InstallDir>*?*?0*?Normal
+3=<ProgramGroup>*?Corionis Service Manager Task*?<SystemDir>\schtasks.exe*?Executes CSM via Windows Task Scheduler*?/run /tn "Corionis Service Manager"*?*?<InstallDir>\Resources\manager-round-bronco.ico*?0*?Minimized
+4=<ProgramGroup>*?Check for Updates*?<InstallDir>\Updater.exe*?*?*?<InstallDir>*?*?0*?Normal
+
+[Registry]
+0=HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers*?<InstallDir>\CorionisServiceManager.exe*?REG_SZ*?RUNASADMIN*?Yes*?Yes*?Default
+1=HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers*?<ProgramGroup>\<AppName>.lnk*?REG_SZ*?RUNASADMIN*?Yes*?Yes*?Default
+2=HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers*?<Desktop>\<AppName>.lnk*?REG_SZ*?RUNASADMIN*?Yes*?Yes*?Default
+
+[Commands]
+0=<SystemDir>\schtasks.exe*?/Create /SC ONLOGON /TN "Corionis Service Manager" /F /RL HIGHEST /TR "'<InstallDir>\CorionisServiceManager.exe'" /IT /RU "<UserName>"*?Hide*?After Installation*?Yes*?Any*?Yes
+1=<SystemDir>\schtasks.exe*?/Delete /TN "Corionis Service Manager" /F*?Hide*?After Uninstallation*?Yes*?Any*?Yes
+
