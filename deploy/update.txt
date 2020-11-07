@@ -1,2 +1,2 @@
 2020.1.1.0
-https://github.com/Corionis/CorionisServiceManager.NET/tree/main/deploy/CorionisServiceManager2020.1.1.0.exe
+https://github.com/Corionis/CorionisServiceManager.NET/blob/main/deploy/CorionisServiceManager2020.1.1.0.exe
