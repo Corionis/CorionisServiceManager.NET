@@ -120,6 +120,10 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLogButtonBottom = new System.Windows.Forms.ToolStripButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.monitorNameTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.monitorIdentifierTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.monitorStartupTypeTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -195,6 +199,7 @@
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.onlineDocumentationToolStripMenuItem,
+            this.checkForUpdatesToolStripMenuItem,
             this.toolStripSeparator3,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
@@ -448,9 +453,10 @@
             // 
             this.toolStripSelect.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStripSelect.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSelectRefresh,
+            this.toolStripSelectSave,
             this.toolStripSelectCancel,
-            this.toolStripSelectSave});
+            this.toolStripSeparator6,
+            this.toolStripSelectRefresh});
             this.toolStripSelect.Location = new System.Drawing.Point(3, 362);
             this.toolStripSelect.MinimumSize = new System.Drawing.Size(0, 29);
             this.toolStripSelect.Name = "toolStripSelect";
@@ -473,7 +479,6 @@
             // 
             // toolStripSelectCancel
             // 
-            this.toolStripSelectCancel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripSelectCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.toolStripSelectCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripSelectCancel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSelectCancel.Image")));
@@ -485,7 +490,6 @@
             // 
             // toolStripSelectSave
             // 
-            this.toolStripSelectSave.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripSelectSave.BackColor = System.Drawing.SystemColors.ControlLight;
             this.toolStripSelectSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripSelectSave.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSelectSave.Image")));
@@ -942,8 +946,9 @@
             // 
             this.toolStripOptions.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStripOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripOptionsCancel,
             this.toolStripOptionsSave,
+            this.toolStripOptionsCancel,
+            this.toolStripSeparator7,
             this.toolStripOptionsDefault});
             this.toolStripOptions.Location = new System.Drawing.Point(3, 362);
             this.toolStripOptions.MinimumSize = new System.Drawing.Size(0, 29);
@@ -956,7 +961,6 @@
             // 
             // toolStripOptionsCancel
             // 
-            this.toolStripOptionsCancel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripOptionsCancel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.toolStripOptionsCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripOptionsCancel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripOptionsCancel.Image")));
@@ -968,7 +972,6 @@
             // 
             // toolStripOptionsSave
             // 
-            this.toolStripOptionsSave.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripOptionsSave.BackColor = System.Drawing.SystemColors.ControlLight;
             this.toolStripOptionsSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripOptionsSave.Image = ((System.Drawing.Image)(resources.GetObject("toolStripOptionsSave.Image")));
@@ -1022,8 +1025,9 @@
             // 
             this.toolStripLog.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStripLog.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLogButtonClear,
             this.toolStripLogButtonSave,
+            this.toolStripLogButtonClear,
+            this.toolStripSeparator8,
             this.toolStripLogButtonView,
             this.toolStripSeparator5,
             this.toolStripLogButtonBottom});
@@ -1037,7 +1041,6 @@
             // 
             // toolStripLogButtonClear
             // 
-            this.toolStripLogButtonClear.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLogButtonClear.BackColor = System.Drawing.SystemColors.ControlLight;
             this.toolStripLogButtonClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripLogButtonClear.Image = ((System.Drawing.Image)(resources.GetObject("toolStripLogButtonClear.Image")));
@@ -1049,12 +1052,11 @@
             // 
             // toolStripLogButtonSave
             // 
-            this.toolStripLogButtonSave.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripLogButtonSave.BackColor = System.Drawing.SystemColors.ControlLight;
             this.toolStripLogButtonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripLogButtonSave.Image = ((System.Drawing.Image)(resources.GetObject("toolStripLogButtonSave.Image")));
             this.toolStripLogButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripLogButtonSave.Margin = new System.Windows.Forms.Padding(0, 1, 2, 2);
+            this.toolStripLogButtonSave.Margin = new System.Windows.Forms.Padding(0, 1, 4, 2);
             this.toolStripLogButtonSave.Name = "toolStripLogButtonSave";
             this.toolStripLogButtonSave.Size = new System.Drawing.Size(35, 21);
             this.toolStripLogButtonSave.Text = "&Save";
@@ -1088,6 +1090,31 @@
             this.toolStripLogButtonBottom.Size = new System.Drawing.Size(51, 21);
             this.toolStripLogButtonBottom.Text = "&Bottom";
             this.toolStripLogButtonBottom.ToolTipText = "Goto bottom of log";
+            // 
+            // checkForUpdatesToolStripMenuItem
+            // 
+            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
+            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.checkForUpdatesToolStripMenuItem.Text = "&Check for updates";
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 24);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 24);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 24);
             // 
             // monitorNameTextBox
             // 
@@ -1334,5 +1361,9 @@
         private System.Windows.Forms.ToolStripButton toolStripLogButtonView;
         private System.Windows.Forms.TextBox logTextBox;
         private System.Windows.Forms.BindingSource logBindingSource;
+        private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
     }
 }

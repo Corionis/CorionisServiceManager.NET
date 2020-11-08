@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
@@ -63,6 +64,7 @@ namespace CorionisServiceManager.NET
 
             // Menu
             aboutToolStripMenuItem.Click += EventMenuHelpAbout;
+            checkForUpdatesToolStripMenuItem.Click += EventMenuCheckForUpdates;
             onlineDocumentationToolStripMenuItem.Click += EventMenuHelpOnlineDocumentation;
             restartToolStripMenuItem.Click += EventMenuFileRestart;
             exitToolStripMenuItem.Click += EventMenuFileExit;
@@ -295,6 +297,13 @@ namespace CorionisServiceManager.NET
         {
             logger.Save();
             Process.Start(logger.GetLogFilename());
+        }
+
+        private void EventMenuCheckForUpdates(object sender, EventArgs e)
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+            path = Path.Combine(path, "Updater.exe");
+            Process.Start(path);
         }
 
         private void EventMenuHelpAbout(object sender, EventArgs e)

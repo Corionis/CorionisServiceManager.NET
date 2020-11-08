@@ -66,6 +66,7 @@ namespace CorionisServiceManager.NET
         // Public constructor
         public Config()
         {
+            Version = Assembly.GetEntryAssembly()?.GetName().Version.ToString();
         }
 
         public Color ColorFromHex(String hexColor)
@@ -84,7 +85,6 @@ namespace CorionisServiceManager.NET
         {
             string file = Assembly.GetEntryAssembly().GetName().Name;
             string path = AppDomain.CurrentDomain.BaseDirectory;
-            // path = Path.Combine(path, file); // add directory
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
