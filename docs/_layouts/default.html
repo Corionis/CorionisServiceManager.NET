@@ -39,7 +39,7 @@
         margin: 0.67em 0;
         color: #ffffff;
         margin: 0 0 2px;
-        line-height: 1.5;
+        line-height: 1.2;
       }
       
       .topdescription {
@@ -47,7 +47,7 @@
         margin: 0.67em 0;
         color: #ea7c03;
         margin: 0 0 4px;
-        line-height: 1.5;
+        line-height: 1.2;
       }
     </style>
 
@@ -55,15 +55,15 @@
   <body>
 
     <header>
-   	  <span class="topname"><a href="https://corionis.github.io/CorionisServiceManager.NET/">
-        <img class="topimage" src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/manager-round.bronco.png" alt="" border="0"></a>
+      <span class="topname"><a href="hhttps://corionis.github.io/CorionisServiceManager.NET/">
+      <img class="topimage" src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/manager-round.bronco.png" alt="" border="0"></a>
         {{ page.title | default: site.title | default: site.github.repository_name }}</span>
       <p class="topdescription">{{ page.description | default: site.description | default: site.github.project_tagline }}</p>
     </header>
 
       <div id="banner">
         <span id="logo"></span>
-        <a href="{{ site.github.repository_url }}" class="button fork"><strong>View On GitHub</strong></a>
+        <a href="{{ site.github.repository_url }}" class="button fork" target="_blank"><strong>View On GitHub</strong></a>
         {% if site.show_downloads %}
           <div class="downloads">
           <span>Downloads:</span>
@@ -106,11 +106,11 @@
 
   <footer>
         {% if site.github.is_project_page %}
-          <p>Project maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></p>
+          <p>Project maintained by <a href="{{ site.github.owner_url }}" target="_blank">{{ site.github.owner_name }}</a></p>
         {% endif %}
-        <p><small>Hosted on GitHub Pages &mdash; Leap Day theme by <a href="https://twitter.com/mattgraham">mattgraham</a></small></p>
-	<p><small>Graphics created with <a href="https://www.gimp.org/" >GNU Image Manipulation Program - GIMP</a></small></p>
-	<p><small>Screenshots taken using <a href="https://getgreenshot.org/">Greenshot<//a></salll</p>
+        <p><small>Hosted on GitHub Pages &mdash; Leap Day theme by <a href="https://twitter.com/mattgraham" target="_blank">mattgraham</a></small></p>
+	<p><small>Graphics created with <a href="https://www.gimp.org/" target="_blank">GNU Image Manipulation Program - GIMP</a></small></p>
+	<p><small>Screenshots taken using <a href="https://getgreenshot.org/" target="_blank">Greenshot<//a></salll</p>
   </footer>
  </div>
 
