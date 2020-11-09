@@ -4,6 +4,7 @@ show_blog: false
 ---
 
 # Downloads
+Corionis Service Manager is distributed as a Windows installer with an optional updater.
 
 ### Supported Platforms
 CSM has been tested on all Windows operating systems from Windows 7 to Windows Server 2016.
