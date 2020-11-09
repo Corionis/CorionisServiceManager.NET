@@ -10,7 +10,8 @@
     <script src="https://code.jquery.com/jquery-3.3.0.min.js" integrity="sha256-RTQy8VOmNlT6b2PIRur37p6JEBZUE7o8wPgMvu18MC4=" crossorigin="anonymous"></script>
     <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
     <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g="
+            crossorigin="anonymous"></script>
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
@@ -21,14 +22,14 @@
             width: 100%;
         }
 
-	hr {
+        hr {
             border-top: 1px solid #ea7c03;
-	    height: 1px;
-	    background: none;
-	    width: 50%;
-	    margin-left:25% !important;
-	    margin-right:25%;
-	}
+            height: 1px;
+            background: none;
+            width: 50%;
+            margin-left: 25% !important;
+            margin-right: 25%;
+        }
 
         #banner {
             background: #ea7c03;
@@ -39,7 +40,7 @@
         #banner .downloads span {
             color: #6e5a0a;
         }
-	
+
         .topimage {
             float: left;
             margin: 0 10px 20px 5px;
@@ -94,12 +95,12 @@
 <div class="wrapper">
     <nav>
         <ul>
-	    <li><a href="index">Home</a></li>
-	    <li><a href="Screenshots">Screenshots</a></li>
-	    <li><a href="Downloads">Downloads</a></li>
-	    <li><a href="Documentation">Documentation</a></li>
-	    <li><a href="FAQ">FAQ</a></li>
-	    <li><a href="History">History</a></li>
+            <li><a href="index">Home</a></li>
+            <li><a href="Screenshots">Screenshots</a></li>
+            <li><a href="Downloads">Downloads</a></li>
+            <li><a href="Documentation">Documentation</a></li>
+            <li><a href="FAQ">FAQ</a></li>
+            <li><a href="History">History</a></li>
         </ul>
     </nav>
 
@@ -114,7 +115,7 @@
         <li>
             <font size="+1">{{ post.title }}</font>
             <span class="blogentry">{{ post.excerpt }}</span>
-	    <hr/>
+            <hr/>
         </li>
         {% endfor %}
     </ul>
@@ -124,7 +125,7 @@
 
 <footer>
     {% if site.github.is_project_page %}
-      <p>Project {{ site.github.repository_name }} is maintained by <a href="{{ site.github.owner_url }}" target="_blank">{{ site.github.owner_name }}</a></p>
+    <p>Project {{ site.github.repository_name }} is maintained by <a href="{{ site.github.owner_url }}" target="_blank">{{ site.github.owner_name }}</a></p>
     {% endif %}
     <p><small>Hosted on GitHub Pages &mdash; Leap Day theme by <a href="https://twitter.com/mattgraham" target="_blank">mattgraham</a></small></p>
     <p><small>Graphics created with <a href="https://www.gimp.org/" target="_blank">GNU Image Manipulation Program - GIMP</a></small></p>
