@@ -3,11 +3,6 @@ layout: default
 show_blog: false
 ---
 # Downloads
-Get it here.
-
-## General
-Corionis Service Manager .NET (CSM) is distributed with a Windows installer that includes
-an optional updater.
 
 ### Supported Platforms
 CSM has been tested on all Windows operating systems from Windows 7 to Windows Server 2016.
@@ -24,6 +19,8 @@ purpose. Use at your own risk. If you break it you own both parts.
 
 ## Download
 The latest release of CSM is **{{ site.version }}**.
+
+Windows x86/x64 installer: [Corionis Service Manager](https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager{{ site.version }}.exe?raw=true)
 
 ### Installation
 Run the installer. Depending on your UAC setting you may be prompted to allow CSM to
