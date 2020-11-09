@@ -1,1 +1,5 @@
 theme: jekyll-theme-architect
+title: Corionis Service Manager 
+description: Monitor & manage selected Windows services 
+show_downloads: true 
+excerpt_separator: thisnevermatchme 
