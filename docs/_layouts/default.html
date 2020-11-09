@@ -115,7 +115,9 @@
         <li>
             <font size="+1">{{ post.title }}</font>
             <span class="blogentry">{{ post.excerpt }}</span>
-            <hr/>
+	    {% if page.next != nil %}
+                <hr/>
+	    {% endif %}
         </li>
         {% endfor %}
     </ul>
