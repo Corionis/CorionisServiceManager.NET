@@ -21,9 +21,9 @@ kind expressed or implied. The software may not work or serve any intended or pa
 purpose. Use at your own risk. If you break it you own both parts.
 
 ## Download
-The latest release of CSM is:  **2020.1.0.0**
+The latest release of CSM is:  **{{ site.version }}**
 
- * [Corionis Service Manager](https://github.com/Corionis/CorionisServiceManager.NET/blob/main/CorionisServiceManager{{ site.version }}.exe?raw=true)
+ * [Corionis Service Manager](https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager{{ site.version }}.exe?raw=true?raw=true)
 
 ### Installation
 Run the installer. Depending on your UAC setting you may be prompted to allow CSM to
