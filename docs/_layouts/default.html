@@ -101,7 +101,6 @@
             <li><a href="Documentation">Documentation</a></li>
             <li><a href="FAQ">FAQ</a></li>
             <li><a href="History">History</a></li>
-            <li><hr styile="align:right; margin-left:75% !important; margin-right: 0%;"></li>
         </ul>
     </nav>
 
@@ -114,9 +113,9 @@
     <ul class="blog">
         {% for post in site.posts %}
         <li>
+            <hr/>
             <font size="+1">{{ post.title }}</font>
             <span class="blogentry">{{ post.excerpt }}</span>
-            <hr/>
         </li>
         {% endfor %}
     </ul>
