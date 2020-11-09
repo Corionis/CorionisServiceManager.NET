@@ -2,7 +2,6 @@
 layout: default
 show_blog: false
 ---
-
 # Downloads
 
 Corionis Service Manager .NET (CSM) is distributed with a Windows installer that includes
@@ -27,8 +26,6 @@ purpose. Use at your own risk. If you break it you own both parts.
 ## Download
 
 The latest release of CSM is **{{ site.version }}**.
-
-Windows x86/x64 installer: [Corionis Service Manager](https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager{{ site.version }}.exe?raw=true)
 
 ### Installation
 
