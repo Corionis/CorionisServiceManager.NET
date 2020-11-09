@@ -23,10 +23,6 @@
 	width: 100%;
       }
 
-header table {
-	border: 0;
-}
-      
       #banner {
         background: #ea7c03;
         border: 1px solid #000000;
@@ -39,13 +35,13 @@ header table {
 
       .topimage {
         float: left;
-        margin: 0 20px 20px 0;
+        margin: 0 20px 20px 20;
       }
 
       .topimageRight {
         float: right;
 	align: right;
-        margin: 0 20px 20px 120px;
+        margin: 0 20px 20px 20px;
       }
 
       .topname {
@@ -70,21 +66,21 @@ header table {
   <body>
 
     <header>
-      <table width="100%">
+      <table width="100%" border="0">
         <tr>
 	<td>
-      <a href="hhttps://corionis.github.io/CorionisServiceManager.NET/">
-      <img class="topimage" src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/manager-round.bronco.png" alt="" border="0"></a>
+          <a href="hhttps://corionis.github.io/CorionisServiceManager.NET/">
+          <img class="topimage" src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/manager-round.bronco.png" alt="" border="0"></a>
 	</td>
 	<td>
-        <span class="topname">{{ page.title | default: site.title | default: site.github.repository_name }}</span>
-	</td>	
-	<td>
-      <span class="topimageright"><img src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/gears.png" alt="" border="0"></span>
+          <span class="topname">{{ page.title | default: site.title | default: site.github.repository_name }}</span>
+      	  <p class="topdescription">&nbsp;&nbsp;&nbsp;&nbsp;{{ page.description | default: site.description | default: site.github.project_tagline }}</p>
+       </td>	
+	<td align="right">
+          <span class="topimageright"><img src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/gears.png" alt="" border="0"></span>
 	</td>
        </tr>
        </table>
-      <p class="topdescription">&nbsp;&nbsp;&nbsp;&nbsp;{{ page.description | default: site.description | default: site.github.project_tagline }}</p>
     </header>
 
       <div id="banner">
