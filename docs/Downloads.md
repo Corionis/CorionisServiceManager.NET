@@ -28,6 +28,6 @@ Windows x86/x64 installer: [CorionisServiceManager{{ site.version }}.exe](https:
 Run the installer. Depending on your UAC setting you may be prompted to allow CSM to
 modify your system during installation.
 
-## First Use
+### First Use
 When CSM is started the first time no services have been selected yet. A dialog is displayed
 with basic instructions on getting started.
