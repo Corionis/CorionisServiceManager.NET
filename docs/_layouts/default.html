@@ -15,9 +15,6 @@
     
     <style>
       header {
-	position: absolute;
-	top: 0;
-	margin: 0;
         background: #123876;
 	text-align: left;
 	width: 100%;
@@ -36,12 +33,6 @@
       .topimage {
         float: left;
         margin: 0 20px 20px 20;
-      }
-
-      .topimageRight {
-        float: right;
-	align: right;
-        margin: 0 20px 20px 20px;
       }
 
       .topname {
@@ -66,21 +57,14 @@
   <body>
 
     <header>
-      <table width="100%" border="0">
-        <tr>
-	<td>
+	<span class="topimage">
           <a href="hhttps://corionis.github.io/CorionisServiceManager.NET/">
           <img class="topimage" src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/manager-round.bronco.png" alt="" border="0"></a>
-	</td>
-	<td>
+	</span>
+	
           <span class="topname">{{ page.title | default: site.title | default: site.github.repository_name }}</span>
       	  <p class="topdescription">&nbsp;&nbsp;&nbsp;&nbsp;{{ page.description | default: site.description | default: site.github.project_tagline }}</p>
-       </td>	
-	<td align="right">
-          <img src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/gears.png" alt="" border="0">
-	</td>
-       </tr>
-       </table>
+	    </span>
     </header>
 
       <div id="banner">
