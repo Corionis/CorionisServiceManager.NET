@@ -2,6 +2,7 @@
 layout: default
 show_blog: false
 ---
+
 # Downloads
 
 ### Supported Platforms
@@ -20,12 +21,12 @@ purpose. Use at your own risk. If you break it you own both parts.
 ## Download
 The latest release of CSM is **{{ site.version }}**.
 
-Windows x86/x64 installer: [Corionis Service Manager](https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager{{ site.version }}.exe?raw=true)
+Windows x86/x64 installer: [CorionisServiceManager{{ site.version }}.exe](https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager{{ site.version }}.exe?raw=true)
 
 ### Installation
 Run the installer. Depending on your UAC setting you may be prompted to allow CSM to
 modify your system during installation.
 
-### First Use
+## First Use
 When CSM is started the first time no services have been selected yet. A dialog is displayed
 with basic instructions on getting started.
