@@ -102,6 +102,7 @@
             <li><a href="FAQ">FAQ</a></li>
             <li><a href="History">History</a></li>
         </ul>
+	<hr/>
     </nav>
 
     <section>
@@ -115,9 +116,7 @@
         <li>
             <font size="+1">{{ post.title }}</font>
             <span class="blogentry">{{ post.excerpt }}</span>
-	    {% if next_post %}
-                <hr/>
-	    {% endif %}
+            <hr/>
         </li>
         {% endfor %}
     </ul>
