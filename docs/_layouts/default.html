@@ -70,7 +70,7 @@
 
       <div id="banner">
         <span id="logo"></span>
-        <a href="{{ site.github.repository_url }}" class="button fork" target="_blank"><strong>{{ default: site.title | default: site.github.repository_name }} On GitHub</strong></a>
+        <a href="{{ site.github.repository_url }}" class="button fork" target="_blank"><strong>View on GitHub</strong></a>
         {% if site.show_downloads %}
           <div class="downloads">
           <span>Downloads:</span>
@@ -112,7 +112,7 @@
 
   <footer>
         {% if site.github.is_project_page %}
-          <p>Project maintained by <a href="{{ site.github.owner_url }}" target="_blank">{{ site.github.owner_name }}</a></p>
+          <p>Project {{ site.github.repository_name }} is maintained by <a href="{{ site.github.owner_url }}" target="_blank">{{ site.github.owner_name }}</a></p>
         {% endif %}
         <p><small>Hosted on GitHub Pages &mdash; Leap Day theme by <a href="https://twitter.com/mattgraham" target="_blank">mattgraham</a></small></p>
 	<p><small>Graphics created with <a href="https://www.gimp.org/" target="_blank">GNU Image Manipulation Program - GIMP</a></small></p>
