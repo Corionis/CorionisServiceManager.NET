@@ -65,10 +65,18 @@
   <body>
 
     <header>
+      <table>
+	<td>
       <span class="topname"><a href="hhttps://corionis.github.io/CorionisServiceManager.NET/">
-      <img class="topimage" src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/manager-round.bronco.png" alt="" border="0"></a>
-        {{ page.title | default: site.title | default: site.github.repository_name }}</span>
+      <img class="topimage" src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/manager-round.bronco.png" alt="" border="0"></a></span>
+	</td>
+	<td>
+        {{ page.title | default: site.title | default: site.github.repository_name }}
+	</td>	
+	<td>
       <span class="topimageright"><img src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/gears.png" alt="" border="0"></span>
+	</td>
+       </table>
       <p class="topdescription">&nbsp;&nbsp;&nbsp;&nbsp;{{ page.description | default: site.description | default: site.github.project_tagline }}</p>
     </header>
 
