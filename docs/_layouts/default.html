@@ -36,6 +36,15 @@
       .topname {
         line-height: 90%;
       }
+      
+      .topdescription {
+        font-size: 22px;
+        margin: 0.67em 0;
+        color: #cccccc;
+        margin: 0 0 10px;
+        line-height: 1.1;
+        
+      }
     </style>
 
   </head>
@@ -45,7 +54,7 @@
    	<h1 class="topname"><a href="https://corionis.github.io/CorionisServiceManager.NET/">
           <img class="topimage" src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/manager-round.bronco.png" alt="" border="0"></a>
         {{ page.title | default: site.title | default: site.github.repository_name }}</h1>
-        {{ page.description | default: site.description | default: site.github.project_tagline }}
+        <span class="topdescription">{{ page.description | default: site.description | default: site.github.project_tagline }}</span>
       </header>
 
 
