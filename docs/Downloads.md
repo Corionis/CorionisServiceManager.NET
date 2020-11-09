@@ -23,7 +23,7 @@ purpose. Use at your own risk. If you break it you own both parts.
 ## Download
 The latest release of CSM is:  **2020.1.0.0**
 
- * [Corionis Service Manager](../blob/main/deploy/CorionisServiceManager2020.1.0.0.exe?raw=true)
+ * [Corionis Service Manager](https://github.com/Corionis/CorionisServiceManager/blob/master/CorionisServiceManager{{ site.version }}.exe?raw=true)
 
 ### Installation
 Run the installer. Depending on your UAC setting you may be prompted to allow CSM to
