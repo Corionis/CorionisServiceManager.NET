@@ -24,6 +24,8 @@ The latest release of CSM is **{{ site.version }}**.
 
 Windows x86/x64 installer: [CorionisServiceManager{{ site.version }}.exe](https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager{{ site.version }}.exe?raw=true)
 
+Windows x86/x64: <a style="border: 1px solid .75rem; border-color: black; border-radius: .25rem; background-color:green; color:white; padding: .375rem .75rem; " href="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager{{ site.version }}.exe?raw=true">Release {{ site.version }}</a>
+
 ### Installation
 Run the installer. Depending on your UAC setting you may be prompted to allow CSM to
 modify your system during installation.
