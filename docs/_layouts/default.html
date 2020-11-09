@@ -58,13 +58,13 @@
     <header>
       <span class="topname"><a href="hhttps://corionis.github.io/CorionisServiceManager.NET/">
       <img class="topimage" src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/manager-round.bronco.png" alt="" border="0"></a>
-        {{ default: site.title | default: site.github.repository_name }}</span>
+        {{ page.title | default: site.title | default: site.github.repository_name }}</span>
       <p class="topdescription">&nbsp;&nbsp;&nbsp;&nbsp;{{ page.description | default: site.description | default: site.github.project_tagline }}</p>
     </header>
 
       <div id="banner">
         <span id="logo"></span>
-        <a href="{{ site.github.repository_url }}" class="button fork" target="_blank"><strong>View On GitHub</strong></a>
+        <a href="{{ site.github.repository_url }}" class="button fork" target="_blank"><strong>{{ default: site.title | default: site.github.repository_name }} On GitHub</strong></a>
         {% if site.show_downloads %}
           <div class="downloads">
           <span>Downloads:</span>
