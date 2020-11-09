@@ -22,9 +22,7 @@ purpose. Use at your own risk. If you break it you own both parts.
 ## Download
 The latest version of CSM is **{{ site.version }}**.
 
-Windows x86/x64: <a style="border: 1px solid black; border-radius: .25rem; background-color:darkblue; color:white; padding: .375rem .75rem; font-weight: bolder; "
-onmouseover="this.style.backgroundColor='darkorange'";
-onmouseout="this.style.backgroundColor='darkblue'";
+Windows x86/x64: <a style="border: 1px solid black; border-radius: .25rem; background-color: darkblue; color: white; padding: .375rem .75rem; font-weight: bolder; "
 href="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager{{ site.version }}.exe?raw=true">Release {{ site.version }}</a>
 
 ### Installation
