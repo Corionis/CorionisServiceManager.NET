@@ -7,28 +7,28 @@ show_blog: false
 Corionis Service Manager .NET (CSM) is distributed with a Windows installer that includes
 an optional updater.
 
-## Supported Platforms
+### Supported Platforms
 CSM has been tested on all Windows operating systems from Windows 7 to Windows Server 2016.
 Both 32- and 64-bit systems are supported.
 
-## Requirements
+### Requirements
 CSM uses Microsoft .NET Framework 4.7.2. If your system does not already have a compatible
 version installed you will be prompted and guided to install the necessary component. 
 
-## Disclaimer
+### Disclaimer
 Any software downloaded from this site is free and without warranty or guarantee of any
 kind expressed or implied. The software may not work or serve any intended or particular
 purpose. Use at your own risk. If you break it you own both parts.
 
-# Download
+## Download
 The latest release of CSM is:  **2020.1.0.0**
 
  * [Corionis Service Manager](../blob/masin/deploy/CorionisServiceManager2020.1.0.0.exe?raw=true)
 
-## Installation
+### Installation
 Run the installer. Depending on your UAC setting you may be prompted to allow CSM to
 modify your system during installation.
 
-# First Use
+### First Use
 When CSM is started the first time no services have been selected yet. A dialog is displayed
 with basic instructions on getting started.
