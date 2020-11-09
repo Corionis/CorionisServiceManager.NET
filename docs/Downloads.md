@@ -20,11 +20,9 @@ kind expressed or implied. The software may not work or serve any intended or pa
 purpose. Use at your own risk. If you break it you own both parts.
 
 ## Download
-The latest release of CSM is **{{ site.version }}**.
+The latest version of CSM is **{{ site.version }}**.
 
-Windows x86/x64 installer: [CorionisServiceManager{{ site.version }}.exe](https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager{{ site.version }}.exe?raw=true)
-
-Windows x86/x64: <a style="border: 1px solid black; ; border-radius: .25rem; background-color:darkblue; color:white; padding: .375rem .75rem; font-weight: bolder; "
+Windows x86/x64: <a style="border: 1px solid black; border-radius: .25rem; background-color:darkblue; color:white; padding: .375rem .75rem; font-weight: bolder; "
 onmouseover="this.style.backgroundColor='darkorange'";
 onmouseout="this.style.backgroundColor='darkblue'";
 href="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager{{ site.version }}.exe?raw=true">Release {{ site.version }}</a>
