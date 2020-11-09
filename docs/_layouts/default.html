@@ -25,7 +25,7 @@
       }
       
       #banner .downloads span {
-        color: #ffffff;
+        color: #6e5a0a;
       }
     </style>
 
@@ -33,7 +33,10 @@
   <body>
 
       <header>
-        <h1>{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
+   			<h1 class="topname"><a href="https://corionis.github.io/CorionisServiceManager.NET/">
+          <img class="topimage" src="https://github.com/Corionis/CorionisServiceManager.NET/raw/master/docs/res/manager-round.bronco.png" alt="" border="0"></a>
+				Corionis<br/>
+        &nbsp;&nbsp;&nbsp;{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
         <p>{{ page.description | default: site.description | default: site.github.project_tagline }}</p>
       </header>
 
@@ -45,7 +48,7 @@
           <div class="downloads">
             <span>Downloads:</span>
             <ul>
-              <li><a href="{{ site.github.tar_url }}" class="button">Installer</a></li>
+              <li><a href="{{ site.github.tar_url }}" class="button">Installer {{ site.version }}</a></li>
               <li><a href="{{ site.github.zip_url }}" class="button">Source Zip</a></li>
             </ul>
           </div>
@@ -54,7 +57,11 @@
 
     <div class="wrapper">
       <nav>
-        <ul></ul>
+        <ul>
+          <li>Downloads</li>
+          <li>Screenshots</li>
+          <li>FAQ</li>
+        </ul>
       </nav>
       <section>
         {{ content }}
