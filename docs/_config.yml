@@ -4,3 +4,6 @@ description: Monitor & manage selected Windows services
 show_downloads: true 
 excerpt_separator: thisnevermatchme 
 version: 2020.1.0.0
+github:
+  zip_url: https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager{{ site.version }}.exe?raw=true
+  
