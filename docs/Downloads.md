@@ -19,12 +19,12 @@ Any software downloaded from this site is free and without warranty or guarantee
 kind expressed or implied. The software may not work or serve any intended or particular
 purpose. Use at your own risk. If you break it you own both parts.
 
-## Download
+# Download
 Windows x86/x64, all platforms: <a style="border:1px solid black; border-radius:.25rem; background-color:green;
 color:white; padding:.375rem .75rem; font-weight:bolder;"
 href="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager{{ site.version }}.exe?raw=true">Release {{ site.version }}</a>
 
-### Installation
+## Installation
 Run the installer. Depending on your UAC setting you may be prompted to allow CSM to
 modify your system during installation.
 
