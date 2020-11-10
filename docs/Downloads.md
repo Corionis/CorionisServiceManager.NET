@@ -13,7 +13,7 @@ Both 32- and 64-bit systems are supported.
 ### Requirements
 
 CSM uses Microsoft .NET Framework 4.7.2. If your system does not already have a compatible
-version installed you will be prompted and guided to install the necessary component. 
+version installed you will be prompted and [guided to install .NET]({{ site.msnetdownload }}).
 
 # Disclaimer
 
