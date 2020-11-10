@@ -12,8 +12,8 @@ Both 32- and 64-bit systems are supported.
 
 ### Requirements
 
-CSM uses Microsoft .NET Framework 4.7.2. If your system does not already have a compatible
-version installed you will be prompted and [guided to install .NET]({{ site.msnetdownload }}).
+CSM uses [Microsoft .NET Framework 4.7.2]({{ site.msnetdownload }}). If your system does not already have a compatible
+version installed you will be prompted and guided to install .NET.
 
 # Disclaimer
 
@@ -23,13 +23,14 @@ purpose. Use at your own risk. If you break it you own both parts.
 
 ## Support
 
-If a bug is found please create an issue on the project's [GitHub site](https://github.com/Corionis/CorionisServiceManager.NET).
+If a bug is found please create an issue on the project's [GitHub site]({{ site.github.repository_url }}).
 
 # Download
 
 Windows x86/x64, all platforms: <a style="border:1px solid black; border-radius:.25rem; background-color:green;
 color:white; padding:.375rem .75rem; font-weight:bolder;"
-href="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager{{ site.version }}.exe?raw=true">Release {{ site.version }}</a>
+href="{{ tar_url }}">Release {{ site.version }}</a>
+*([MIT License](https://opensource.org/licenses/MIT))*
 
 ## Installation
 

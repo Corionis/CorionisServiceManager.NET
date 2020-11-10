@@ -15,7 +15,7 @@ available. The utility may be popped up or down by double-clicking the
 tray icon. Notifications are displayed and logged when a 
 selected service's state changes.
 
-CSM is free and Open Source distributed under the MIT license.
+CSM is free and Open Source distributed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ## Features
 
