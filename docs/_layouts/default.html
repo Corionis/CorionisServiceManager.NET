@@ -109,6 +109,7 @@
     </section>
 
     {% if page.show_blog %}
+	<section>
     <p>
     <ul class="blog">
         {% for post in site.posts %}
@@ -120,6 +121,7 @@
         {% endfor %}
     </ul>
     </p>
+	</section>
     {% endif %}
 </div>
 
