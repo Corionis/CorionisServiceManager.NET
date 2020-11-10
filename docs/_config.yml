@@ -1,6 +1,6 @@
 theme: jekyll-theme-leap-day
 title: Corionis Service Manager 
-description: Monitor & manage selected Windows services 
+description: Monitor & Manage Selected Windows Services 
 show_downloads: true 
 excerpt_separator: thisnevermatchme 
 version: 2020.1.0.0
