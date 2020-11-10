@@ -14,7 +14,7 @@ Both 32- and 64-bit systems are supported.
 CSM uses Microsoft .NET Framework 4.7.2. If your system does not already have a compatible
 version installed you will be prompted and guided to install the necessary component. 
 
-### Disclaimer
+# Disclaimer
 Any software downloaded from this site is free and without warranty or guarantee of any
 kind expressed or implied. The software may not work or serve any intended or particular
 purpose. Use at your own risk. If you break it you own both parts.
