@@ -20,7 +20,7 @@ kind expressed or implied. The software may not work or serve any intended or pa
 purpose. Use at your own risk. If you break it you own both parts.
 
 ## Support
-If a bug is found please create an issue on the project GitHub site.
+If a bug is found please create an issue on the project's [GitHub site](https://github.com/Corionis/CorionisServiceManager.NET).
 
 # Download
 Windows x86/x64, all platforms: <a style="border:1px solid black; border-radius:.25rem; background-color:green;
