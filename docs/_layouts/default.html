@@ -7,10 +7,12 @@
 
     {% seo %}
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <script src="https://code.jquery.com/jquery-3.3.0.min.js" integrity="sha256-RTQy8VOmNlT6b2PIRur37p6JEBZUE7o8wPgMvu18MC4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.0.min.js"
+            integrity="sha256-RTQy8VOmNlT6b2PIRur37p6JEBZUE7o8wPgMvu18MC4=" crossorigin="anonymous"></script>
     <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
     <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g="
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"
+            integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g="
             crossorigin="anonymous"></script>
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -70,11 +72,14 @@
 <header>
 	<span class="topimage">
           <a href="index">
-          <img class="topimage" src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/manager-round.bronco.png" alt="" border="0"></a>
+          <img class="topimage"
+               src="https://github.com/Corionis/CorionisServiceManager.NET/raw/main/docs/res/manager-round.bronco.png"
+               alt="" border="0"></a>
 	</span>
 
     <span class="topname">{{ page.title | default: site.title | default: site.github.repository_name }}</span>
-    <p class="topdescription">&nbsp;&nbsp;&nbsp;&nbsp;{{ page.description | default: site.description | default: site.github.project_tagline }}</p>
+    <p class="topdescription">&nbsp;&nbsp;&nbsp;&nbsp;{{ page.description | default: site.description | default:
+        site.github.project_tagline }}</p>
     </span>
 </header>
 
@@ -98,7 +103,6 @@
             <li><a href="index">Home</a></li>
             <li><a href="Screenshots">Screenshots</a></li>
             <li><a href="Downloads">Downloads</a></li>
-            <li><a href="Documentation">Documentation</a></li>
             <li><a href="FAQ">FAQ</a></li>
             <li><a href="Posts">Blog Posts</a></li>
             <li><a href="History">History</a></li>
@@ -106,20 +110,19 @@
     </nav>
 
     {% if page.show_blog %}
-	<section>
-    <p>
-    <ul class="blog">
-        {% for post in site.posts %}
-        <li>
-            <font size="+1">{{ post.title }}</font>
-            <span class="blogentry">{{ post.excerpt }}</span>
-            <hr/>
-        </li>
-        {% endfor %}
-    </ul>
-    </p>
-	</section>
-{% else %}
+    <section>
+        <p>
+        <ul class="blog">
+            {% for post in site.posts %}
+            <li>
+                <font size="+1">{{ post.title }}</font>
+                <span class="blogentry">{{ post.excerpt }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        </p>
+    </section>
+    {% else %}
     <section>
         {{ content }}
     </section>
@@ -129,10 +132,13 @@
 
 <footer>
     {% if site.github.is_project_page %}
-    <p>Project {{ site.github.repository_name }} is maintained by <a href="{{ site.github.owner_url }}" target="_blank">{{ site.github.owner_name }}</a></p>
+    <p>Project {{ site.github.repository_name }} is maintained by <a href="{{ site.github.owner_url }}" target="_blank">{{
+        site.github.owner_name }}</a></p>
     {% endif %}
-    <p><small>Hosted on GitHub Pages &mdash; Leap Day theme by <a href="https://twitter.com/mattgraham" target="_blank">mattgraham</a></small></p>
-    <p><small>Graphics created with <a href="https://www.gimp.org/" target="_blank">GNU Image Manipulation Program - GIMP</a></small></p>
+    <p><small>Hosted on GitHub Pages &mdash; Leap Day theme by <a href="https://twitter.com/mattgraham" target="_blank">mattgraham</a></small>
+    </p>
+    <p><small>Graphics created with <a href="https://www.gimp.org/" target="_blank">GNU Image Manipulation Program -
+        GIMP</a></small></p>
     <p><small>Screenshots taken using <a href="https://getgreenshot.org/" target="_blank">Greenshot<//a></salll</p>
 </footer>
 </div>
