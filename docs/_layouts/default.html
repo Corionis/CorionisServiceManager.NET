@@ -104,10 +104,6 @@
         </ul>
     </nav>
 
-    <section>
-        {{ content }}
-    </section>
-
     {% if page.show_blog %}
 	<section>
     <p>
@@ -122,6 +118,11 @@
     </ul>
     </p>
 	</section>
+{% else %}
+    <section>
+        {{ content }}
+    </section>
+
     {% endif %}
 </div>
 
