@@ -17,7 +17,7 @@ selected service's state changes.
 
 <p align="center">
     <img src="res/csm-monitor-edit-small.jpg"/><br/>
-CSM is free and Open Source distributed under the [MIT license](https://opensource.org/licenses/MIT).</p>
+    CSM is free and Open Source distributed under the <a href="https://opensource.org/licenses/MIT">MIT license</a>.</p>
 
 <center><span style="font-size: 22px; font-face: bold; margin-top: 10px;">Features</span></center>
 <hr/>
