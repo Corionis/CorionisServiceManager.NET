@@ -15,7 +15,7 @@ available. The utility may be popped up or down by double-clicking the
 tray icon. Notifications are displayed and logged when a 
 selected service's state changes.
 
-<p align="center"><img src="res/csm-monitor-edit-small.jpg"/><br/></p>
+<p align="center"><img src="res/csm-monitor-tight.jpg"/><br/></p>
 
 <center><span style="font-size: 22px; font-face: bold; margin-top: 10px;">Features</span></center>
 <hr/>
