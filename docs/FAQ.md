@@ -19,7 +19,7 @@ monitor and/or manage a subset of Windows services.
       Corionis Service Manager Task shortcut may be used to execute CSM
       manually and bypass the UAC warning.
  3. Where is CSM installed?
-    > By default CSM is installed in: C:\Users\[*user*]\AppData\Local\Corionis Service Manager
+    > By default CSM is installed in: C:\Users\\[*user*]\AppData\Local\Corionis Service Manager\.
  4. What are the installed shortcuts on the Windows Start button?
     > * **Check for Updates** -- Manually check for CSM updates.
     > * **Corionis Service Manager Task** -- Executes the Task Scheduler task 'As Administrator' bypassing the UAC prompt. 
