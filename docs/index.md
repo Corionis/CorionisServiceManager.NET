@@ -15,8 +15,7 @@ selected service's state changes.
 
 CSM is free and Open Source distributed under the [MIT license](https://opensource.org/licenses/MIT).
 
-<br/>
-<center><span style="font-size: 142%; font-face: bold;">Features</span></center>
+<center><span style="font-size: 142%; font-face: bold; margin-top: 10px;">Features</span></center>
 <hr/>
 
  * Monitors and manages a list of user-selected Windows services.
