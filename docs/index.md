@@ -2,6 +2,8 @@
 layout: default
 show_blog: false
 ---
+<center><span style="font-size: 142%; font-face: bold; margin-top: 10px;">What is Corionis Service Manager?</span></center>
+<hr/>
 The Corionis Service Manager (CSM) is a small Windows tray application that 
 monitors and manages a list of user-selected Windows services. The selected 
 services are monitored and may be started, stopped, the start-up 
@@ -17,7 +19,6 @@ CSM is free and Open Source distributed under the [MIT license](https://opensour
 
 <center><span style="font-size: 142%; font-face: bold; margin-top: 10px;">Features</span></center>
 <hr/>
-
  * Monitors and manages a list of user-selected Windows services.
  * Monitored services may be reordered on the Monitor tab with drag 'n drop.
  * Monitored service names may be edited.
