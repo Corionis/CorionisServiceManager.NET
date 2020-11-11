@@ -2,7 +2,7 @@
 layout: default
 show_blog: false
 ---
-<center><span style="font-size: 160%; font-face: bold; margin-top: 10px;">What is Corionis Service Manager?</span></center>
+<center><span style="font-size: 28px; font-face: bold; margin-top: 10px;">What is Corionis Service Manager?</span></center>
 <hr/>
 The Corionis Service Manager (CSM) is a small Windows tray application that 
 monitors and manages a list of user-selected Windows services. The selected 
