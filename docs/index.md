@@ -15,7 +15,10 @@ available. The utility may be popped up or down by double-clicking the
 tray icon. Notifications are displayed and logged when a 
 selected service's state changes.
 
+<center>
+![Monitor tab name editing](res/csm-monitor-edit-small.jpg "Monitor tab name editing")<br/>
 CSM is free and Open Source distributed under the [MIT license](https://opensource.org/licenses/MIT).
+</center>
 
 <center><span style="font-size: 22px; font-face: bold; margin-top: 10px;">Features</span></center>
 <hr/>
