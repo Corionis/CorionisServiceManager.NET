@@ -29,7 +29,7 @@ If a bug is found please create an issue on the project's [GitHub site]({{ site.
 
 Windows x86/x64, all platforms: <a style="border:1px solid black; border-radius:.25rem; background-color:green;
 color:white; padding:.375rem .75rem; font-weight:bolder;"
-href="{{ tar_url }}">Release {{ site.version }}</a>
+href="{{ site.github.tar_url }}">Release {{ site.version }}</a>
 *([MIT License](https://opensource.org/licenses/MIT))*
 
 ## Installation
