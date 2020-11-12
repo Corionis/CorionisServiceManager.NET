@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="Config" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>CorionisServiceManager.NET.Config, CorionisServiceManager, Version=2020.1.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>CorionisServiceManager.NET.Config, CorionisServiceManager, Version=2020.2.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

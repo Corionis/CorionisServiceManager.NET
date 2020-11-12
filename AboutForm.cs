@@ -16,7 +16,7 @@ namespace CorionisServiceManager.NET
 
             aboutVersion.Text = "Version: " + theCfg.Version;
 
-            linkLabelDocumentation.Click += EventLinkLabelDocumentation;
+            linkLabelPublic.Click += EventLinkLabelPublic;
             linkLabelProject.Click += EventLinkLabelProject;
 
             okButton.Click += EventOkButton;
@@ -27,7 +27,7 @@ namespace CorionisServiceManager.NET
             KeyDown += EventKeyDown;
             KeyPress += EventKeyPress;
 
-            Show();
+            ShowDialog();
             okButton.Focus();
         }
 
@@ -43,9 +43,9 @@ namespace CorionisServiceManager.NET
                 okButton.PerformClick();
         }
 
-        private void EventLinkLabelDocumentation(object sender, EventArgs e)
+        private void EventLinkLabelPublic(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/Corionis/CorionisServiceManager.NET/wiki");
+            Process.Start("https://corionis.github.io/CorionisServiceManager.NET/");
         }
 
         private void EventLinkLabelProject(object sender, EventArgs e)

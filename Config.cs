@@ -15,7 +15,7 @@ namespace CorionisServiceManager.NET
         #region Constants
 
         public String Program { get; set; } = "Corionis Service Manager";
-        public String Version { get; set; } = "2020.1";
+        public String Version { get; set; } = "";
 
         #endregion
 
@@ -66,7 +66,7 @@ namespace CorionisServiceManager.NET
         // Public constructor
         public Config()
         {
-            Version = Assembly.GetEntryAssembly()?.GetName().Version.ToString();
+            Version = Assembly.GetEntryAssembly()?.GetName().Version.ToString().TrimEnd('0').TrimEnd('.');
         }
 
         public Color ColorFromHex(String hexColor)

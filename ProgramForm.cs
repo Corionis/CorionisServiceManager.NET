@@ -313,7 +313,7 @@ namespace CorionisServiceManager.NET
 
         private void EventMenuHelpOnlineDocumentation(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/Corionis/CorionisServiceManager.NET/wiki");
+            Process.Start("https://corionis.github.io/CorionisServiceManager.NET/");
         }
 
         private void EventMenuFileRestart(object sender, EventArgs e)

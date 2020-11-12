@@ -54,6 +54,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.onlineDocumentationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl = new System.Windows.Forms.TabControl();
@@ -72,9 +73,10 @@
             this.toolStripMonitorDisable = new System.Windows.Forms.ToolStripButton();
             this.tabSelect = new System.Windows.Forms.TabPage();
             this.toolStripSelect = new System.Windows.Forms.ToolStrip();
-            this.toolStripSelectRefresh = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSelectCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripSelectSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSelectCancel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSelectRefresh = new System.Windows.Forms.ToolStripButton();
             this.dataGridViewSelect = new System.Windows.Forms.DataGridView();
             this.selectPickedCheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabOptions = new System.Windows.Forms.TabPage();
@@ -108,22 +110,20 @@
             this.optionsCheckBoxHideWhenMinimized = new System.Windows.Forms.CheckBox();
             this.optionsCheckBoxShowGridTooltips = new System.Windows.Forms.CheckBox();
             this.toolStripOptions = new System.Windows.Forms.ToolStrip();
-            this.toolStripOptionsCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripOptionsSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripOptionsCancel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripOptionsDefault = new System.Windows.Forms.ToolStripButton();
             this.tabLog = new System.Windows.Forms.TabPage();
             this.logTextBox = new System.Windows.Forms.TextBox();
             this.toolStripLog = new System.Windows.Forms.ToolStrip();
-            this.toolStripLogButtonClear = new System.Windows.Forms.ToolStripButton();
             this.toolStripLogButtonSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLogButtonClear = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLogButtonView = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLogButtonBottom = new System.Windows.Forms.ToolStripButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.monitorNameTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.monitorIdentifierTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.monitorStartupTypeTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -136,6 +136,7 @@
             this.servicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.configBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.logBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.monitorToolStripButtonShow = new System.Windows.Forms.ToolStripButton();
             this.menuStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabMonitor.SuspendLayout();
@@ -211,6 +212,12 @@
             this.onlineDocumentationToolStripMenuItem.Name = "onlineDocumentationToolStripMenuItem";
             this.onlineDocumentationToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.onlineDocumentationToolStripMenuItem.Text = "Online &documentation";
+            // 
+            // checkForUpdatesToolStripMenuItem
+            // 
+            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
+            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.checkForUpdatesToolStripMenuItem.Text = "&Check for updates";
             // 
             // toolStripSeparator3
             // 
@@ -334,7 +341,8 @@
             this.toolStripSeparator2,
             this.toolStripMonitorAuto,
             this.toolStripMonitorManual,
-            this.toolStripMonitorDisable});
+            this.toolStripMonitorDisable,
+            this.monitorToolStripButtonShow});
             this.toolStripMonitor.Location = new System.Drawing.Point(3, 362);
             this.toolStripMonitor.MinimumSize = new System.Drawing.Size(0, 29);
             this.toolStripMonitor.Name = "toolStripMonitor";
@@ -466,16 +474,17 @@
             this.toolStripSelect.TabStop = true;
             this.toolStripSelect.Text = "toolStripSelect";
             // 
-            // toolStripSelectRefresh
+            // toolStripSelectSave
             // 
-            this.toolStripSelectRefresh.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.toolStripSelectRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripSelectRefresh.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSelectRefresh.Image")));
-            this.toolStripSelectRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSelectRefresh.Name = "toolStripSelectRefresh";
-            this.toolStripSelectRefresh.Size = new System.Drawing.Size(50, 21);
-            this.toolStripSelectRefresh.Text = "&Refresh";
-            this.toolStripSelectRefresh.ToolTipText = "Refresh All services from Windows";
+            this.toolStripSelectSave.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.toolStripSelectSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripSelectSave.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSelectSave.Image")));
+            this.toolStripSelectSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSelectSave.Margin = new System.Windows.Forms.Padding(0, 1, 4, 2);
+            this.toolStripSelectSave.Name = "toolStripSelectSave";
+            this.toolStripSelectSave.Size = new System.Drawing.Size(35, 21);
+            this.toolStripSelectSave.Text = "&Save";
+            this.toolStripSelectSave.ToolTipText = "Save Selected";
             // 
             // toolStripSelectCancel
             // 
@@ -488,17 +497,23 @@
             this.toolStripSelectCancel.Text = "&Cancel";
             this.toolStripSelectCancel.ToolTipText = "Cancel Changes";
             // 
-            // toolStripSelectSave
+            // toolStripSeparator6
             // 
-            this.toolStripSelectSave.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.toolStripSelectSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripSelectSave.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSelectSave.Image")));
-            this.toolStripSelectSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSelectSave.Margin = new System.Windows.Forms.Padding(0, 1, 4, 2);
-            this.toolStripSelectSave.Name = "toolStripSelectSave";
-            this.toolStripSelectSave.Size = new System.Drawing.Size(35, 21);
-            this.toolStripSelectSave.Text = "&Save";
-            this.toolStripSelectSave.ToolTipText = "Save Selected";
+            this.toolStripSeparator6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 24);
+            // 
+            // toolStripSelectRefresh
+            // 
+            this.toolStripSelectRefresh.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.toolStripSelectRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripSelectRefresh.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSelectRefresh.Image")));
+            this.toolStripSelectRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSelectRefresh.Name = "toolStripSelectRefresh";
+            this.toolStripSelectRefresh.Size = new System.Drawing.Size(50, 21);
+            this.toolStripSelectRefresh.Text = "&Refresh";
+            this.toolStripSelectRefresh.ToolTipText = "Refresh All services from Windows";
             // 
             // dataGridViewSelect
             // 
@@ -959,17 +974,6 @@
             this.toolStripOptions.TabStop = true;
             this.toolStripOptions.Text = "toolStripOptions";
             // 
-            // toolStripOptionsCancel
-            // 
-            this.toolStripOptionsCancel.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.toolStripOptionsCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripOptionsCancel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripOptionsCancel.Image")));
-            this.toolStripOptionsCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripOptionsCancel.Name = "toolStripOptionsCancel";
-            this.toolStripOptionsCancel.Size = new System.Drawing.Size(47, 21);
-            this.toolStripOptionsCancel.Text = "&Cancel";
-            this.toolStripOptionsCancel.ToolTipText = "Cancel Changes";
-            // 
             // toolStripOptionsSave
             // 
             this.toolStripOptionsSave.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -981,6 +985,23 @@
             this.toolStripOptionsSave.Size = new System.Drawing.Size(35, 21);
             this.toolStripOptionsSave.Text = "&Save";
             this.toolStripOptionsSave.ToolTipText = "Save Serttings";
+            // 
+            // toolStripOptionsCancel
+            // 
+            this.toolStripOptionsCancel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.toolStripOptionsCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripOptionsCancel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripOptionsCancel.Image")));
+            this.toolStripOptionsCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripOptionsCancel.Name = "toolStripOptionsCancel";
+            this.toolStripOptionsCancel.Size = new System.Drawing.Size(47, 21);
+            this.toolStripOptionsCancel.Text = "&Cancel";
+            this.toolStripOptionsCancel.ToolTipText = "Cancel Changes";
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 24);
             // 
             // toolStripOptionsDefault
             // 
@@ -1039,17 +1060,6 @@
             this.toolStripLog.TabIndex = 1;
             this.toolStripLog.Text = "toolStripLog";
             // 
-            // toolStripLogButtonClear
-            // 
-            this.toolStripLogButtonClear.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.toolStripLogButtonClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripLogButtonClear.Image = ((System.Drawing.Image)(resources.GetObject("toolStripLogButtonClear.Image")));
-            this.toolStripLogButtonClear.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripLogButtonClear.Name = "toolStripLogButtonClear";
-            this.toolStripLogButtonClear.Size = new System.Drawing.Size(38, 21);
-            this.toolStripLogButtonClear.Text = "&Clear";
-            this.toolStripLogButtonClear.ToolTipText = "Clear log";
-            // 
             // toolStripLogButtonSave
             // 
             this.toolStripLogButtonSave.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -1061,6 +1071,23 @@
             this.toolStripLogButtonSave.Size = new System.Drawing.Size(35, 21);
             this.toolStripLogButtonSave.Text = "&Save";
             this.toolStripLogButtonSave.ToolTipText = "Save log to file";
+            // 
+            // toolStripLogButtonClear
+            // 
+            this.toolStripLogButtonClear.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.toolStripLogButtonClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripLogButtonClear.Image = ((System.Drawing.Image)(resources.GetObject("toolStripLogButtonClear.Image")));
+            this.toolStripLogButtonClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripLogButtonClear.Name = "toolStripLogButtonClear";
+            this.toolStripLogButtonClear.Size = new System.Drawing.Size(38, 21);
+            this.toolStripLogButtonClear.Text = "&Clear";
+            this.toolStripLogButtonClear.ToolTipText = "Clear log";
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 24);
             // 
             // toolStripLogButtonView
             // 
@@ -1090,31 +1117,6 @@
             this.toolStripLogButtonBottom.Size = new System.Drawing.Size(51, 21);
             this.toolStripLogButtonBottom.Text = "&Bottom";
             this.toolStripLogButtonBottom.ToolTipText = "Goto bottom of log";
-            // 
-            // checkForUpdatesToolStripMenuItem
-            // 
-            this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
-            this.checkForUpdatesToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.checkForUpdatesToolStripMenuItem.Text = "&Check for updates";
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 24);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 24);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 24);
             // 
             // monitorNameTextBox
             // 
@@ -1213,6 +1215,18 @@
             // 
             this.logBindingSource.AllowNew = true;
             this.logBindingSource.DataSource = typeof(CorionisServiceManager.NET.Log);
+            // 
+            // monitorToolStripButtonShow
+            // 
+            this.monitorToolStripButtonShow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.monitorToolStripButtonShow.BackColor = System.Drawing.Color.PaleGreen;
+            this.monitorToolStripButtonShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.monitorToolStripButtonShow.Image = ((System.Drawing.Image)(resources.GetObject("monitorToolStripButtonShow.Image")));
+            this.monitorToolStripButtonShow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.monitorToolStripButtonShow.Margin = new System.Windows.Forms.Padding(0, 1, 4, 2);
+            this.monitorToolStripButtonShow.Name = "monitorToolStripButtonShow";
+            this.monitorToolStripButtonShow.Size = new System.Drawing.Size(40, 21);
+            this.monitorToolStripButtonShow.Text = "Show";
             // 
             // ProgramForm
             // 
@@ -1365,5 +1379,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripButton monitorToolStripButtonShow;
     }
 }

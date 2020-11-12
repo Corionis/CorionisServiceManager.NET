@@ -3,7 +3,7 @@ title: Corionis Service Manager.NET
 description: Monitor & Manage Selected Windows Services 
 show_downloads: true 
 excerpt_separator: thisnevermatchme 
-version: 2020.1.0.0
+version: 2020.2.0
 msnetdownload: https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net472-web-installer
 github:
-  tar_url: https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager2020.1.0.0.exe?raw=true
+  tar_url: https://github.com/Corionis/CorionisServiceManager.NET/raw/main/deploy/CorionisServiceManager2020.2.0.exe?raw=true

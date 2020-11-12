@@ -35,11 +35,11 @@ namespace CorionisServiceManager.NET
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.aboutVersion = new System.Windows.Forms.Label();
             this.linkLabelProject = new System.Windows.Forms.LinkLabel();
-            this.linkLabelDocumentation = new System.Windows.Forms.LinkLabel();
             this.okButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.linkLabelPublic = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,23 +65,13 @@ namespace CorionisServiceManager.NET
             // 
             // linkLabelProject
             // 
-            this.linkLabelProject.Location = new System.Drawing.Point(87, 134);
+            this.linkLabelProject.Location = new System.Drawing.Point(87, 136);
             this.linkLabelProject.Name = "linkLabelProject";
             this.linkLabelProject.Size = new System.Drawing.Size(292, 23);
             this.linkLabelProject.TabIndex = 2;
             this.linkLabelProject.TabStop = true;
             this.linkLabelProject.Text = "https://github.com/Corionis/CorionisServiceManager.NET";
             this.linkLabelProject.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // linkLabelDocumentation
-            // 
-            this.linkLabelDocumentation.Location = new System.Drawing.Point(87, 111);
-            this.linkLabelDocumentation.Name = "linkLabelDocumentation";
-            this.linkLabelDocumentation.Size = new System.Drawing.Size(309, 23);
-            this.linkLabelDocumentation.TabIndex = 3;
-            this.linkLabelDocumentation.TabStop = true;
-            this.linkLabelDocumentation.Text = "https://github.com/Corionis/CorionisServiceManager.NET/wiki";
-            this.linkLabelDocumentation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // okButton
             // 
@@ -95,21 +85,12 @@ namespace CorionisServiceManager.NET
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(9, 134);
+            this.label2.Location = new System.Drawing.Point(9, 137);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(81, 23);
             this.label2.TabIndex = 5;
             this.label2.Text = "GitHub Project:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label3
-            // 
-            this.label3.Location = new System.Drawing.Point(1, 111);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(89, 23);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Documentation:";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label1
             // 
@@ -120,17 +101,36 @@ namespace CorionisServiceManager.NET
             this.label1.Text = "By Todd R. Hill, Corionis, LLC";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(32, 114);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(58, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Public site:";
+            // 
+            // linkLabelPublic
+            // 
+            this.linkLabelPublic.AutoSize = true;
+            this.linkLabelPublic.Location = new System.Drawing.Point(87, 114);
+            this.linkLabelPublic.Name = "linkLabelPublic";
+            this.linkLabelPublic.Size = new System.Drawing.Size(272, 13);
+            this.linkLabelPublic.TabIndex = 9;
+            this.linkLabelPublic.TabStop = true;
+            this.linkLabelPublic.Text = "https://corionis.github.io/CorionisServiceManager.NET/";
+            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(399, 212);
+            this.Controls.Add(this.linkLabelPublic);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.okButton);
-            this.Controls.Add(this.linkLabelDocumentation);
             this.Controls.Add(this.linkLabelProject);
             this.Controls.Add(this.aboutVersion);
             this.Controls.Add(this.pictureBox1);
@@ -145,12 +145,11 @@ namespace CorionisServiceManager.NET
             this.Text = "About";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         private System.Windows.Forms.Label label1;
-
-        private System.Windows.Forms.LinkLabel linkLabelDocumentation;
         private System.Windows.Forms.LinkLabel linkLabelProject;
 
         private System.Windows.Forms.Button okButton;
@@ -158,10 +157,12 @@ namespace CorionisServiceManager.NET
         private System.Windows.Forms.Label aboutVersion;
 
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
 
         private System.Windows.Forms.PictureBox pictureBox1;
 
         #endregion
+
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.LinkLabel linkLabelPublic;
     }
 }
