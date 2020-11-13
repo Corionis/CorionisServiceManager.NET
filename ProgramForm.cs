@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using System.ServiceProcess;
+using System.Windows;
 using System.Windows.Forms;
 using Microsoft.Win32.TaskScheduler;
 
@@ -23,9 +24,11 @@ namespace CorionisServiceManager.NET
         private Config cfg;
         private CsmContext ctxt;
         public Log logger { get; }
+        private Panel miniPanel;
         private int monitorSortColumnIndex = -1;
         private SortOrder monitorSortMode = SortOrder.None;
         private Timer monitorUpdateTimer;
+        private int originalFormHeight = -1;
         private DataGridViewCellStyle rowStyleRunning;
         private DataGridViewCellStyle rowStyleStopped;
         private DataGridViewCellStyle rowStyleUnknown;
@@ -65,9 +68,10 @@ namespace CorionisServiceManager.NET
             // Menu
             aboutToolStripMenuItem.Click += EventMenuHelpAbout;
             checkForUpdatesToolStripMenuItem.Click += EventMenuCheckForUpdates;
+            exitToolStripMenuItem.Click += EventMenuFileExit;
+            minifyToolStripMenuItem.Click += EventMenuViewMinify;
             onlineDocumentationToolStripMenuItem.Click += EventMenuHelpOnlineDocumentation;
             restartToolStripMenuItem.Click += EventMenuFileRestart;
-            exitToolStripMenuItem.Click += EventMenuFileExit;
 
             // Tab control
             tabControl.Click += EventTabFocused;
@@ -80,6 +84,9 @@ namespace CorionisServiceManager.NET
             toolStripMonitorNone.Click += EventMonitorButtonNone;
             toolStripMonitorStart.Click += EventMonitorButtonStart;
             toolStripMonitorStop.Click += EventMonitorButtonStop;
+            toolStripMonitorShow.Click += EventMonitorButtonShow;
+            toolStripMonitorShow.Visible = false;
+
             dataGridViewMonitor.CellClick += EventMonitorCellClicked;
             dataGridViewMonitor.CellValueChanged += EventMonitorCellEndEdit;
             dataGridViewMonitor.KeyDown += EventMonitorKeyDown;
@@ -332,6 +339,42 @@ namespace CorionisServiceManager.NET
             ctxt.Exit(sender, e);
         }
 
+        private void EventMenuViewMinify(object sender, EventArgs e)
+        {
+            menuStrip.Visible = false;
+            tabControl.Visible = false;
+
+            miniPanel = new Panel();
+            miniPanel.SuspendLayout();
+            miniPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            miniPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            miniPanel.Location = new System.Drawing.Point(0, 6);
+            miniPanel.Margin = new System.Windows.Forms.Padding(4);
+            miniPanel.Name = "tabControl";
+            //miniPanel.Padding = new System.Drawing.Point(4, 4);
+            //miniPanel.SelectedIndex = 0;
+            miniPanel.Size = new System.Drawing.Size(803, 450);
+            //miniPanel.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            miniPanel.TabIndex = 1;
+
+            miniPanel.Controls.Add(dataGridViewMonitor);
+            miniPanel.Controls.Add(toolStripMonitor);
+            miniPanel.Visible = false;
+            miniPanel.ResumeLayout();
+
+            this.Controls.Add(miniPanel);
+
+            originalFormHeight = this.Height;
+            var h = CalculateFormHeight();
+            var s = 0;  
+            this.Height =  + s + h + toolStripMonitor.Height;
+
+            miniPanel.Visible = true;
+            toolStripMonitorShow.Visible = true;
+
+            this.Refresh();
+        }
+
         private void EventMonitorButtonAll(object sender, EventArgs e)
         {
             TogglePicked(true);
@@ -355,6 +398,21 @@ namespace CorionisServiceManager.NET
         private void EventMonitorButtonNone(object sender, EventArgs e)
         {
             TogglePicked(false);
+        }
+
+        private void EventMonitorButtonShow(object sender, EventArgs e)
+        {
+            if (miniPanel != null)
+            {
+                miniPanel.Visible = false;
+                tabMonitor.Controls.Add(this.dataGridViewMonitor);
+                tabMonitor.Controls.Add(toolStripMonitor);
+                menuStrip.Visible = true;
+                tabControl.Visible = true;
+                toolStripMonitorShow.Visible = false;
+                this.Height = originalFormHeight;
+                Refresh();
+            }
         }
 
         private void EventMonitorButtonStart(object sender, EventArgs e)
@@ -870,6 +928,16 @@ namespace CorionisServiceManager.NET
                 cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Status");
                 cell.ToolTipText = ttt;
             }
+        }
+
+        private int CalculateFormHeight()
+        {
+            int height = 0;
+            if (dataGridViewMonitor != null && dataGridViewMonitor.Rows != null)
+            {
+                height = dataGridViewMonitor.Rows[0].Height * dataGridViewMonitor.Rows.Count;
+            }
+            return height;
         }
 
         private string GetColumnValue(DataGridViewCellCollection cells, string headerName)

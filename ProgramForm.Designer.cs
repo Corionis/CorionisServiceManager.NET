@@ -124,6 +124,9 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLogButtonBottom = new System.Windows.Forms.ToolStripButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolStripMonitorShow = new System.Windows.Forms.ToolStripButton();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.minifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.monitorNameTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.monitorIdentifierTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.monitorStartupTypeTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -136,7 +139,6 @@
             this.servicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.configBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.logBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.monitorToolStripButtonShow = new System.Windows.Forms.ToolStripButton();
             this.menuStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabMonitor.SuspendLayout();
@@ -162,6 +164,7 @@
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.viewToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -342,7 +345,7 @@
             this.toolStripMonitorAuto,
             this.toolStripMonitorManual,
             this.toolStripMonitorDisable,
-            this.monitorToolStripButtonShow});
+            this.toolStripMonitorShow});
             this.toolStripMonitor.Location = new System.Drawing.Point(3, 362);
             this.toolStripMonitor.MinimumSize = new System.Drawing.Size(0, 29);
             this.toolStripMonitor.Name = "toolStripMonitor";
@@ -1118,6 +1121,32 @@
             this.toolStripLogButtonBottom.Text = "&Bottom";
             this.toolStripLogButtonBottom.ToolTipText = "Goto bottom of log";
             // 
+            // toolStripMonitorShow
+            // 
+            this.toolStripMonitorShow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripMonitorShow.BackColor = System.Drawing.Color.PaleGreen;
+            this.toolStripMonitorShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripMonitorShow.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMonitorShow.Image")));
+            this.toolStripMonitorShow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripMonitorShow.Margin = new System.Windows.Forms.Padding(0, 1, 4, 2);
+            this.toolStripMonitorShow.Name = "toolStripMonitorShow";
+            this.toolStripMonitorShow.Size = new System.Drawing.Size(40, 21);
+            this.toolStripMonitorShow.Text = "Show";
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.minifyToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "&View";
+            // 
+            // minifyToolStripMenuItem
+            // 
+            this.minifyToolStripMenuItem.Name = "minifyToolStripMenuItem";
+            this.minifyToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.minifyToolStripMenuItem.Text = "&Minify";
+            // 
             // monitorNameTextBox
             // 
             this.monitorNameTextBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -1215,18 +1244,6 @@
             // 
             this.logBindingSource.AllowNew = true;
             this.logBindingSource.DataSource = typeof(CorionisServiceManager.NET.Log);
-            // 
-            // monitorToolStripButtonShow
-            // 
-            this.monitorToolStripButtonShow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.monitorToolStripButtonShow.BackColor = System.Drawing.Color.PaleGreen;
-            this.monitorToolStripButtonShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.monitorToolStripButtonShow.Image = ((System.Drawing.Image)(resources.GetObject("monitorToolStripButtonShow.Image")));
-            this.monitorToolStripButtonShow.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.monitorToolStripButtonShow.Margin = new System.Windows.Forms.Padding(0, 1, 4, 2);
-            this.monitorToolStripButtonShow.Name = "monitorToolStripButtonShow";
-            this.monitorToolStripButtonShow.Size = new System.Drawing.Size(40, 21);
-            this.monitorToolStripButtonShow.Text = "Show";
             // 
             // ProgramForm
             // 
@@ -1379,6 +1396,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripButton monitorToolStripButtonShow;
+        private System.Windows.Forms.ToolStripButton toolStripMonitorShow;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem minifyToolStripMenuItem;
     }
 }
