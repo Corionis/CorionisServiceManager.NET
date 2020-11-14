@@ -84,8 +84,8 @@ namespace CorionisServiceManager.NET
             toolStripMonitorNone.Click += EventMonitorButtonNone;
             toolStripMonitorStart.Click += EventMonitorButtonStart;
             toolStripMonitorStop.Click += EventMonitorButtonStop;
-            toolStripMonitorShow.Click += EventMonitorButtonShow;
-            toolStripMonitorShow.Visible = false;
+            toolStripMonitorToggleMinify.Click += EventMonitorButtonToggleMinify;
+            //toolStripMonitorToggleMinify.Visible = false;
 
             dataGridViewMonitor.CellClick += EventMonitorCellClicked;
             dataGridViewMonitor.CellValueChanged += EventMonitorCellEndEdit;
@@ -344,34 +344,39 @@ namespace CorionisServiceManager.NET
             menuStrip.Visible = false;
             tabControl.Visible = false;
 
-            miniPanel = new Panel();
-            miniPanel.SuspendLayout();
-            miniPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            miniPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            miniPanel.Location = new System.Drawing.Point(0, 6);
-            miniPanel.Margin = new System.Windows.Forms.Padding(4);
-            miniPanel.Name = "tabControl";
-            //miniPanel.Padding = new System.Drawing.Point(4, 4);
-            //miniPanel.SelectedIndex = 0;
-            miniPanel.Size = new System.Drawing.Size(803, 450);
-            //miniPanel.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            miniPanel.TabIndex = 1;
+            if (miniPanel == null)
+            {
+                miniPanel = new Panel();
+                miniPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+                miniPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                miniPanel.Location = new System.Drawing.Point(0, 6);
+                miniPanel.Margin = new System.Windows.Forms.Padding(4);
+                miniPanel.Name = "tabControl";
+                //miniPanel.Padding = new System.Drawing.Point(4, 4);
+                //miniPanel.SelectedIndex = 0;
+                miniPanel.Size = new System.Drawing.Size(803, 450);
+                //miniPanel.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+                miniPanel.TabIndex = 1;
+                this.Controls.Add(miniPanel);
+            }
 
+            miniPanel.SuspendLayout();
             miniPanel.Controls.Add(dataGridViewMonitor);
             miniPanel.Controls.Add(toolStripMonitor);
+            toolStripMonitorToggleMinify.Image = CorionisServiceManager.NET.Properties.Resources.arrow_down;
+            this.toolStripMonitorToggleMinify.Text = "Expand";
             miniPanel.Visible = false;
             miniPanel.ResumeLayout();
 
-            this.Controls.Add(miniPanel);
-
             originalFormHeight = this.Height;
-            var h = CalculateFormHeight();
-            var s = 0;  
-            this.Height =  + s + h + toolStripMonitor.Height;
+            this.Height = CalculateMinifyHeight();
 
             miniPanel.Visible = true;
-            toolStripMonitorShow.Visible = true;
+            //toolStripMonitorToggleMinify.Visible = true;
 
+            AugmentMonitorCells();
+            EventMonitorUpdateTick(sender, e);
+            tabMonitor.Refresh();
             this.Refresh();
         }
 
@@ -400,21 +405,6 @@ namespace CorionisServiceManager.NET
             TogglePicked(false);
         }
 
-        private void EventMonitorButtonShow(object sender, EventArgs e)
-        {
-            if (miniPanel != null)
-            {
-                miniPanel.Visible = false;
-                tabMonitor.Controls.Add(this.dataGridViewMonitor);
-                tabMonitor.Controls.Add(toolStripMonitor);
-                menuStrip.Visible = true;
-                tabControl.Visible = true;
-                toolStripMonitorShow.Visible = false;
-                this.Height = originalFormHeight;
-                Refresh();
-            }
-        }
-
         private void EventMonitorButtonStart(object sender, EventArgs e)
         {
             ManageServices("start");
@@ -423,6 +413,27 @@ namespace CorionisServiceManager.NET
         private void EventMonitorButtonStop(object sender, EventArgs e)
         {
             ManageServices("stop");
+        }
+
+        private void EventMonitorButtonToggleMinify(object sender, EventArgs e)
+        {
+            if (miniPanel != null && miniPanel.Visible == true)
+            {
+                miniPanel.Visible = false;
+                tabMonitor.Controls.Add(this.dataGridViewMonitor);
+                tabMonitor.Controls.Add(toolStripMonitor);
+                toolStripMonitorToggleMinify.Image = CorionisServiceManager.NET.Properties.Resources.arrow_up;
+                toolStripMonitorToggleMinify.ToolTipText = "Minify";
+                menuStrip.Visible = true;
+                tabControl.Visible = true;
+                // toolStripMonitorToggleMinify.Visible = false;
+                this.Height = originalFormHeight;
+                Refresh();
+            }
+            else
+            {
+                EventMenuViewMinify(sender, e);
+            }
         }
 
         private void EventMonitorCellClicked(object sender, DataGridViewCellEventArgs e)
@@ -930,12 +941,13 @@ namespace CorionisServiceManager.NET
             }
         }
 
-        private int CalculateFormHeight()
+        private int CalculateMinifyHeight()
         {
-            int height = 0;
+            int height = Size.Height - ClientSize.Height + toolStripMonitor.Height;
             if (dataGridViewMonitor != null && dataGridViewMonitor.Rows != null)
             {
-                height = dataGridViewMonitor.Rows[0].Height * dataGridViewMonitor.Rows.Count;
+                height += dataGridViewMonitor.ColumnHeadersHeight;
+                height += dataGridViewMonitor.Rows[0].Height * dataGridViewMonitor.Rows.Count;
             }
             return height;
         }
@@ -1121,6 +1133,12 @@ namespace CorionisServiceManager.NET
             if (Visible == false || WindowState == FormWindowState.Minimized)
             {
                 ShowForm();
+            }
+
+            // Un-Minify if necessary
+            if (miniPanel != null && miniPanel.Visible == true)
+            {
+                EventMonitorButtonToggleMinify(null, null);
             }
 
             cfg.Left = Left;

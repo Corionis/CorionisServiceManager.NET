@@ -123,6 +123,7 @@
     </Compile>
     <EmbeddedResource Include="ProgramForm.resx">
       <DependentUpon>ProgramForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Config.datasource" />
@@ -161,6 +162,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\about-header.jpg" />
+    <Content Include="Resources\arrow-down.bmp" />
+    <None Include="Resources\arrow-down.png" />
+    <Content Include="Resources\arrow-up.bmp" />
+    <None Include="Resources\arrow-up.png" />
+    <Content Include="Resources\arrow_up.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

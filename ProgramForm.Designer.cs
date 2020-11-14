@@ -35,14 +35,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgramForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -52,6 +52,8 @@
             this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.minifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.onlineDocumentationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,6 +63,11 @@
             this.tabMonitor = new System.Windows.Forms.TabPage();
             this.dataGridViewMonitor = new System.Windows.Forms.DataGridView();
             this.monitorPickedCheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.monitorNameTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.monitorIdentifierTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.monitorStartupTypeTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.monitorStatusTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.monitoredServicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripMonitor = new System.Windows.Forms.ToolStrip();
             this.toolStripMonitorAll = new System.Windows.Forms.ToolStripButton();
             this.toolStripMonitorNone = new System.Windows.Forms.ToolStripButton();
@@ -71,6 +78,7 @@
             this.toolStripMonitorAuto = new System.Windows.Forms.ToolStripButton();
             this.toolStripMonitorManual = new System.Windows.Forms.ToolStripButton();
             this.toolStripMonitorDisable = new System.Windows.Forms.ToolStripButton();
+            this.toolStripMonitorToggleMinify = new System.Windows.Forms.ToolStripButton();
             this.tabSelect = new System.Windows.Forms.TabPage();
             this.toolStripSelect = new System.Windows.Forms.ToolStrip();
             this.toolStripSelectSave = new System.Windows.Forms.ToolStripButton();
@@ -79,10 +87,16 @@
             this.toolStripSelectRefresh = new System.Windows.Forms.ToolStripButton();
             this.dataGridViewSelect = new System.Windows.Forms.DataGridView();
             this.selectPickedCheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.selectNameTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.selectIdentifierTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.selectStartupTypeTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.selectStatusTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.servicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabOptions = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBoxBehavior = new System.Windows.Forms.GroupBox();
             this.optionsCheckBoxLogToFile = new System.Windows.Forms.CheckBox();
+            this.configBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBoxMonitorColors = new System.Windows.Forms.GroupBox();
             this.optionsSelectBack = new System.Windows.Forms.Label();
             this.optionsSelectBackLabel = new System.Windows.Forms.Label();
@@ -116,6 +130,7 @@
             this.toolStripOptionsDefault = new System.Windows.Forms.ToolStripButton();
             this.tabLog = new System.Windows.Forms.TabPage();
             this.logTextBox = new System.Windows.Forms.TextBox();
+            this.logBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripLog = new System.Windows.Forms.ToolStrip();
             this.toolStripLogButtonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripLogButtonClear = new System.Windows.Forms.ToolStripButton();
@@ -124,40 +139,25 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLogButtonBottom = new System.Windows.Forms.ToolStripButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.toolStripMonitorShow = new System.Windows.Forms.ToolStripButton();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.minifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.monitorNameTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.monitorIdentifierTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.monitorStartupTypeTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.monitorStatusTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.monitoredServicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.selectNameTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.selectIdentifierTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.selectStartupTypeTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.selectStatusTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.servicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.configBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.logBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabMonitor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMonitor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.monitoredServicesBindingSource)).BeginInit();
             this.toolStripMonitor.SuspendLayout();
             this.tabSelect.SuspendLayout();
             this.toolStripSelect.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSelect)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesBindingSource)).BeginInit();
             this.tabOptions.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBoxBehavior.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.configBindingSource)).BeginInit();
             this.groupBoxMonitorColors.SuspendLayout();
             this.toolStripOptions.SuspendLayout();
             this.tabLog.SuspendLayout();
-            this.toolStripLog.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.monitoredServicesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.servicesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.configBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logBindingSource)).BeginInit();
+            this.toolStripLog.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -198,6 +198,20 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.minifyToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "&View";
+            // 
+            // minifyToolStripMenuItem
+            // 
+            this.minifyToolStripMenuItem.Name = "minifyToolStripMenuItem";
+            this.minifyToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.minifyToolStripMenuItem.Text = "&Minify";
             // 
             // helpToolStripMenuItem
             // 
@@ -332,6 +346,49 @@
             this.monitorPickedCheckBox.TrueValue = "true";
             this.monitorPickedCheckBox.Width = 32;
             // 
+            // monitorNameTextBox
+            // 
+            this.monitorNameTextBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.monitorNameTextBox.DataPropertyName = "Name";
+            this.monitorNameTextBox.HeaderText = "Name";
+            this.monitorNameTextBox.Name = "monitorNameTextBox";
+            // 
+            // monitorIdentifierTextBox
+            // 
+            this.monitorIdentifierTextBox.DataPropertyName = "Identifier";
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.monitorIdentifierTextBox.DefaultCellStyle = dataGridViewCellStyle4;
+            this.monitorIdentifierTextBox.FillWeight = 90F;
+            this.monitorIdentifierTextBox.HeaderText = "Identifier";
+            this.monitorIdentifierTextBox.Name = "monitorIdentifierTextBox";
+            this.monitorIdentifierTextBox.ReadOnly = true;
+            // 
+            // monitorStartupTypeTextBox
+            // 
+            this.monitorStartupTypeTextBox.DataPropertyName = "Startup";
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.monitorStartupTypeTextBox.DefaultCellStyle = dataGridViewCellStyle5;
+            this.monitorStartupTypeTextBox.FillWeight = 90F;
+            this.monitorStartupTypeTextBox.HeaderText = "Start Type";
+            this.monitorStartupTypeTextBox.Name = "monitorStartupTypeTextBox";
+            this.monitorStartupTypeTextBox.ReadOnly = true;
+            // 
+            // monitorStatusTextBox
+            // 
+            this.monitorStatusTextBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.monitorStatusTextBox.DataPropertyName = "Status";
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.monitorStatusTextBox.DefaultCellStyle = dataGridViewCellStyle6;
+            this.monitorStatusTextBox.HeaderText = "Status";
+            this.monitorStatusTextBox.Name = "monitorStatusTextBox";
+            this.monitorStatusTextBox.ReadOnly = true;
+            this.monitorStatusTextBox.Width = 62;
+            // 
+            // monitoredServicesBindingSource
+            // 
+            this.monitoredServicesBindingSource.DataMember = "monitoredServices";
+            this.monitoredServicesBindingSource.DataSource = typeof(CorionisServiceManager.NET.Services);
+            // 
             // toolStripMonitor
             // 
             this.toolStripMonitor.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -345,7 +402,7 @@
             this.toolStripMonitorAuto,
             this.toolStripMonitorManual,
             this.toolStripMonitorDisable,
-            this.toolStripMonitorShow});
+            this.toolStripMonitorToggleMinify});
             this.toolStripMonitor.Location = new System.Drawing.Point(3, 362);
             this.toolStripMonitor.MinimumSize = new System.Drawing.Size(0, 29);
             this.toolStripMonitor.Name = "toolStripMonitor";
@@ -446,6 +503,22 @@
             this.toolStripMonitorDisable.Size = new System.Drawing.Size(49, 21);
             this.toolStripMonitorDisable.Text = "&Disable";
             this.toolStripMonitorDisable.ToolTipText = "Disable Selected";
+            // 
+            // toolStripMonitorToggleMinify
+            // 
+            this.toolStripMonitorToggleMinify.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripMonitorToggleMinify.AutoSize = false;
+            this.toolStripMonitorToggleMinify.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.toolStripMonitorToggleMinify.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.toolStripMonitorToggleMinify.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripMonitorToggleMinify.ForeColor = System.Drawing.Color.Transparent;
+            this.toolStripMonitorToggleMinify.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMonitorToggleMinify.Image")));
+            this.toolStripMonitorToggleMinify.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripMonitorToggleMinify.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this.toolStripMonitorToggleMinify.Margin = new System.Windows.Forms.Padding(0, 1, 4, 2);
+            this.toolStripMonitorToggleMinify.Name = "toolStripMonitorToggleMinify";
+            this.toolStripMonitorToggleMinify.Size = new System.Drawing.Size(23, 21);
+            this.toolStripMonitorToggleMinify.Text = "Minify";
             // 
             // tabSelect
             // 
@@ -586,6 +659,52 @@
             this.selectPickedCheckBox.TrueValue = "true";
             this.selectPickedCheckBox.Width = 32;
             // 
+            // selectNameTextBox
+            // 
+            this.selectNameTextBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.selectNameTextBox.DataPropertyName = "DisplayName";
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            this.selectNameTextBox.DefaultCellStyle = dataGridViewCellStyle11;
+            this.selectNameTextBox.HeaderText = "Name";
+            this.selectNameTextBox.Name = "selectNameTextBox";
+            this.selectNameTextBox.ReadOnly = true;
+            // 
+            // selectIdentifierTextBox
+            // 
+            this.selectIdentifierTextBox.DataPropertyName = "ServiceName";
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
+            this.selectIdentifierTextBox.DefaultCellStyle = dataGridViewCellStyle12;
+            this.selectIdentifierTextBox.FillWeight = 90F;
+            this.selectIdentifierTextBox.HeaderText = "Identifier";
+            this.selectIdentifierTextBox.Name = "selectIdentifierTextBox";
+            this.selectIdentifierTextBox.ReadOnly = true;
+            // 
+            // selectStartupTypeTextBox
+            // 
+            this.selectStartupTypeTextBox.DataPropertyName = "StartType";
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
+            this.selectStartupTypeTextBox.DefaultCellStyle = dataGridViewCellStyle13;
+            this.selectStartupTypeTextBox.FillWeight = 90F;
+            this.selectStartupTypeTextBox.HeaderText = "Start Type";
+            this.selectStartupTypeTextBox.Name = "selectStartupTypeTextBox";
+            this.selectStartupTypeTextBox.ReadOnly = true;
+            // 
+            // selectStatusTextBox
+            // 
+            this.selectStatusTextBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.selectStatusTextBox.DataPropertyName = "Status";
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            this.selectStatusTextBox.DefaultCellStyle = dataGridViewCellStyle14;
+            this.selectStatusTextBox.HeaderText = "Status";
+            this.selectStatusTextBox.Name = "selectStatusTextBox";
+            this.selectStatusTextBox.ReadOnly = true;
+            this.selectStatusTextBox.Width = 62;
+            // 
+            // servicesBindingSource
+            // 
+            this.servicesBindingSource.DataMember = "allServices";
+            this.servicesBindingSource.DataSource = typeof(CorionisServiceManager.NET.Services);
+            // 
             // tabOptions
             // 
             this.tabOptions.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -645,6 +764,10 @@
             this.optionsCheckBoxLogToFile.Text = "Log to file";
             this.toolTip1.SetToolTip(this.optionsCheckBoxLogToFile, "Write to the CSM log file\r\nin addition to the Log tab");
             this.optionsCheckBoxLogToFile.UseVisualStyleBackColor = true;
+            // 
+            // configBindingSource
+            // 
+            this.configBindingSource.DataSource = typeof(CorionisServiceManager.NET.Config);
             // 
             // groupBoxMonitorColors
             // 
@@ -1045,6 +1168,11 @@
             this.logTextBox.TabIndex = 0;
             this.logTextBox.WordWrap = false;
             // 
+            // logBindingSource
+            // 
+            this.logBindingSource.AllowNew = true;
+            this.logBindingSource.DataSource = typeof(CorionisServiceManager.NET.Log);
+            // 
             // toolStripLog
             // 
             this.toolStripLog.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -1121,130 +1249,6 @@
             this.toolStripLogButtonBottom.Text = "&Bottom";
             this.toolStripLogButtonBottom.ToolTipText = "Goto bottom of log";
             // 
-            // toolStripMonitorShow
-            // 
-            this.toolStripMonitorShow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripMonitorShow.BackColor = System.Drawing.Color.PaleGreen;
-            this.toolStripMonitorShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripMonitorShow.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMonitorShow.Image")));
-            this.toolStripMonitorShow.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripMonitorShow.Margin = new System.Windows.Forms.Padding(0, 1, 4, 2);
-            this.toolStripMonitorShow.Name = "toolStripMonitorShow";
-            this.toolStripMonitorShow.Size = new System.Drawing.Size(40, 21);
-            this.toolStripMonitorShow.Text = "Show";
-            // 
-            // viewToolStripMenuItem
-            // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.minifyToolStripMenuItem});
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.viewToolStripMenuItem.Text = "&View";
-            // 
-            // minifyToolStripMenuItem
-            // 
-            this.minifyToolStripMenuItem.Name = "minifyToolStripMenuItem";
-            this.minifyToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
-            this.minifyToolStripMenuItem.Text = "&Minify";
-            // 
-            // monitorNameTextBox
-            // 
-            this.monitorNameTextBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.monitorNameTextBox.DataPropertyName = "Name";
-            this.monitorNameTextBox.HeaderText = "Name";
-            this.monitorNameTextBox.Name = "monitorNameTextBox";
-            // 
-            // monitorIdentifierTextBox
-            // 
-            this.monitorIdentifierTextBox.DataPropertyName = "Identifier";
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.monitorIdentifierTextBox.DefaultCellStyle = dataGridViewCellStyle4;
-            this.monitorIdentifierTextBox.FillWeight = 90F;
-            this.monitorIdentifierTextBox.HeaderText = "Identifier";
-            this.monitorIdentifierTextBox.Name = "monitorIdentifierTextBox";
-            this.monitorIdentifierTextBox.ReadOnly = true;
-            // 
-            // monitorStartupTypeTextBox
-            // 
-            this.monitorStartupTypeTextBox.DataPropertyName = "Startup";
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.monitorStartupTypeTextBox.DefaultCellStyle = dataGridViewCellStyle5;
-            this.monitorStartupTypeTextBox.FillWeight = 90F;
-            this.monitorStartupTypeTextBox.HeaderText = "Start Type";
-            this.monitorStartupTypeTextBox.Name = "monitorStartupTypeTextBox";
-            this.monitorStartupTypeTextBox.ReadOnly = true;
-            // 
-            // monitorStatusTextBox
-            // 
-            this.monitorStatusTextBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.monitorStatusTextBox.DataPropertyName = "Status";
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.monitorStatusTextBox.DefaultCellStyle = dataGridViewCellStyle6;
-            this.monitorStatusTextBox.HeaderText = "Status";
-            this.monitorStatusTextBox.Name = "monitorStatusTextBox";
-            this.monitorStatusTextBox.ReadOnly = true;
-            this.monitorStatusTextBox.Width = 62;
-            // 
-            // monitoredServicesBindingSource
-            // 
-            this.monitoredServicesBindingSource.DataMember = "monitoredServices";
-            this.monitoredServicesBindingSource.DataSource = typeof(CorionisServiceManager.NET.Services);
-            // 
-            // selectNameTextBox
-            // 
-            this.selectNameTextBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.selectNameTextBox.DataPropertyName = "DisplayName";
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            this.selectNameTextBox.DefaultCellStyle = dataGridViewCellStyle11;
-            this.selectNameTextBox.HeaderText = "Name";
-            this.selectNameTextBox.Name = "selectNameTextBox";
-            this.selectNameTextBox.ReadOnly = true;
-            // 
-            // selectIdentifierTextBox
-            // 
-            this.selectIdentifierTextBox.DataPropertyName = "ServiceName";
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
-            this.selectIdentifierTextBox.DefaultCellStyle = dataGridViewCellStyle12;
-            this.selectIdentifierTextBox.FillWeight = 90F;
-            this.selectIdentifierTextBox.HeaderText = "Identifier";
-            this.selectIdentifierTextBox.Name = "selectIdentifierTextBox";
-            this.selectIdentifierTextBox.ReadOnly = true;
-            // 
-            // selectStartupTypeTextBox
-            // 
-            this.selectStartupTypeTextBox.DataPropertyName = "StartType";
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
-            this.selectStartupTypeTextBox.DefaultCellStyle = dataGridViewCellStyle13;
-            this.selectStartupTypeTextBox.FillWeight = 90F;
-            this.selectStartupTypeTextBox.HeaderText = "Start Type";
-            this.selectStartupTypeTextBox.Name = "selectStartupTypeTextBox";
-            this.selectStartupTypeTextBox.ReadOnly = true;
-            // 
-            // selectStatusTextBox
-            // 
-            this.selectStatusTextBox.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.selectStatusTextBox.DataPropertyName = "Status";
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            this.selectStatusTextBox.DefaultCellStyle = dataGridViewCellStyle14;
-            this.selectStatusTextBox.HeaderText = "Status";
-            this.selectStatusTextBox.Name = "selectStatusTextBox";
-            this.selectStatusTextBox.ReadOnly = true;
-            this.selectStatusTextBox.Width = 62;
-            // 
-            // servicesBindingSource
-            // 
-            this.servicesBindingSource.DataMember = "allServices";
-            this.servicesBindingSource.DataSource = typeof(CorionisServiceManager.NET.Services);
-            // 
-            // configBindingSource
-            // 
-            this.configBindingSource.DataSource = typeof(CorionisServiceManager.NET.Config);
-            // 
-            // logBindingSource
-            // 
-            this.logBindingSource.AllowNew = true;
-            this.logBindingSource.DataSource = typeof(CorionisServiceManager.NET.Log);
-            // 
             // ProgramForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1263,6 +1267,7 @@
             this.tabMonitor.ResumeLayout(false);
             this.tabMonitor.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMonitor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.monitoredServicesBindingSource)).EndInit();
             this.toolStripMonitor.ResumeLayout(false);
             this.toolStripMonitor.PerformLayout();
             this.tabSelect.ResumeLayout(false);
@@ -1270,24 +1275,23 @@
             this.toolStripSelect.ResumeLayout(false);
             this.toolStripSelect.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSelect)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.servicesBindingSource)).EndInit();
             this.tabOptions.ResumeLayout(false);
             this.tabOptions.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.groupBoxBehavior.ResumeLayout(false);
             this.groupBoxBehavior.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.configBindingSource)).EndInit();
             this.groupBoxMonitorColors.ResumeLayout(false);
             this.groupBoxMonitorColors.PerformLayout();
             this.toolStripOptions.ResumeLayout(false);
             this.toolStripOptions.PerformLayout();
             this.tabLog.ResumeLayout(false);
             this.tabLog.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logBindingSource)).EndInit();
             this.toolStripLog.ResumeLayout(false);
             this.toolStripLog.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.monitoredServicesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.servicesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.configBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.logBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1396,7 +1400,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripButton toolStripMonitorShow;
+        private System.Windows.Forms.ToolStripButton toolStripMonitorToggleMinify;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem minifyToolStripMenuItem;
     }
