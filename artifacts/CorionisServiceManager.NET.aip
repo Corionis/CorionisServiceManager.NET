@@ -75,7 +75,7 @@ ProgramGroup=<AppName>
 Uninstall=1
 ShowAddRemove=1
 SilentUninstall=0
-UninstallForce=1
+UninstallForce=0
 UninstallRestart=0
 UninstallSettings=0
 UninstallSettingsCommand=
@@ -114,7 +114,7 @@ SilentInstall=0
 Theme=2
 ShowPublisher=1
 HideFileNames=1
-Beep=1
+Beep=0
 RunAsAdmin=1
 DialogWelcome=1
 DialogLicense=0
@@ -162,7 +162,7 @@ CustomActionCommand=<WebSite>
 CustomActionChecked=0
 CustomActionAdmin=0
 CustomTemplate=1
-TotalFiles=2
+TotalFiles=3
 
 [Languages]
 English=
@@ -180,14 +180,14 @@ FontName=Tahoma
 HeaderSize=18
 HeaderColor=
 HeaderStyle=Regular
-HeaderOffset=0
+HeaderOffset=31
 TextSize=9
 TextColor=
 TextStyle=Regular
-TextOffset=0
+TextOffset=28
 ButtonWidth=180
 ButtonFontSize=12
-ButtonOffset=0
+ButtonOffset=25
 LicenseFontSize=8
 LicenseColor=
 LinkColor=
@@ -196,6 +196,7 @@ LicensePosition=Center
 [Files]
 0=D:\Tools\Actual Installer\Uninstall.exe?<InstallDir>\Uninstall.exe?1?1
 1=D:\Tools\Actual Installer\Updater.exe?<InstallDir>\Updater.exe?1?1
+2=D:\Users\trh\Work\corionis\git\corionis\CorionisServiceManager.NET\artifacts\aifont.ini?<SetupTempDir>\aifont.ini?1?1
 
 [License]
 (Default)=
@@ -207,10 +208,10 @@ English=
 
 [Shortcuts]
 0=<ProgramGroup>*?<AppName>*?<InstallDir>\CorionisServiceManager.exe*?*?*?<InstallDir>*?*?0*?Normal
-1=<Desktop>*?<AppName>*?<InstallDir>\CorionisServiceManager.exe*?*?*?<InstallDir>*?*?0*?Normal
-2=<ProgramGroup>*?Uninstall <AppName>*?<InstallDir>\Uninstall.exe*?*?*?<InstallDir>*?*?0*?Normal
-3=<ProgramGroup>*?Corionis Service Manager Task*?<SystemDir>\schtasks.exe*?Executes CSM via Windows Task Scheduler*?/run /tn "Corionis Service Manager"*?*?<InstallDir>\Resources\manager-round-bronco.ico*?0*?Minimized
-4=<ProgramGroup>*?Check for Updates*?<InstallDir>\Updater.exe*?*?*?<InstallDir>*?*?0*?Normal
+1=<ProgramGroup>*?Uninstall <AppName>*?<InstallDir>\Uninstall.exe*?*?*?<InstallDir>*?*?0*?Normal
+2=<ProgramGroup>*?Corionis Service Manager Task*?<SystemDir>\schtasks.exe*?Executes CSM via Windows Task Scheduler*?/run /tn "Corionis Service Manager"*?*?<InstallDir>\Resources\manager-round-bronco.ico*?0*?Minimized
+3=<ProgramGroup>*?Check for Updates*?<InstallDir>\Updater.exe*?*?*?<InstallDir>*?*?0*?Normal
+4=<Desktop>*?Corionis Service Manager Task*?<SystemDir>\schtasks.exe*?Executes CSM via Windows Task Scheduler*?/run /tn "Corionis Service Manager"*?*?<InstallDir>\Resources\manager-round-bronco.ico*?0*?Minimized
 
 [Registry]
 0=HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers*?<InstallDir>\CorionisServiceManager.exe*?REG_SZ*?RUNASADMIN*?Yes*?Yes*?Default
@@ -220,4 +221,8 @@ English=
 [Commands]
 0=<SystemDir>\schtasks.exe*?/Create /SC ONLOGON /TN "Corionis Service Manager" /F /RL HIGHEST /TR "'<InstallDir>\CorionisServiceManager.exe'" /IT /RU "<UserName>"*?Hide*?After Installation*?Yes*?Any*?Yes
 1=<SystemDir>\schtasks.exe*?/Delete /TN "Corionis Service Manager" /F*?Hide*?After Uninstallation*?Yes*?Any*?Yes
+
+[FileOptions]
+0=D:\Users\trh\Work\corionis\git\corionis\CorionisServiceManager.NET\bin\Debug\CorionisServiceManager.json?D
+1=D:\Users\trh\Work\corionis\git\corionis\CorionisServiceManager.NET\bin\Debug\CorionisServiceManager.log?D
 

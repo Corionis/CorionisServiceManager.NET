@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using System.ServiceProcess;
-using System.Windows;
 using System.Windows.Forms;
 using Microsoft.Win32.TaskScheduler;
 
@@ -85,8 +84,6 @@ namespace CorionisServiceManager.NET
             toolStripMonitorStart.Click += EventMonitorButtonStart;
             toolStripMonitorStop.Click += EventMonitorButtonStop;
             toolStripMonitorToggleMinify.Click += EventMonitorButtonToggleMinify;
-            //toolStripMonitorToggleMinify.Visible = false;
-
             dataGridViewMonitor.CellClick += EventMonitorCellClicked;
             dataGridViewMonitor.CellValueChanged += EventMonitorCellEndEdit;
             dataGridViewMonitor.KeyDown += EventMonitorKeyDown;
@@ -320,7 +317,8 @@ namespace CorionisServiceManager.NET
 
         private void EventMenuHelpOnlineDocumentation(object sender, EventArgs e)
         {
-            Process.Start("https://corionis.github.io/CorionisServiceManager.NET/");
+            var url = "https://corionis.github.io/CorionisServiceManager.NET/";
+            Process.Start("explorer.exe", "\"" + @"" + url + "\"");
         }
 
         private void EventMenuFileRestart(object sender, EventArgs e)
@@ -352,32 +350,28 @@ namespace CorionisServiceManager.NET
                 miniPanel.Location = new System.Drawing.Point(0, 6);
                 miniPanel.Margin = new System.Windows.Forms.Padding(4);
                 miniPanel.Name = "tabControl";
-                //miniPanel.Padding = new System.Drawing.Point(4, 4);
-                //miniPanel.SelectedIndex = 0;
                 miniPanel.Size = new System.Drawing.Size(803, 450);
-                //miniPanel.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
                 miniPanel.TabIndex = 1;
-                this.Controls.Add(miniPanel);
+                Controls.Add(miniPanel);
             }
 
             miniPanel.SuspendLayout();
             miniPanel.Controls.Add(dataGridViewMonitor);
             miniPanel.Controls.Add(toolStripMonitor);
-            toolStripMonitorToggleMinify.Image = CorionisServiceManager.NET.Properties.Resources.arrow_down;
-            this.toolStripMonitorToggleMinify.Text = "Expand";
+            toolStripMonitorToggleMinify.Image = Properties.Resources.arrow_down;
+            toolStripMonitorToggleMinify.ToolTipText = "Expand";
             miniPanel.Visible = false;
-            miniPanel.ResumeLayout();
 
             originalFormHeight = this.Height;
-            this.Height = CalculateMinifyHeight();
+            Height = CalculateMinifyHeight();
 
+            miniPanel.ResumeLayout();
             miniPanel.Visible = true;
-            //toolStripMonitorToggleMinify.Visible = true;
 
             AugmentMonitorCells();
             EventMonitorUpdateTick(sender, e);
             tabMonitor.Refresh();
-            this.Refresh();
+            Refresh();
         }
 
         private void EventMonitorButtonAll(object sender, EventArgs e)
@@ -422,11 +416,10 @@ namespace CorionisServiceManager.NET
                 miniPanel.Visible = false;
                 tabMonitor.Controls.Add(this.dataGridViewMonitor);
                 tabMonitor.Controls.Add(toolStripMonitor);
-                toolStripMonitorToggleMinify.Image = CorionisServiceManager.NET.Properties.Resources.arrow_up;
+                toolStripMonitorToggleMinify.Image = Properties.Resources.arrow_up;
                 toolStripMonitorToggleMinify.ToolTipText = "Minify";
                 menuStrip.Visible = true;
                 tabControl.Visible = true;
-                // toolStripMonitorToggleMinify.Visible = false;
                 this.Height = originalFormHeight;
                 Refresh();
             }
@@ -580,7 +573,7 @@ namespace CorionisServiceManager.NET
 
         private void EventMonitorUpdateTick(object sender, EventArgs e)
         {
-            if (!updateTickActive)
+            if (!updateTickActive && services != null && services.selectedServices != null && services.selectedServices.Length > 0)
             {
                 updateTickActive = true;
                 dataGridViewMonitor.ClearSelection();
@@ -612,6 +605,7 @@ namespace CorionisServiceManager.NET
 
                         if (!status.Equals(current))
                         {
+                            ctxt.Popup(cfg.GetProgramTitle(),$"Service {mon.Name} is {status}");
                             logger.Write("Service " + mon.Name + " is " + status);
                         }
                     }

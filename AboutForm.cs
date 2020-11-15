@@ -45,12 +45,14 @@ namespace CorionisServiceManager.NET
 
         private void EventLinkLabelPublic(object sender, EventArgs e)
         {
-            Process.Start("https://corionis.github.io/CorionisServiceManager.NET/");
+            var url = "https://corionis.github.io/CorionisServiceManager.NET/";
+            Process.Start("explorer.exe", "\"" + @"" + url + "\"");
         }
 
         private void EventLinkLabelProject(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/Corionis/CorionisServiceManager.NET");
+            var url = "https://github.com/Corionis/CorionisServiceManager.NET";
+            Process.Start("explorer.exe", "\"" + @"" + url + "\"");
         }
 
         private void EventOkButton(object sender, EventArgs e)

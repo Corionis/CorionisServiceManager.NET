@@ -518,7 +518,7 @@
             this.toolStripMonitorToggleMinify.Margin = new System.Windows.Forms.Padding(0, 1, 4, 2);
             this.toolStripMonitorToggleMinify.Name = "toolStripMonitorToggleMinify";
             this.toolStripMonitorToggleMinify.Size = new System.Drawing.Size(23, 21);
-            this.toolStripMonitorToggleMinify.Text = "Minify";
+            this.toolStripMonitorToggleMinify.ToolTipText = "Minify";
             // 
             // tabSelect
             // 
