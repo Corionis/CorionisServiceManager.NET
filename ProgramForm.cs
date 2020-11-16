@@ -142,6 +142,15 @@ namespace CorionisServiceManager.NET
             monitorUpdateTimer = new Timer();
             monitorUpdateTimer.Interval = 1000; // 1 second
             monitorUpdateTimer.Tick += EventMonitorUpdateTick;
+
+            // Minify as necessary
+            // if (cfg.IsMinified == true)
+            // {
+            // EventMonitorButtonToggleMinify(null, null);
+            // }
+
+            // Write the JSON configuration file and create/update the Task Scheduler task
+            SaveUserPreferences();
         }
         // -----------------------------------------------------------------------------------------------------------------------
 
@@ -177,6 +186,9 @@ namespace CorionisServiceManager.NET
                 // Update then start the Monitor tab update timer
                 EventMonitorUpdateTick(sender, e);
                 AugmentMonitorCells();
+
+                // Reorder and resize the Monitor and Select tab columns
+                OrderSizeColumns();
 
                 monitorUpdateTimer.Start();
                 updateTimerStarted = true;
@@ -346,7 +358,7 @@ namespace CorionisServiceManager.NET
             {
                 miniPanel = new Panel();
                 miniPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-                miniPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                miniPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
                 miniPanel.Location = new System.Drawing.Point(0, 6);
                 miniPanel.Margin = new System.Windows.Forms.Padding(4);
                 miniPanel.Name = "tabControl";
@@ -367,6 +379,7 @@ namespace CorionisServiceManager.NET
 
             miniPanel.ResumeLayout();
             miniPanel.Visible = true;
+            cfg.IsMinified = true;
 
             AugmentMonitorCells();
             EventMonitorUpdateTick(sender, e);
@@ -413,6 +426,7 @@ namespace CorionisServiceManager.NET
         {
             if (miniPanel != null && miniPanel.Visible == true)
             {
+                cfg.IsMinified = false;
                 miniPanel.Visible = false;
                 tabMonitor.Controls.Add(this.dataGridViewMonitor);
                 tabMonitor.Controls.Add(toolStripMonitor);
@@ -493,7 +507,7 @@ namespace CorionisServiceManager.NET
                                 services.monitoredServices.Sort((x, y) =>
                                     String.Compare(x.Identifier, y.Identifier, StringComparison.Ordinal));
                             }
-                            else if (name.Equals("Start Type"))
+                            else if (name.Equals("Start"))
                             {
                                 services.monitoredServices.Sort((x, y) =>
                                     String.Compare(x.Startup, y.Startup, StringComparison.Ordinal));
@@ -520,7 +534,7 @@ namespace CorionisServiceManager.NET
                                 services.monitoredServices.Sort((x, y) =>
                                     String.Compare(y.Identifier, x.Identifier, StringComparison.Ordinal));
                             }
-                            else if (name.Equals("Start Type"))
+                            else if (name.Equals("Start"))
                             {
                                 services.monitoredServices.Sort((x, y) =>
                                     String.Compare(y.Startup, x.Startup, StringComparison.Ordinal));
@@ -605,7 +619,7 @@ namespace CorionisServiceManager.NET
 
                         if (!status.Equals(current))
                         {
-                            ctxt.Popup(cfg.GetProgramTitle(),$"Service {mon.Name} is {status}");
+                            ctxt.Popup(cfg.GetProgramTitle(), $"Service {mon.Name} is {status}");
                             logger.Write("Service " + mon.Name + " is " + status);
                         }
                     }
@@ -884,7 +898,7 @@ namespace CorionisServiceManager.NET
 
         private void EventTabFocused(object sender, EventArgs e)
         {
-            if (((TabControl)sender).SelectedTab.Name.Equals("tabLog"))
+            if (((TabControl) sender).SelectedTab.Name.Equals("tabLog"))
             {
                 logTextBox.Focus();
                 logTextBox.SelectionStart = logger.logBuffer.Length - 1;
@@ -928,7 +942,7 @@ namespace CorionisServiceManager.NET
                 string ttt = cfg.ShowGridTooltips ? "Drag 'n Drop to move row" : "";
 
                 cell.ToolTipText = ttt;
-                cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Start Type");
+                cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Start");
                 cell.ToolTipText = ttt;
                 cell = row.Cells.Cast<DataGridViewCell>().First(c => c.OwningColumn.HeaderText == "Status");
                 cell.ToolTipText = ttt;
@@ -943,6 +957,7 @@ namespace CorionisServiceManager.NET
                 height += dataGridViewMonitor.ColumnHeadersHeight;
                 height += dataGridViewMonitor.Rows[0].Height * dataGridViewMonitor.Rows.Count;
             }
+
             return height;
         }
 
@@ -984,18 +999,21 @@ namespace CorionisServiceManager.NET
                             {
                                 ManageStartupType(service.ServiceName, service.DisplayName, "auto");
                             }
+
                             break;
                         case "disable":
                             if (service.StartType != ServiceStartMode.Disabled)
                             {
                                 ManageStartupType(service.ServiceName, service.DisplayName, "disabled");
                             }
+
                             break;
                         case "manual":
                             if (service.StartType != ServiceStartMode.Manual)
                             {
                                 ManageStartupType(service.ServiceName, service.DisplayName, "demand");
                             }
+
                             break;
                         case "start":
                             if (service.Status != ServiceControllerStatus.Running)
@@ -1058,6 +1076,25 @@ namespace CorionisServiceManager.NET
             }
         }
 
+        public void OrderSizeColumns()
+        {
+            if (cfg.MonitorColumns != null && cfg.MonitorColumns.Length > 0)
+            {
+                for (int i = 0; i < dataGridViewMonitor.Columns.Count; ++i)
+                {
+                    for (int j = 0; j < cfg.MonitorColumns.Length; ++j)
+                    {
+                        if (cfg.MonitorColumns[j].Header.Equals(dataGridViewMonitor.Columns[i].HeaderText))
+                        {
+                            dataGridViewMonitor.Columns[i].Width = cfg.MonitorColumns[j].Width;
+                            dataGridViewMonitor.Columns[i].DisplayIndex = cfg.MonitorColumns[j].Index;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         private void PopulateMonitor()
         {
             services.GetSelectedServices();
@@ -1069,6 +1106,7 @@ namespace CorionisServiceManager.NET
             configBindingSource.DataSource = cfg;
             this.Text = cfg.GetProgramTitle();
             ctxt.trayIcon.Text = cfg.GetProgramTitle();
+            ctxt.trayIcon.ContextMenu.MenuItems[0].Text = cfg.GetProgramTitle();
 
             configBindingSource.ResetBindings(false);
             optionsRunningFore.BackColor = cfg.ColorFromHex(cfg.RunningFore);
@@ -1123,16 +1161,19 @@ namespace CorionisServiceManager.NET
 
         public void SaveUserPreferences()
         {
-            // Must be visible for coordinates to be valid
-            if (Visible == false || WindowState == FormWindowState.Minimized)
-            {
-                ShowForm();
-            }
+            bool WasMinified = cfg.IsMinified;
 
             // Un-Minify if necessary
             if (miniPanel != null && miniPanel.Visible == true)
             {
+                WasMinified = true;
                 EventMonitorButtonToggleMinify(null, null);
+            }
+
+            // Must be visible for coordinates to be valid
+            if (Visible == false || WindowState == FormWindowState.Minimized)
+            {
+                ShowForm();
             }
 
             cfg.Left = Left;
@@ -1140,9 +1181,35 @@ namespace CorionisServiceManager.NET
             cfg.Width = Width;
             cfg.Height = Height;
 
+            cfg.MonitorColumns = new Config.ColumnOrderSize[dataGridViewMonitor.Columns.Count];
+            for (int i = 0; i < dataGridViewMonitor.Columns.Count; ++i)
+            {
+                cfg.MonitorColumns[i] = new Config.ColumnOrderSize();
+                cfg.MonitorColumns[i].Header = dataGridViewMonitor.Columns[i].HeaderText;
+                cfg.MonitorColumns[i].Width = dataGridViewMonitor.Columns[i].Width;
+                cfg.MonitorColumns[i].Index = dataGridViewMonitor.Columns[i].DisplayIndex;
+            }
+
+            cfg.SelectColumns = new Config.ColumnOrderSize[dataGridViewSelect.Columns.Count];
+            for (int i = 0; i < dataGridViewSelect.Columns.Count; ++i)
+            {
+                cfg.SelectColumns[i] = new Config.ColumnOrderSize();
+                cfg.SelectColumns[i].Header = dataGridViewSelect.Columns[i].HeaderText;
+                cfg.SelectColumns[i].Width = dataGridViewSelect.Columns[i].Width;
+                cfg.SelectColumns[i].Index = dataGridViewSelect.Columns[i].DisplayIndex;
+            }
+
+            // Add the selected service & write the JSON configuration
+            cfg.IsMinified = WasMinified;
             SaveSelectedServices();
 
             StartAtLogin();
+
+            // Minify as necessary
+            if (WasMinified == true)
+            {
+                EventMonitorButtonToggleMinify(null, null);
+            }
         }
 
         private void SetMonitorColors()
@@ -1336,7 +1403,7 @@ namespace CorionisServiceManager.NET
                     left = ((ServiceController) x).ServiceName;
                     right = ((ServiceController) y).ServiceName;
                 }
-                else if (ColumnName.Equals("Start Type"))
+                else if (ColumnName.Equals("Start"))
                 {
                     left = ((ServiceController) x).StartType.ToString();
                     right = ((ServiceController) y).StartType.ToString();
@@ -1361,6 +1428,5 @@ namespace CorionisServiceManager.NET
                 }
             }
         }
-
     }
 }

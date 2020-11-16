@@ -48,6 +48,12 @@ namespace CorionisServiceManager.NET
         public int Width { get; set; }
         public int Height { get; set; }
 
+        public bool IsMinified { get; set; }
+
+        public ColumnOrderSize[] MonitorColumns { get; set; }
+
+        public ColumnOrderSize[] SelectColumns { get; set; }
+
         #endregion
 
         #region Selected
@@ -55,6 +61,14 @@ namespace CorionisServiceManager.NET
         public ServiceIdNamePair[] SelectedServiceIds { get; set; }
 
         #endregion
+
+        // Class for tracking column order and size
+        public class ColumnOrderSize
+        {
+            public String Header { get; set; }
+            public int Width { get; set; }
+            public int Index { get; set; }
+        }
 
         // Class for each service identifer/name pair where name is editable
         public class ServiceIdNamePair
@@ -66,13 +80,13 @@ namespace CorionisServiceManager.NET
         // Public constructor
         public Config()
         {
-            Version = Assembly.GetEntryAssembly()?.GetName().Version.ToString().TrimEnd('0').TrimEnd('.');
+            Version = Assembly.GetEntryAssembly()?.GetName().Version.ToString();
+            Version = Version.Substring(0, Version.Length - 4); // truncate trailing ".0.0"
         }
 
         public Color ColorFromHex(String hexColor)
         {
             Color color = System.Drawing.ColorTranslator.FromHtml(hexColor);
-            ;
             return color;
         }
 
@@ -89,6 +103,7 @@ namespace CorionisServiceManager.NET
             {
                 Directory.CreateDirectory(path);
             }
+
             path = Path.Combine(path, file); // add filename
             path = path + ".json";
             return path;
@@ -138,6 +153,9 @@ namespace CorionisServiceManager.NET
                 Top = data.Top;
                 Width = data.Width;
                 Height = data.Height;
+                IsMinified = data.IsMinified;
+                MonitorColumns = data.MonitorColumns;
+                SelectColumns = data.SelectColumns;
                 SelectedServiceIds = data.SelectedServiceIds;
 
                 found = true;
@@ -150,6 +168,7 @@ namespace CorionisServiceManager.NET
             {
                 found = false;
             }
+
             if (!found)
             {
                 SetConfigDefaults();
@@ -186,6 +205,8 @@ namespace CorionisServiceManager.NET
             Top = 10;
             Width = 600;
             Height = 440;
+            IsMinified = false;
+            // use default order and size
             // don't replace selected services
         }
     }

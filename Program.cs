@@ -3,12 +3,6 @@ using System.Windows.Forms;
 using CorionisServiceManager.NET.Properties;
 using Tulpep.NotificationWindow;
 
-/*
- * todo Save column widths
- * todo Save Minify toggle
- * todo Remove .0 from version, so it's 2020.2
- */
-
 namespace CorionisServiceManager.NET
 {
     /// <summary>

@@ -36,6 +36,7 @@ namespace CorionisServiceManager.NET
             {
                 Directory.CreateDirectory(path);
             }
+
             path = Path.Combine(path, file); // add filename
             path = path + ".log";
             return path;
@@ -66,5 +67,4 @@ namespace CorionisServiceManager.NET
             }
         }
     }
-
 }
