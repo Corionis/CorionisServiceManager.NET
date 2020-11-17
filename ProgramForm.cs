@@ -158,7 +158,7 @@ namespace CorionisServiceManager.NET
         {
             if (m.Msg==WM_QUERYENDSESSION)
             {
-                logger.Write("System shutdown event");
+                logger.Write("System shutdown/reboot event");
                 systemShutdown = true;
             }
 
@@ -173,7 +173,6 @@ namespace CorionisServiceManager.NET
             if (systemShutdown)
             {
                 // Gracefully exit
-                logger.Write("System shutdown, exiting gracefully");
                 ctxt.Exit(sender, e);
             }
 

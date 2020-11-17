@@ -60,5 +60,10 @@ namespace CorionisServiceManager.NET
             Close();
             myParent.Focus();
         }
+
+        private void linkLabelPublic_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
     }
 }

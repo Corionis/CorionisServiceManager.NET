@@ -114,11 +114,6 @@ namespace CorionisServiceManager.NET
             }
         }
 
-        public void SessionDone(object sender, SessionEndingEventArgs a)
-        {
-            Exit(null, null);
-        }
-
         public void Show(object sender, EventArgs e)
         {
             if (form == null)

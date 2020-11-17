@@ -40,12 +40,15 @@ namespace CorionisServiceManager.NET
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.linkLabelPublic = new System.Windows.Forms.LinkLabel();
-            ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).BeginInit();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image) (resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox1.Name = "pictureBox1";
@@ -55,8 +58,8 @@ namespace CorionisServiceManager.NET
             // 
             // aboutVersion
             // 
-            this.aboutVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.aboutVersion.Location = new System.Drawing.Point(107, 76);
+            this.aboutVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aboutVersion.Location = new System.Drawing.Point(109, 14);
             this.aboutVersion.Name = "aboutVersion";
             this.aboutVersion.Size = new System.Drawing.Size(165, 23);
             this.aboutVersion.TabIndex = 1;
@@ -65,9 +68,9 @@ namespace CorionisServiceManager.NET
             // 
             // linkLabelProject
             // 
-            this.linkLabelProject.Location = new System.Drawing.Point(87, 136);
+            this.linkLabelProject.Location = new System.Drawing.Point(89, 71);
             this.linkLabelProject.Name = "linkLabelProject";
-            this.linkLabelProject.Size = new System.Drawing.Size(292, 23);
+            this.linkLabelProject.Size = new System.Drawing.Size(286, 23);
             this.linkLabelProject.TabIndex = 2;
             this.linkLabelProject.TabStop = true;
             this.linkLabelProject.Text = "https://github.com/Corionis/CorionisServiceManager.NET";
@@ -76,7 +79,7 @@ namespace CorionisServiceManager.NET
             // okButton
             // 
             this.okButton.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.okButton.Location = new System.Drawing.Point(325, 177);
+            this.okButton.Location = new System.Drawing.Point(306, 106);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(62, 23);
             this.okButton.TabIndex = 4;
@@ -85,7 +88,7 @@ namespace CorionisServiceManager.NET
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(9, 137);
+            this.label2.Location = new System.Drawing.Point(7, 72);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(81, 23);
             this.label2.TabIndex = 5;
@@ -94,7 +97,7 @@ namespace CorionisServiceManager.NET
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(9, 177);
+            this.label1.Location = new System.Drawing.Point(7, 106);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(167, 23);
             this.label1.TabIndex = 7;
@@ -104,7 +107,7 @@ namespace CorionisServiceManager.NET
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(32, 114);
+            this.label4.Location = new System.Drawing.Point(30, 45);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(58, 13);
             this.label4.TabIndex = 8;
@@ -113,12 +116,28 @@ namespace CorionisServiceManager.NET
             // linkLabelPublic
             // 
             this.linkLabelPublic.AutoSize = true;
-            this.linkLabelPublic.Location = new System.Drawing.Point(87, 114);
+            this.linkLabelPublic.Location = new System.Drawing.Point(89, 45);
             this.linkLabelPublic.Name = "linkLabelPublic";
-            this.linkLabelPublic.Size = new System.Drawing.Size(272, 13);
+            this.linkLabelPublic.Size = new System.Drawing.Size(267, 13);
             this.linkLabelPublic.TabIndex = 9;
             this.linkLabelPublic.TabStop = true;
-            this.linkLabelPublic.Text = "https://corionis.github.io/CorionisServiceManager.NET/";
+            this.linkLabelPublic.Text = "https://corionis.github.io/CorionisServiceManager.NET";
+            this.linkLabelPublic.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelPublic_LinkClicked);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.linkLabelPublic);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.okButton);
+            this.groupBox1.Controls.Add(this.linkLabelProject);
+            this.groupBox1.Controls.Add(this.aboutVersion);
+            this.groupBox1.Location = new System.Drawing.Point(9, 63);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(381, 141);
+            this.groupBox1.TabIndex = 10;
+            this.groupBox1.TabStop = false;
             // 
             // AboutForm
             // 
@@ -126,13 +145,7 @@ namespace CorionisServiceManager.NET
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(399, 212);
-            this.Controls.Add(this.linkLabelPublic);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.okButton);
-            this.Controls.Add(this.linkLabelProject);
-            this.Controls.Add(this.aboutVersion);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
@@ -142,10 +155,12 @@ namespace CorionisServiceManager.NET
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "About";
-            ((System.ComponentModel.ISupportInitialize) (this.pictureBox1)).EndInit();
+            this.Text = "About CSM";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
+
         }
 
         private System.Windows.Forms.Label label1;
@@ -163,5 +178,6 @@ namespace CorionisServiceManager.NET
 
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.LinkLabel linkLabelPublic;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

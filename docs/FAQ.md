@@ -4,28 +4,14 @@ show_blog: false
 ---
 # FAQ
 
-The Corionis Service Manager - CSM - is fairly self-explanatory and easy
+The Corionis Service Manager, or CSM, is fairly self-explanatory and easy
 to use for the target audience. It is intended for those who wish to 
 monitor and/or manage a subset of Windows services.
 
-## Index
- 1. [What privileges are required to run CSM?](What-privileges-are-required-to-run-CSM?)
- 2. [How is CSM executed?](How-is-CSM-executed?)
- 3. [What if CSM does not start at login the first time?](What-if-CSM-does-not-start-at-login-the-first-time?)
- 4. [Where is CSM installed?](Where-is-CSM-installed?)
- 5. [What is in the Corionis Service Manager "Start" button group?](What-is-in-the-Corionis-Service-Manager-"Start"-button-group?)
- 6. [Is the Windows Task Scheduler task removed during uninstall?](Is-the-Windows-Task-Scheduler-Task-removed-during-uninstall?)
- 7. [Why doesn't CSM have a Restart button?](Why-doesn't-CSM-have-a-Restart-button?)
- 8. [How does the updater work?](How-does-the-updater-work?)
- 9. [How can the physical log file be emptied?](How-can-the-physical-log-file-be-emptied?)
-10. [Where is the log file?](Where-is-the-log-file)
-
----
-
  1. What privileges are required to run CSM?
-    > To manage services, e.g. start/stop them, Administrator privileges are required, 
-      [see #2](How-is-CSM-executed?). CSM may be executed without Administrator
-      privileges to monitor services but the management controls are disabled.
+    > To manage services, e.g. start and stop them, Administrator privileges are required, 
+      see #2. CSM may be executed without Administrator privileges to monitor services 
+      but the management controls are disabled.
  2. How is CSM executed?
     > The CSM installer and application create and manage a Windows Task
       Scheduler task. An "At log on" trigger is enabled/disabled depending
@@ -47,7 +33,8 @@ monitor and/or manage a subset of Windows services.
     > * **Corionis Service Manager** -- Executes the CSM program directly. Right-click and 'Run as Administrator' to avoid the UAC.
     > * **Uninstall Corionis Service Manager** -- Completely removes CSM.
  6. Is the Windows Task Scheduler task removed during uninstall?
-    > Yes. An uninstall removes all CSM-related elements including it's JSON configuration file and any log file.
+    > Yes. An uninstall removes CSM with an option to remove all related elements including it's JSON 
+      configuration file and any log file.
  7. Why doesn't CSM have a Restart button?
     > CSM cannot accurately "know" when a service has finished its shutdown
       procedures and completely stopped. So knowing when it is safe to
@@ -59,5 +46,5 @@ monitor and/or manage a subset of Windows services.
  9. How can the physical log file be emptied?
     > In CSM goto the Log tab, click Clear, then click Save. Additionally the
       log file can be deleted.
-10. #Where is the log file
+10. Where is the log file?
     > In the installation directory, [see #4](Where-is-CSM-installed?).
