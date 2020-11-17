@@ -44,7 +44,19 @@ namespace CorionisServiceManager.NET
 
         public void Save()
         {
-            File.WriteAllText(GetLogFilename(), logBuffer);
+            // don't double-log entries
+            if (!cfg.LogToFile)
+            {
+                File.AppendAllText(GetLogFilename(), logBuffer);
+            }
+            else
+            {
+                // If the buffer was just cleared assume they want to truncate the log file
+                if (logBuffer.Length == 0)
+                {
+                    File.WriteAllText(GetLogFilename(), logBuffer);
+                }
+            }
         }
 
         public void Write(String line)
@@ -67,4 +79,5 @@ namespace CorionisServiceManager.NET
             }
         }
     }
+
 }

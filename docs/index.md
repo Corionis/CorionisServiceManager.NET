@@ -2,7 +2,7 @@
 layout: default
 show_blog: false
 ---
-<center><span style="font-size: 28px; font-face: bold; font-weight: bold; margin-top: 10px;">What is Corionis Service Manager?</span></center>
+<center><span style="font-size: 28px; font-face: bold; font-weight: bold; margin-top: 10px;">What is the Corionis Service Manager?</span></center>
 <hr/>
 The Corionis Service Manager (CSM) is a small Windows tray application that 
 monitors and manages a list of user-selected Windows services. The selected 
@@ -18,6 +18,7 @@ selected service's state changes.
 
 <center><span style="font-size: 22px; font-face: bold; margin-top: 10px;">Features</span></center>
 <hr/>
+
  * Monitors and manages a list of user-selected Windows services.
  * Monitored services may be reordered on the Monitor tab with drag 'n drop.
  * Monitored service names may be edited.
@@ -25,3 +26,4 @@ selected service's state changes.
  * Select tab shows all Windows services available on the system.
  * Logs running status changes of selected services.
  * Optional logging to a file.
+ * Minify button to hide the menu and tabs, **new in release 2020.2.** 

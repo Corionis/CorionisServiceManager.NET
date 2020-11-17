@@ -78,7 +78,7 @@ SilentUninstall=0
 UninstallForce=0
 UninstallRestart=0
 UninstallSettings=1
-UninstallSettingsCommand=
+UninstallSettingsCommand=del /Q "<InstallDir>\*.*"
 VisitUninstallPage=0
 UninstallURL=http://www.website.com/uninstall.html
 UninstallCloseMainExe=1
@@ -200,8 +200,8 @@ LicensePosition=Center
 3=D:\Users\trh\Work\corionis\git\corionis\CorionisServiceManager.NET\LICENSE?<InstallDir>\LICENSE?1?1
 
 [License]
-(Default)=
-English=D:\Users\trh\Work\corionis\git\corionis\CorionisServiceManager.NET\LICENSE
+(Default)=D:\Users\trh\Work\corionis\git\corionis\CorionisServiceManager.NET\LICENSE
+English=
 
 [Readme]
 (Default)=

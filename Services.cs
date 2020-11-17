@@ -46,8 +46,6 @@ namespace CorionisServiceManager.NET
                     {
                         if (service.ServiceName.Equals(servicePair.Identifier))
                         {
-                            selectedServices[i] = service;
-
                             MonitoredService mon = new MonitoredService();
                             mon.Picked = false;
                             mon.Name = servicePair.Name; // saved variation
@@ -55,6 +53,8 @@ namespace CorionisServiceManager.NET
                             mon.Startup = service.StartType.ToString();
                             mon.Status = service.Status.ToString();
                             monitoredServices.Add(mon);
+
+                            selectedServices[i] = service;
                             ++i;
                         }
                     }
@@ -65,9 +65,9 @@ namespace CorionisServiceManager.NET
         public void LogMonitoredServices(Log logger)
         {
             logger.Write("Currently Monitored Services:");
-            foreach (var mon in monitoredServices)
+            for (int i = 0; i < monitoredServices.Count; ++i)
             {
-                logger.Write("+ " + mon.Name);
+                logger.Write("+ " + monitoredServices[i].Name + " (" + selectedServices[i].Status + ")");
             }
         }
     }

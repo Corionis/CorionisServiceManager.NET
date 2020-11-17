@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Security.Principal;
 using System.ServiceProcess;
 using System.Windows.Forms;
+using Microsoft.Win32;
 using Microsoft.Win32.TaskScheduler;
 
 namespace CorionisServiceManager.NET
@@ -135,6 +136,7 @@ namespace CorionisServiceManager.NET
             PopulateMonitor();
             PopulateOptions();
 
+            logger.Write("-----------------------------------------------");
             logger.Write(cfg.Program + " Version " + cfg.Version + " started");
             services.LogMonitoredServices(logger);
 
@@ -143,12 +145,6 @@ namespace CorionisServiceManager.NET
             monitorUpdateTimer.Interval = 1000; // 1 second
             monitorUpdateTimer.Tick += EventMonitorUpdateTick;
 
-            // Minify as necessary
-            // if (cfg.IsMinified == true)
-            // {
-            // EventMonitorButtonToggleMinify(null, null);
-            // }
-
             // Write the JSON configuration file and create/update the Task Scheduler task
             SaveUserPreferences();
         }
@@ -156,8 +152,31 @@ namespace CorionisServiceManager.NET
 
         #region Event Handlers
 
+        private static int WM_QUERYENDSESSION = 0x11;
+        private static bool systemShutdown = false;
+        protected override void WndProc(ref System.Windows.Forms.Message m)
+        {
+            if (m.Msg==WM_QUERYENDSESSION)
+            {
+                logger.Write("System shutdown event");
+                systemShutdown = true;
+            }
+
+            // If this is WM_QUERYENDSESSION, the closing event should be
+            // raised in the base WndProc.
+            base.WndProc(ref m);
+
+        } //WndProc
+
         private void EventFormClosing(object sender, FormClosingEventArgs e)
         {
+            if (systemShutdown)
+            {
+                // Gracefully exit
+                logger.Write("System shutdown, exiting gracefully");
+                ctxt.Exit(sender, e);
+            }
+
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 // Cancel the event so ProgramForm is not disposed
@@ -301,7 +320,6 @@ namespace CorionisServiceManager.NET
         private void EventLogButtonClear(object sender, EventArgs e)
         {
             logger.Clear();
-            logger.Write(cfg.Program + " Version " + cfg.Version + " log cleared");
         }
 
         private void EventLogButtonSave(object sender, EventArgs e)

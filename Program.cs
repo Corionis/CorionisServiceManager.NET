@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using CorionisServiceManager.NET.Properties;
+using Microsoft.Win32;
 using Tulpep.NotificationWindow;
 
 namespace CorionisServiceManager.NET
@@ -111,6 +112,11 @@ namespace CorionisServiceManager.NET
                 popup.ShowCloseButton = true;
                 popup.Popup();
             }
+        }
+
+        public void SessionDone(object sender, SessionEndingEventArgs a)
+        {
+            Exit(null, null);
         }
 
         public void Show(object sender, EventArgs e)
