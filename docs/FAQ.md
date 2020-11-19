@@ -47,4 +47,4 @@ monitor and/or manage a subset of Windows services.
     > In CSM goto the Log tab, click Clear, then click Save. Additionally the
       log file can be deleted.
 10. Where is the log file?
-    > In the installation directory, [see #4](Where-is-CSM-installed?).
+    > In the installation directory, see #4.
