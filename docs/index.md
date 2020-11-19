@@ -26,4 +26,5 @@ selected service's state changes.
  * Select tab shows all Windows services available on the system.
  * Logs running status changes of selected services.
  * Optional logging to a file.
+ * Auto-updater.
  * Minify button to hide the menu and tabs, **new in release 2020.2.** 
